@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.maintenance.mapper.MainClassMapper">
+
+    <resultMap id="coreClassResultMap" type="com.dimple.maintenance.domain.MainClass">
+        <id property="claId" column="cla_id"></id>
+        <result property="claName" column="cla_name"></result>
+        <result property="monitorEmail" column="monitor_email"/>
+        <result property="monitorName" column="monitor_name"/>
+        <result property="monitorPhone" column="monitor_phone"/>
+        <result property="teacherEmail" column="teacher_email"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="teacherPhone" column="teacher_phone"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectCoreClassVo">
+        select cla_id, cla_name, prof_id, create_time, update_by, update_time, create_by
+        from main_class
+    </sql>
+
+    <select id="selectCoreClassList" parameterType="com.dimple.maintenance.domain.MainClass"
+            resultMap="coreClassResultMap">
+        <include refid="selectCoreClassVo"></include>
+        <where>
+            <if test="claName != null and claName!=''">
+                and cla_name like concat('%',#{claName},'%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCoreClassByCalId" resultType="com.dimple.maintenance.domain.MainClass">
+        <include refid="selectCoreClassVo"></include>
+        where
+        cal_id=#{claId}
+    </select>
+
+    <update id="updateCoreClass">
+        update main_class
+        <set>
+            <if test="claName !=null and claName !=''">cla_name =#{claName}</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+    </update>
+
+    <delete id="deleteCoreClassByCalIds" parameterType="string">
+        delete from main_class where cla_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="insertCoreClass">
+        insert into main_class(
+        <if test="cloName!=null and cloName != ''">cla_name,</if>
+        <if test="createBy != null and createBy != ''">create_by</if>
+        create_time
+        ) values (
+        <if test="cloName!=null and cloName != ''">#{claName},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+</mapper>

@@ -47,12 +47,11 @@
         <module>eams-system</module>
         <module>eams-quartz</module>
         <module>eams-common</module>
+        <module>eams-maintenance</module>
     </modules>
     <packaging>pom</packaging>
 
-
     <dependencies>
-
         <!-- Spring框架基本的核心工具 -->
         <dependency>
             <groupId>org.springframework</groupId>

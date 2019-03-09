@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.system.mapper.SysPostMapper">
 
-    <resultMap type="SysPost" id="SysPostResult">
+    <resultMap type="com.dimple.system.domain.SysPost" id="SysPostResult">
         <id property="postId" column="post_id"/>
         <result property="postCode" column="post_code"/>
         <result property="postName" column="post_name"/>
@@ -18,11 +18,18 @@
     </resultMap>
 
     <sql id="selectPostVo">
-        select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark 
-		from sys_post
+        select post_id,
+               post_code,
+               post_name,
+               post_sort,
+               status,
+               create_by,
+               create_time,
+               remark
+        from sys_post
     </sql>
 
-    <select id="selectPostList" parameterType="SysPost" resultMap="SysPostResult">
+    <select id="selectPostList" parameterType="com.dimple.system.domain.SysPost" resultMap="SysPostResult">
         <include refid="selectPostVo"/>
         <where>
             <if test="postCode != null and postCode != ''">
@@ -42,12 +49,12 @@
     </select>
 
     <select id="selectPostsByUserId" parameterType="Long" resultMap="SysPostResult">
-		SELECT p.post_id, p.post_name, p.post_code
-		FROM sys_user u
-			 LEFT JOIN sys_user_post up ON u.user_id = up.user_id
-			 LEFT JOIN sys_post p ON up.post_id = p.post_id
-		WHERE up.user_id = #{userId}
-	</select>
+        SELECT p.post_id, p.post_name, p.post_code
+        FROM sys_user u
+                 LEFT JOIN sys_user_post up ON u.user_id = up.user_id
+                 LEFT JOIN sys_post p ON up.post_id = p.post_id
+        WHERE up.user_id = #{userId}
+    </select>
 
     <select id="selectPostById" parameterType="Long" resultMap="SysPostResult">
         <include refid="selectPostVo"/>
@@ -71,7 +78,7 @@
         </foreach>
     </delete>
 
-    <update id="updatePost" parameterType="SysPost">
+    <update id="updatePost" parameterType="com.dimple.system.domain.SysPost">
         update sys_post
         <set>
             <if test="postCode != null and postCode != ''">post_code = #{postCode},</if>
@@ -85,7 +92,8 @@
         where post_id = #{postId}
     </update>
 
-    <insert id="insertPost" parameterType="SysPost" useGeneratedKeys="true" keyProperty="postId">
+    <insert id="insertPost" parameterType="com.dimple.system.domain.SysPost" useGeneratedKeys="true"
+            keyProperty="postId">
         insert into sys_post(
         <if test="postId != null and postId != 0">post_id,</if>
         <if test="postCode != null and postCode != ''">post_code,</if>
