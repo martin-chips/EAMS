@@ -46,7 +46,7 @@ public class SysConfigController extends BaseController {
      * 查询参数配置列表
      */
     @RequiresPermissions("system:config:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysConfig config) {
         startPage();

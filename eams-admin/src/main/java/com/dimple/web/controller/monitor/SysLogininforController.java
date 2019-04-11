@@ -46,7 +46,7 @@ public class SysLogininforController extends BaseController {
     }
 
     @RequiresPermissions("monitor:logininfor:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysLogininfor logininfor) {
         startPage();

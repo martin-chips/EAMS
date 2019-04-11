@@ -45,7 +45,7 @@ public class SysNoticeController extends BaseController {
      * 查询公告列表
      */
     @RequiresPermissions("system:notice:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysNotice notice) {
         startPage();

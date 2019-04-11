@@ -1,19 +1,19 @@
 package com.dimple.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.dimple.system.domain.SysDept;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.dimple.common.annotation.DataScope;
 import com.dimple.common.base.Ztree;
 import com.dimple.common.constant.UserConstants;
 import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.system.domain.SysDept;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.mapper.SysDeptMapper;
 import com.dimple.system.service.ISysDeptService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @className: SysDeptServiceImpl
@@ -206,12 +206,12 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public void updateDeptChildren(Long deptId, String ancestors) {
         SysDept dept = new SysDept();
         dept.setParentId(deptId);
-        List<SysDept> childrens = deptMapper.selectDeptList(dept);
-        for (SysDept children : childrens) {
-            children.setAncestors(ancestors + "," + dept.getParentId());
+        List<SysDept> children = deptMapper.selectDeptList(dept);
+        for (SysDept child : children) {
+            child.setAncestors(ancestors + "," + dept.getParentId());
         }
-        if (childrens.size() > 0) {
-            deptMapper.updateDeptChildren(childrens);
+        if (children.size() > 0) {
+            deptMapper.updateDeptChildren(children);
         }
     }
 

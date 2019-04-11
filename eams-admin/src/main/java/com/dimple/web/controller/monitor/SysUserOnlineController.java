@@ -47,7 +47,7 @@ public class SysUserOnlineController extends BaseController {
     }
 
     @RequiresPermissions("monitor:online:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUserOnline userOnline) {
         startPage();

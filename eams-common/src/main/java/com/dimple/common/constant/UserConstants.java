@@ -62,7 +62,11 @@ public class UserConstants {
      */
     public final static String DEPT_NAME_UNIQUE = "0";
     public final static String DEPT_NAME_NOT_UNIQUE = "1";
-
+    /**
+     * 专业名称是否唯一的返回结果码
+     */
+    public final static String PROF_NAME_UNIQUE = "0";
+    public final static String PROF_NAME_NOT_UNIQUE = "1";
     /**
      * 角色名称是否唯一的返回结果码
      */

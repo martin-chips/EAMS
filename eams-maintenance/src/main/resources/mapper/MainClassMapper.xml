@@ -17,14 +17,32 @@
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
+        <association property="mainProfession" javaType="com.dimple.maintenance.domain.MainProfession">
+            <id property="profId" column="prof_id"/>
+            <result property="profName" column="prof_name"/>
+        </association>
     </resultMap>
 
     <sql id="selectCoreClassVo">
-        select cla_id, cla_name, prof_id, create_time, update_by, update_time, create_by
-        from main_class
+        select c.cla_id,
+               c.cla_name,
+               c.monitor_email,
+               c.monitor_name,
+               c.monitor_phone,
+               c.teacher_email,
+               c.teacher_name,
+               c.teacher_phone,
+               c.create_time,
+               c.update_by,
+               c.update_time,
+               c.create_by,
+               p.prof_id,
+               p.prof_name
+        from main_class c
+                 left join main_profession p on c.prof_id = p.prof_id
     </sql>
 
-    <select id="selectCoreClassList" parameterType="com.dimple.maintenance.domain.MainClass"
+    <select id="selectMainClassList" parameterType="com.dimple.maintenance.domain.MainClass"
             resultMap="coreClassResultMap">
         <include refid="selectCoreClassVo"></include>
         <where>
@@ -37,16 +55,24 @@
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
+            <if test="profId !=null">
+                and c.prof_id=p.prof_id and c.prof_id=#{profId}
+            </if>
         </where>
     </select>
 
-    <select id="selectCoreClassByCalId" resultType="com.dimple.maintenance.domain.MainClass">
+    <select id="selectMainClassByCalId" resultType="com.dimple.maintenance.domain.MainClass">
         <include refid="selectCoreClassVo"></include>
         where
         cal_id=#{claId}
     </select>
+    <select id="selectMainClassByProfId" resultType="com.dimple.maintenance.domain.MainClass">
+        <include refid="selectCoreClassVo"></include>
+        where
+        prof_id=#{profId}
+    </select>
 
-    <update id="updateCoreClass">
+    <update id="updateMainClass">
         update main_class
         <set>
             <if test="claName !=null and claName !=''">cla_name =#{claName}</if>
@@ -55,14 +81,14 @@
         </set>
     </update>
 
-    <delete id="deleteCoreClassByCalIds" parameterType="string">
+    <delete id="deleteMainClassByCalIds" parameterType="string">
         delete from main_class where cla_id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{ids}
         </foreach>
     </delete>
 
-    <insert id="insertCoreClass">
+    <insert id="insertMainClass">
         insert into main_class(
         <if test="cloName!=null and cloName != ''">cla_name,</if>
         <if test="createBy != null and createBy != ''">create_by</if>

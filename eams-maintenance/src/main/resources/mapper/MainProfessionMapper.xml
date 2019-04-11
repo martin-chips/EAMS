@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.maintenance.mapper.MainProfessionMapper">
+
+    <insert id="insertMainProfession">
+        insert into main_profession(
+        <if test="profId!=null and profId!=0">prof_id,</if>
+        <if test="profName!=null and profName!=''">prof_name,</if>
+        <if test="orderNum != null and orderNum != ''">order_num,</if>
+        <if test="parentId!=null and parentId!=0">parent_id,</if>
+        <if test="ancestors!=null and ancestors!=''">ancestors,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="status != null and status != ''">status,</if>
+        create_time
+        )values (
+        <if test="profId!=null and profId!=0">#{profId},</if>
+        <if test="profName!=null and profName!=''">#{profName},</if>
+        <if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+        <if test="parentId!=null and parentId!=0">#{parentId},</if>
+        <if test="ancestors!=null and ancestors!=''">#{ancestors},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateProfessionChildren">
+        update main_profession set ancestors=
+        <foreach collection="children" item="item" index="index" separator="" open="case prof_id" close="end">
+            when #{item.profId} then #{item.ancestors}
+        </foreach>
+        where profId in
+        <foreach collection="children" item="item" index="index" separator="," open="(" close=")">
+            #{item.profId}
+        </foreach>
+    </update>
+
+    <update id="updateMainProfession">
+        update main_profession
+        <set>
+            <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+            <if test="profName != null and profName != ''">prof_name = #{profId},</if>
+            <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
+            <if test="orderNum != null and orderNum != ''">order_num = #{orderNum},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where prof_id=#{profId}
+    </update>
+
+    <delete id="deleteMainProfessionByProfId">
+        delete
+        from main_profession
+        where prof_id = #{profId};
+    </delete>
+
+    <select id="selectMainProfessionList" resultType="com.dimple.maintenance.domain.MainProfession">
+        select prof_id,
+               prof_name,
+               parent_id,
+               ancestors,
+               order_num,
+               create_time,
+               status,
+               (select prof_name from main_profession where prof_id = m.parent_id) parent_name
+        from main_profession m;
+    </select>
+
+    <select id="selectMainProfessionCount" resultType="java.lang.Integer">
+        select count(1)
+        from main_profession
+        <where>
+            <if test="profId != null">
+                and prof_id =#{profId}
+            </if>
+            <if test="parentId != null">
+                and parent_id =#{parentId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMainProfessionByProfId" resultType="com.dimple.maintenance.domain.MainProfession">
+        select m.prof_id,
+               m.prof_name,
+               m.parent_id,
+               m.ancestors,
+               m.status,
+               m.order_num,
+               (select prof_name from main_profession where prof_id = m.parent_id) parent_name
+        from main_profession m
+        where prof_id = #{profId}
+    </select>
+
+    <select id="checkProfNameUnique" resultType="com.dimple.maintenance.domain.MainProfession">
+        select prof_id,
+               prof_name,
+               parent_id,
+               ancestors,
+               order_num,
+               status
+        from main_profession
+        where parent_id = #{parentId}
+          and prof_name = #{profName}
+    </select>
+
+</mapper>

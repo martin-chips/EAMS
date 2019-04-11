@@ -43,7 +43,7 @@ public class SysPostController extends BaseController {
     }
 
     @RequiresPermissions("system:post:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysPost post) {
         startPage();

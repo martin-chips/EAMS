@@ -44,4 +44,12 @@ public class MainClass extends BaseEntity {
      * 负责人邮箱
      */
     private String monitorEmail;
+    /**
+     * 专业id
+     */
+    private Long profId;
+    /**
+     * 所属专业
+     */
+    private MainProfession mainProfession;
 }
