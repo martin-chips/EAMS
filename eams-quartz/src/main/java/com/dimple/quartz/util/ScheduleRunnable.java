@@ -1,12 +1,11 @@
 package com.dimple.quartz.util;
 
-import java.lang.reflect.Method;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.ReflectionUtils;
+import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.spring.SpringUtils;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Method;
 
 /**
  * @className: ScheduleRunnable
@@ -16,7 +15,6 @@ import com.dimple.common.utils.spring.SpringUtils;
  * @Version: 1.0
  */
 public class ScheduleRunnable implements Runnable {
-    private static final Logger log = LoggerFactory.getLogger(ScheduleRunnable.class);
 
     private Object target;
     private Method method;
@@ -44,7 +42,7 @@ public class ScheduleRunnable implements Runnable {
                 method.invoke(target);
             }
         } catch (Exception e) {
-            log.error("执行定时任务  - ：", e);
+            throw new BusinessException("执行定时任务失败", e);
         }
     }
 }
