@@ -1,8 +1,16 @@
 package com.dimple.web.controller.monitor;
 
-import java.util.List;
-
+import com.dimple.common.annotation.Log;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.page.TableDataInfo;
+import com.dimple.common.enums.BusinessType;
+import com.dimple.common.exception.job.TaskException;
+import com.dimple.common.utils.poi.ExcelUtil;
+import com.dimple.quartz.domain.SysJob;
+import com.dimple.quartz.service.ISysJobService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,22 +19,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
-import com.dimple.common.enums.BusinessType;
-import com.dimple.common.page.TableDataInfo;
-import com.dimple.common.utils.poi.ExcelUtil;
-import com.dimple.framework.util.ShiroUtils;
-import com.dimple.quartz.domain.SysJob;
-import com.dimple.quartz.service.ISysJobService;
-import com.dimple.framework.web.base.BaseController;
+
+import java.util.List;
 
 /**
- * @className: SysJobController
- * @description: 调度任务信息操作处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJobController
+ * @description 调度任务信息操作处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/monitor/job")
@@ -43,7 +44,7 @@ public class SysJobController extends BaseController {
     }
 
     @RequiresPermissions("monitor:job:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysJob job) {
         startPage();
@@ -65,14 +66,9 @@ public class SysJobController extends BaseController {
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        try {
-            jobService.deleteJobByIds(ids);
-            return success();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return error(e.getMessage());
-        }
+    public AjaxResult remove(String ids) throws SchedulerException {
+        jobService.deleteJobByIds(ids);
+        return success();
     }
 
     @RequiresPermissions("monitor:job:detail")
@@ -90,9 +86,10 @@ public class SysJobController extends BaseController {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public AjaxResult changeStatus(SysJob job) {
-        job.setUpdateBy(ShiroUtils.getLoginName());
-        return toAjax(jobService.changeStatus(job));
+    public AjaxResult changeStatus(SysJob job) throws SchedulerException {
+        SysJob newJob = jobService.selectJobById(job.getJobId());
+        newJob.setStatus(job.getStatus());
+        return toAjax(jobService.changeStatus(newJob));
     }
 
     /**
@@ -102,8 +99,9 @@ public class SysJobController extends BaseController {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/run")
     @ResponseBody
-    public AjaxResult run(SysJob job) {
-        return toAjax(jobService.run(job));
+    public AjaxResult run(SysJob job) throws SchedulerException {
+        jobService.run(job);
+        return success();
     }
 
     /**
@@ -121,8 +119,7 @@ public class SysJobController extends BaseController {
     @RequiresPermissions("monitor:job:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SysJob job) {
-        job.setCreateBy(ShiroUtils.getLoginName());
+    public AjaxResult addSave(SysJob job) throws SchedulerException, TaskException {
         return toAjax(jobService.insertJobCron(job));
     }
 
@@ -142,8 +139,7 @@ public class SysJobController extends BaseController {
     @RequiresPermissions("monitor:job:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SysJob job) {
-        job.setUpdateBy(ShiroUtils.getLoginName());
+    public AjaxResult editSave(SysJob job) throws SchedulerException, TaskException {
         return toAjax(jobService.updateJobCron(job));
     }
 

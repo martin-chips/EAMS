@@ -10,11 +10,11 @@ import com.dimple.common.enums.BusinessType;
 import com.dimple.common.enums.OperatorType;
 
 /**
- * @className: Log
- * @description: 自定义操作日志记录注解
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Log
+ * @description 自定义操作日志记录注解
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

@@ -7,11 +7,11 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @className: MapDataUtil
- * @description: Map通用处理方法
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className MapDataUtil
+ * @description Map通用处理方法
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class MapDataUtil {
     public static Map<String, Object> convertDataMap(HttpServletRequest request) {

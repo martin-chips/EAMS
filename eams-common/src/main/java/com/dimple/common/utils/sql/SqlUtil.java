@@ -3,11 +3,11 @@ package com.dimple.common.utils.sql;
 import com.dimple.common.utils.StringUtils;
 
 /**
- * @className: SqlUtil
- * @description: sql操作工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SqlUtil
+ * @description sql操作工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SqlUtil {
     /**

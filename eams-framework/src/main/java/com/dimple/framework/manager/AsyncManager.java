@@ -8,11 +8,11 @@ import com.dimple.common.utils.Threads;
 import com.dimple.common.utils.spring.SpringUtils;
 
 /**
- * @className: AsyncManager
- * @description: 异步任务管理器
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className AsyncManager
+ * @description 异步任务管理器
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class AsyncManager {
     /**

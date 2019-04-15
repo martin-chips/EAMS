@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 /**
- * @className: JSON
- * @description: JSON解析处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className JSON
+ * @description JSON解析处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class JSON {
     public static final String DEFAULT_FAIL = "\"Parse failed\"";

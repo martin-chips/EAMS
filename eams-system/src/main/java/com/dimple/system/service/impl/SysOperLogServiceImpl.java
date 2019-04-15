@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.system.domain.SysOperLog;
 import com.dimple.system.mapper.SysOperLogMapper;
 import com.dimple.system.service.ISysOperLogService;
 
 /**
- * @className: SysOperLogServiceImpl
- * @description: 操作日志 服务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysOperLogServiceImpl
+ * @description 操作日志 服务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {

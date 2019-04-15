@@ -1,11 +1,11 @@
 package com.dimple.common.constant;
 
 /**
- * @className: ShiroConstants
- * @description: Shiro通用常量
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ShiroConstants
+ * @description Shiro通用常量
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ShiroConstants {
     /**

@@ -1,18 +1,16 @@
 package com.dimple.system.domain;
 
-import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.dimple.common.base.BaseEntity;
+import com.dimple.common.core.domain.BaseEntity;
 
 /**
- * @className: SysDept
- * @description: 部门表 sys_dept
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDept
+ * @description 部门表 sys_dept
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
-@Data
 public class SysDept extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -70,4 +68,112 @@ public class SysDept extends BaseEntity {
      * 父部门名称
      */
     private String parentName;
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getAncestors() {
+        return ancestors;
+    }
+
+    public void setAncestors(String ancestors) {
+        this.ancestors = ancestors;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("deptId", getDeptId())
+                .append("parentId", getParentId())
+                .append("ancestors", getAncestors())
+                .append("deptName", getDeptName())
+                .append("orderNum", getOrderNum())
+                .append("leader", getLeader())
+                .append("phone", getPhone())
+                .append("email", getEmail())
+                .append("status", getStatus())
+                .append("delFlag", getDelFlag())
+                .append("createBy", getCreateBy())
+                .append("createTime", getCreateTime())
+                .append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime())
+                .toString();
+    }
 }

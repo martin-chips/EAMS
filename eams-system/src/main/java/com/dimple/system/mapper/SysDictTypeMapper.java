@@ -2,15 +2,15 @@ package com.dimple.system.mapper;
 
 import java.util.List;
 
-import com.dimple.system.domain.SysDictType;
 import org.apache.ibatis.annotations.Mapper;
+import com.dimple.system.domain.SysDictType;
 
 /**
- * @className: SysDictTypeMapper
- * @description: 字典表 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDictTypeMapper
+ * @description 字典表 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Mapper
 public interface SysDictTypeMapper {

@@ -6,11 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @className: Excel
- * @description: 自定义导出Excel数据注解
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Excel
+ * @description 自定义导出Excel数据注解
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

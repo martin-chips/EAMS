@@ -11,11 +11,11 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- * @className: YamlUtil
- * @description: 配置处理工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className YamlUtil
+ * @description 配置处理工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class YamlUtil {
     public static Map<?, ?> loadYaml(String fileName) throws FileNotFoundException {
@@ -36,7 +36,7 @@ public class YamlUtil {
     public static Object getProperty(Map<?, ?> map, Object qualifiedKey) {
         if (map != null && !map.isEmpty() && qualifiedKey != null) {
             String input = String.valueOf(qualifiedKey);
-            if (!input.equals("")) {
+            if (!"".equals(input)) {
                 if (input.contains(".")) {
                     int index = input.indexOf(".");
                     String left = input.substring(0, index);

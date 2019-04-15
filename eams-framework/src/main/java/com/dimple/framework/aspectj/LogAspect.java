@@ -3,7 +3,6 @@ package com.dimple.framework.aspectj;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.dimple.framework.util.ShiroUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -21,15 +20,16 @@ import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.manager.AsyncManager;
 import com.dimple.framework.manager.factory.AsyncFactory;
+import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysOperLog;
 import com.dimple.system.domain.SysUser;
 
 /**
- * @className: LogAspect
- * @description: 操作日志记录处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className LogAspect
+ * @description 操作日志记录处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Aspect
 @Component
@@ -42,23 +42,23 @@ public class LogAspect {
     }
 
     /**
-     * 前置通知 用于拦截操作
+     * 处理完请求后执行
      *
      * @param joinPoint 切点
      */
     @AfterReturning(pointcut = "logPointCut()")
-    public void doBefore(JoinPoint joinPoint) {
+    public void doAfterReturning(JoinPoint joinPoint) {
         handleLog(joinPoint, null);
     }
 
     /**
      * 拦截异常操作
      *
-     * @param joinPoint
-     * @param e
+     * @param joinPoint 切点
+     * @param e         异常
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
-    public void doAfter(JoinPoint joinPoint, Exception e) {
+    public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
         handleLog(joinPoint, e);
     }
 

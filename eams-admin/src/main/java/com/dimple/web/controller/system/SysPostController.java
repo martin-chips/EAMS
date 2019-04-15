@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.page.TableDataInfo;
 import com.dimple.common.enums.BusinessType;
-import com.dimple.common.page.TableDataInfo;
 import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysPost;
 import com.dimple.system.service.ISysPostService;
-import com.dimple.framework.web.base.BaseController;
 
 /**
- * @className: SysPostController
- * @description: 岗位信息操作处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysPostController
+ * @description 岗位信息操作处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/system/post")
@@ -43,7 +43,7 @@ public class SysPostController extends BaseController {
     }
 
     @RequiresPermissions("system:post:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysPost post) {
         startPage();

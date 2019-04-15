@@ -4,8 +4,6 @@ import java.io.IOException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import com.dimple.framework.shiro.session.OnlineSession;
-import com.dimple.framework.shiro.session.OnlineSessionDAO;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -14,15 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.dimple.common.constant.ShiroConstants;
 import com.dimple.common.enums.OnlineStatus;
+import com.dimple.framework.shiro.session.OnlineSession;
+import com.dimple.framework.shiro.session.OnlineSessionDAO;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysUser;
 
 /**
- * @className: OnlineSessionFilter
- * @description: 自定义访问控制
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OnlineSessionFilter
+ * @description 自定义访问控制
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class OnlineSessionFilter extends AccessControlFilter {
     /**

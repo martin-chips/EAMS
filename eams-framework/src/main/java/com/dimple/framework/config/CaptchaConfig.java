@@ -1,18 +1,18 @@
 package com.dimple.framework.config;
 
-import java.util.Properties;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Properties;
 
 /**
- * @className: CaptchaConfig
- * @description: 验证码配置
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className CaptchaConfig
+ * @description 验证码配置
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class CaptchaConfig {

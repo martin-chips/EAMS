@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.dimple.framework.web.base.BaseController;
+import com.dimple.common.core.controller.BaseController;
 
 /**
- * @className: SysCaptchaController
- * @description: 图片验证码（支持算术形式）
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysCaptchaController
+ * @description 图片验证码（支持算术形式）
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/captcha")

@@ -12,11 +12,11 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.common.xss.XssFilter;
 
 /**
- * @className: FilterConfig
- * @description: Filter配置
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className FilterConfig
+ * @description Filter配置
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class FilterConfig {

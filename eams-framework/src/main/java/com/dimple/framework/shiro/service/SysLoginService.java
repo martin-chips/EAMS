@@ -22,11 +22,11 @@ import com.dimple.system.domain.SysUser;
 import com.dimple.system.service.ISysUserService;
 
 /**
- * @className: SysLoginService
- * @description: 登录校验方法
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysLoginService
+ * @description 登录校验方法
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public class SysLoginService {

@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.dimple.common.config.Global;
 
 /**
- * @className: ResourcesConfig
- * @description: 通用配置
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ResourcesConfig
+ * @description 通用配置
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {

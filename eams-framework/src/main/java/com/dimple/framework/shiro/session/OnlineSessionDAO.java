@@ -14,11 +14,11 @@ import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.framework.shiro.service.SysShiroService;
 
 /**
- * @className: OnlineSessionDAO
- * @description: 针对自定义的ShiroSession的db操作
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OnlineSessionDAO
+ * @description 针对自定义的ShiroSession的db操作
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class OnlineSessionDAO extends EnterpriseCacheSessionDAO {
     /**

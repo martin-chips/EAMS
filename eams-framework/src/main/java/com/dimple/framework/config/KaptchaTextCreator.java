@@ -5,11 +5,11 @@ import java.util.Random;
 import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 
 /**
- * @className: KaptchaTextCreator
- * @description: 验证码文本生成器
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className KaptchaTextCreator
+ * @description 验证码文本生成器
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class KaptchaTextCreator extends DefaultTextCreator {
     private static final String[] CNUMBERS = "0,1,2,3,4,5,6,7,8,9,10".split(",");

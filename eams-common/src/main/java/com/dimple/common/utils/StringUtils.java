@@ -3,14 +3,14 @@ package com.dimple.common.utils;
 import java.util.Collection;
 import java.util.Map;
 
-import com.dimple.common.support.StrFormatter;
+import com.dimple.common.core.text.StrFormatter;
 
 /**
- * @className: StringUtils
- * @description: 字符串工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className StringUtils
+ * @description 字符串工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**

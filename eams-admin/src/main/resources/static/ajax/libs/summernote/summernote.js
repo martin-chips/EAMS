@@ -7566,7 +7566,7 @@
                   ['link', ['linkDialogShow', 'unlink']],
               ],
               table: [
-                  ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                  ['templates.monitor.job.add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
                   ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
               ],
               air: [

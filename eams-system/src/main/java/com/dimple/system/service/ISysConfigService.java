@@ -5,11 +5,11 @@ import java.util.List;
 import com.dimple.system.domain.SysConfig;
 
 /**
- * @className: ISysConfigService
- * @description: 参数配置 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ISysConfigService
+ * @description 参数配置 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ISysConfigService {
     /**

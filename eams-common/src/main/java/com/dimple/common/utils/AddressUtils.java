@@ -1,18 +1,18 @@
 package com.dimple.common.utils;
 
-import com.dimple.common.json.JSON;
-import com.dimple.common.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dimple.common.config.Global;
+import com.dimple.common.json.JSON;
+import com.dimple.common.json.JSONObject;
 import com.dimple.common.utils.http.HttpUtils;
 
 /**
- * @className: AddressUtils
- * @description: 获取地址类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className AddressUtils
+ * @description 获取地址类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class AddressUtils {
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);

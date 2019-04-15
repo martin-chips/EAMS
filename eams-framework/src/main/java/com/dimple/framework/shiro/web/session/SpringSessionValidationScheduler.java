@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.dimple.common.utils.Threads;
 
 /**
- * @className: SpringSessionValidationScheduler
- * @description: 自定义任务调度器完成
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SpringSessionValidationScheduler
+ * @description 自定义任务调度器完成
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SpringSessionValidationScheduler implements SessionValidationScheduler {
     private static final Logger log = LoggerFactory.getLogger(SpringSessionValidationScheduler.class);

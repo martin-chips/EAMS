@@ -8,11 +8,11 @@ import java.lang.annotation.Target;
 import com.dimple.common.enums.DataSourceType;
 
 /**
- * @className: DataSource
- * @description: 自定义多数据源切换注解
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DataSource
+ * @description 自定义多数据源切换注解
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

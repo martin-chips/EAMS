@@ -2,14 +2,16 @@ package com.dimple.quartz.service;
 
 import java.util.List;
 
+import org.quartz.SchedulerException;
+import com.dimple.common.exception.job.TaskException;
 import com.dimple.quartz.domain.SysJob;
 
 /**
- * @className: ISysJobService
- * @description: 定时任务调度信息信息 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ISysJobService
+ * @description 定时任务调度信息信息 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ISysJobService {
     /**
@@ -34,7 +36,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int pauseJob(SysJob job);
+    public int pauseJob(SysJob job) throws SchedulerException;
 
     /**
      * 恢复任务
@@ -42,7 +44,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int resumeJob(SysJob job);
+    public int resumeJob(SysJob job) throws SchedulerException;
 
     /**
      * 删除任务后，所对应的trigger也将被删除
@@ -50,7 +52,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int deleteJob(SysJob job);
+    public int deleteJob(SysJob job) throws SchedulerException;
 
     /**
      * 批量删除调度信息
@@ -58,7 +60,7 @@ public interface ISysJobService {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    public void deleteJobByIds(String ids);
+    public void deleteJobByIds(String ids) throws SchedulerException;
 
     /**
      * 任务调度状态修改
@@ -66,7 +68,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int changeStatus(SysJob job);
+    public int changeStatus(SysJob job) throws SchedulerException;
 
     /**
      * 立即运行任务
@@ -74,7 +76,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int run(SysJob job);
+    public void run(SysJob job) throws SchedulerException;
 
     /**
      * 新增任务表达式
@@ -82,7 +84,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int insertJobCron(SysJob job);
+    public int insertJobCron(SysJob job) throws SchedulerException, TaskException;
 
     /**
      * 更新任务的时间表达式
@@ -90,7 +92,7 @@ public interface ISysJobService {
      * @param job 调度信息
      * @return 结果
      */
-    public int updateJobCron(SysJob job);
+    public int updateJobCron(SysJob job) throws SchedulerException, TaskException;
 
     /**
      * 校验cron表达式是否有效

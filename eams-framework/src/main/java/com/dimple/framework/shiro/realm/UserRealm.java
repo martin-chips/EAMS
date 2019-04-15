@@ -3,7 +3,6 @@ package com.dimple.framework.shiro.realm;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.dimple.framework.shiro.service.SysLoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -28,17 +27,18 @@ import com.dimple.common.exception.user.UserBlockedException;
 import com.dimple.common.exception.user.UserNotExistsException;
 import com.dimple.common.exception.user.UserPasswordNotMatchException;
 import com.dimple.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.dimple.framework.shiro.service.SysLoginService;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysUser;
 import com.dimple.system.service.ISysMenuService;
 import com.dimple.system.service.ISysRoleService;
 
 /**
- * @className: UserRealm
- * @description: 自定义Realm 处理登录 权限
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className UserRealm
+ * @description 自定义Realm 处理登录 权限
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class UserRealm extends AuthorizingRealm {
     private static final Logger log = LoggerFactory.getLogger(UserRealm.class);

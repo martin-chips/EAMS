@@ -12,23 +12,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
-import com.dimple.common.base.Ztree;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.domain.Ztree;
 import com.dimple.common.enums.BusinessType;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.util.ShiroUtils;
-import com.dimple.framework.web.base.BaseController;
 import com.dimple.system.domain.SysDept;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.service.ISysDeptService;
 
-
 /**
- * @className: SysDeptController
- * @description: 部门信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDeptController
+ * @description 部门信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/system/dept")
@@ -107,10 +106,10 @@ public class SysDeptController extends BaseController {
     @ResponseBody
     public AjaxResult remove(@PathVariable("deptId") Long deptId) {
         if (deptService.selectDeptCount(deptId) > 0) {
-            return error(1, "存在下级部门,不允许删除");
+            return AjaxResult.warn("存在下级部门,不允许删除");
         }
         if (deptService.checkDeptExistUser(deptId)) {
-            return error(1, "部门存在用户,不允许删除");
+            return AjaxResult.warn("部门存在用户,不允许删除");
         }
         return toAjax(deptService.deleteDeptById(deptId));
     }

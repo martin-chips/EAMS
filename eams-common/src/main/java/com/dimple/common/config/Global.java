@@ -1,20 +1,20 @@
 package com.dimple.common.config;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.YamlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * @className: Global
- * @description: 全局配置类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Global
+ * @description 全局配置类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Global {
     private static final Logger log = LoggerFactory.getLogger(Global.class);
@@ -24,7 +24,7 @@ public class Global {
     /**
      * 当前对象实例
      */
-    private static Global global = null;
+    private static Global global;
 
     /**
      * 保存全局属性值
@@ -35,15 +35,11 @@ public class Global {
     }
 
     /**
-     * 静态工厂方法 获取当前对象实例 多线程安全单例模式(使用双重同步锁)
+     * 静态工厂方法
      */
-
     public static synchronized Global getInstance() {
         if (global == null) {
-            synchronized (Global.class) {
-                if (global == null)
-                    global = new Global();
-            }
+            global = new Global();
         }
         return global;
     }
@@ -120,33 +116,5 @@ public class Global {
      */
     public static String getUploadPath() {
         return getConfig("dimple.profile") + "upload/";
-    }
-
-    /**
-     * 获取作者
-     */
-    public static String getAuthor() {
-        return StringUtils.nvl(getConfig("gen.author"), "dimple");
-    }
-
-    /**
-     * 生成包路径
-     */
-    public static String getPackageName() {
-        return StringUtils.nvl(getConfig("gen.packageName"), "com.dimple.project.module");
-    }
-
-    /**
-     * 是否自动去除表前缀
-     */
-    public static String getAutoRemovePre() {
-        return StringUtils.nvl(getConfig("gen.autoRemovePre"), "true");
-    }
-
-    /**
-     * 表前缀(类名不会包含表前缀)
-     */
-    public static String getTablePrefix() {
-        return StringUtils.nvl(getConfig("gen.tablePrefix"), "sys_");
     }
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import com.dimple.system.domain.SysLogininfor;
 
 /**
- * @className: SysLogininforMapper
- * @description: 系统访问日志情况信息 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysLogininforMapper
+ * @description 系统访问日志情况信息 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface SysLogininforMapper {
     /**

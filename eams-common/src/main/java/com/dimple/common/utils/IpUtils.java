@@ -5,11 +5,11 @@ import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @className: IpUtils
- * @description: 获取IP方法
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className IpUtils
+ * @description 获取IP方法
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class IpUtils {
     public static String getIpAddr(HttpServletRequest request) {

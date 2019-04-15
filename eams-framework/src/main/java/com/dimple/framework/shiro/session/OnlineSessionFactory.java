@@ -13,11 +13,11 @@ import com.dimple.common.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * @className: OnlineSessionFactory
- * @description: 自定义sessionFactory会话
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OnlineSessionFactory
+ * @description 自定义sessionFactory会话
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory {

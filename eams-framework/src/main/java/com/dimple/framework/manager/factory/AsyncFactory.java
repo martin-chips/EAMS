@@ -2,15 +2,15 @@ package com.dimple.framework.manager.factory;
 
 import java.util.TimerTask;
 
-import com.dimple.framework.shiro.session.OnlineSession;
-import com.dimple.framework.util.LogUtils;
-import com.dimple.framework.util.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dimple.common.constant.Constants;
 import com.dimple.common.utils.AddressUtils;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.framework.shiro.session.OnlineSession;
+import com.dimple.framework.util.LogUtils;
+import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysLogininfor;
 import com.dimple.system.domain.SysOperLog;
 import com.dimple.system.domain.SysUserOnline;
@@ -20,11 +20,11 @@ import com.dimple.system.service.impl.SysLogininforServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * @className: AsyncFactory
- * @description: 异步工厂（产生任务用）
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className AsyncFactory
+ * @description 异步工厂（产生任务用）
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class AsyncFactory {
     private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");

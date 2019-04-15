@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 
 /**
- * @className: DruidProperties
- * @description: druid 配置属性
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DruidProperties
+ * @description druid 配置属性
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class DruidProperties {

@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dimple.common.utils.StringUtils;
 
 /**
- * @className: JSONObject
- * @description: 通用消息对象，基于Map实现的可嵌套数据结构。 支持JSON数据结构。
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className JSONObject
+ * @description 通用消息对象，基于Map实现的可嵌套数据结构。 支持JSON数据结构。
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class JSONObject extends LinkedHashMap<String, Object> {
     private static final long serialVersionUID = 1L;
@@ -191,6 +191,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
             final Matcher matcher = arrayNamePattern.matcher(name);
             if (matcher.find()) {
                 return endArray(matcher.group(1), matcher.group(2), new EndArrayCallback<Object>() {
+                    @Override
                     public Object callback(JSONArray arr, int index) {
                         return elementAt(arr, index);
                     }
@@ -216,6 +217,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
             final Matcher matcher = arrayNamePattern.matcher(name);
             if (matcher.find()) {
                 endArray(matcher.group(1), matcher.group(2), new EndArrayCallback<Void>() {
+                    @Override
                     public Void callback(JSONArray arr, int index) {
                         elementAt(arr, index, value);
                         return null;
@@ -238,6 +240,7 @@ public class JSONObject extends LinkedHashMap<String, Object> {
         final Matcher matcher = arrayNamePattern.matcher(name);
         if (matcher.find()) {
             return endArray(matcher.group(1), matcher.group(2), new EndArrayCallback<JSONObject>() {
+                @Override
                 public JSONObject callback(JSONArray arr, int index) {
                     return objAt(arr, index);
                 }

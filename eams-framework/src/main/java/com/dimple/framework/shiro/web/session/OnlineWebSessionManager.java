@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import com.dimple.framework.shiro.session.OnlineSession;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -17,15 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dimple.common.constant.ShiroConstants;
 import com.dimple.common.utils.spring.SpringUtils;
+import com.dimple.framework.shiro.session.OnlineSession;
 import com.dimple.system.domain.SysUserOnline;
 import com.dimple.system.service.ISysUserOnlineService;
 
 /**
- * @className: OnlineWebSessionManager
- * @description: 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OnlineWebSessionManager
+ * @description 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class OnlineWebSessionManager extends DefaultWebSessionManager {
     private static final Logger log = LoggerFactory.getLogger(OnlineWebSessionManager.class);

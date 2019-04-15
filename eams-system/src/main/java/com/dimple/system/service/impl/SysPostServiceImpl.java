@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.core.text.Convert;
 import com.dimple.common.exception.BusinessException;
-import com.dimple.common.support.Convert;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.system.domain.SysPost;
 import com.dimple.system.mapper.SysPostMapper;
@@ -14,11 +14,11 @@ import com.dimple.system.mapper.SysUserPostMapper;
 import com.dimple.system.service.ISysPostService;
 
 /**
- * @className: SysPostServiceImpl
- * @description: 岗位信息 服务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysPostServiceImpl
+ * @description 岗位信息 服务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysPostServiceImpl implements ISysPostService {

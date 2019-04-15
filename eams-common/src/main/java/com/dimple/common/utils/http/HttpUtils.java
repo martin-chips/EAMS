@@ -21,11 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @className: HttpUtils
- * @description: 通用http发送方法
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className HttpUtils
+ * @description 通用http发送方法
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class HttpUtils {
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);

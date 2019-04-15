@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.system.domain.SysDictData;
 import com.dimple.system.mapper.SysDictDataMapper;
 import com.dimple.system.service.ISysDictDataService;
 
 /**
- * @className: SysDictDataServiceImpl
- * @description: 字典 业务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDictDataServiceImpl
+ * @description 字典 业务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysDictDataServiceImpl implements ISysDictDataService {

@@ -12,11 +12,11 @@ import com.dimple.common.json.JSON;
 import com.dimple.common.utils.IpUtils;
 
 /**
- * @className: LogUtils
- * @description: 处理并记录日志文件
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className LogUtils
+ * @description 处理并记录日志文件
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class LogUtils {
     public static final Logger ERROR_LOG = LoggerFactory.getLogger("sys-error");

@@ -7,13 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @className: BeanUtils
- * @description: Bean 工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className BeanUtils
+ * @description Bean 工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
-public class BeanUtils {
+public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * Bean方法名中属性名开始的下标
      */
@@ -36,17 +36,8 @@ public class BeanUtils {
      * @param src  源对象
      */
     public static void copyBeanProp(Object dest, Object src) {
-        List<Method> destSetters = getSetterMethods(dest);
-        List<Method> srcGetters = getGetterMethods(src);
         try {
-            for (Method setter : destSetters) {
-                for (Method getter : srcGetters) {
-                    if (isMethodPropEquals(setter.getName(), getter.getName())
-                            && setter.getParameterTypes()[0].equals(getter.getReturnType())) {
-                        setter.invoke(dest, getter.invoke(src));
-                    }
-                }
-            }
+            copyProperties(src, dest);
         } catch (Exception e) {
             e.printStackTrace();
         }

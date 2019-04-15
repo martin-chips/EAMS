@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 
 /**
- * @className: ShutdownManager
- * @description: 确保应用退出时能关闭后台线程
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ShutdownManager
+ * @description 确保应用退出时能关闭后台线程
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public class ShutdownManager {

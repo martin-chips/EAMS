@@ -1,11 +1,11 @@
 package com.dimple.common.exception;
 
 /**
- * @className: BusinessException
- * @description: 业务异常
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className BusinessException
+ * @description 业务异常
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;

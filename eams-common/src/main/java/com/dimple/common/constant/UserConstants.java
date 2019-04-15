@@ -1,13 +1,18 @@
 package com.dimple.common.constant;
 
 /**
- * @className: UserConstants
- * @description: 用户常量信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className UserConstants
+ * @description 用户常量信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class UserConstants {
+    /**
+     * 平台内系统用户的唯一标志
+     */
+    public static final String SYS_USER = "SYS_USER";
+
     /**
      * 正常状态
      */
@@ -62,11 +67,7 @@ public class UserConstants {
      */
     public final static String DEPT_NAME_UNIQUE = "0";
     public final static String DEPT_NAME_NOT_UNIQUE = "1";
-    /**
-     * 专业名称是否唯一的返回结果码
-     */
-    public final static String PROF_NAME_UNIQUE = "0";
-    public final static String PROF_NAME_NOT_UNIQUE = "1";
+
     /**
      * 角色名称是否唯一的返回结果码
      */

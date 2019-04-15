@@ -2,21 +2,21 @@ package com.dimple.system.service.impl;
 
 import java.util.List;
 
-import com.dimple.system.domain.SysConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dimple.common.constant.UserConstants;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.system.domain.SysConfig;
 import com.dimple.system.mapper.SysConfigMapper;
 import com.dimple.system.service.ISysConfigService;
 
 /**
- * @className: SysConfigServiceImpl
- * @description: 参数配置 服务层实现
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysConfigServiceImpl
+ * @description 参数配置 服务层实现
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {

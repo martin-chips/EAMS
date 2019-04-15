@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import com.dimple.system.domain.SysDictData;
 
 /**
- * @className: SysDictDataMapper
- * @description: 字典表 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDictDataMapper
+ * @description 字典表 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface SysDictDataMapper {
     /**

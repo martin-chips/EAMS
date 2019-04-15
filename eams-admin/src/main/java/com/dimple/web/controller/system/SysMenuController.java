@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
-import com.dimple.common.base.Ztree;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.domain.Ztree;
 import com.dimple.common.enums.BusinessType;
 import com.dimple.framework.util.ShiroUtils;
-import com.dimple.framework.web.base.BaseController;
 import com.dimple.system.domain.SysMenu;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.service.ISysMenuService;
 
 /**
- * @className: SysMenuController
- * @description: 菜单信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysMenuController
+ * @description 菜单信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/system/menu")
@@ -59,10 +59,10 @@ public class SysMenuController extends BaseController {
     @ResponseBody
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
         if (menuService.selectCountMenuByParentId(menuId) > 0) {
-            return error(1, "存在子菜单,不允许删除");
+            return AjaxResult.warn("存在子菜单,不允许删除");
         }
         if (menuService.selectCountRoleMenuByMenuId(menuId) > 0) {
-            return error(1, "菜单已分配,不允许删除");
+            return AjaxResult.warn("菜单已分配,不允许删除");
         }
         ShiroUtils.clearCachedAuthorizationInfo();
         return toAjax(menuService.deleteMenuById(menuId));

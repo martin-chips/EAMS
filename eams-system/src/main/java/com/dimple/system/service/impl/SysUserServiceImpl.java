@@ -3,21 +3,22 @@ package com.dimple.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dimple.system.domain.SysUserPost;
-import com.dimple.system.domain.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.dimple.common.annotation.DataScope;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.core.text.Convert;
 import com.dimple.common.exception.BusinessException;
-import com.dimple.common.support.Convert;
-import com.dimple.common.utils.Md5Utils;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.common.utils.security.Md5Utils;
 import com.dimple.system.domain.SysPost;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.domain.SysUser;
+import com.dimple.system.domain.SysUserPost;
+import com.dimple.system.domain.SysUserRole;
 import com.dimple.system.mapper.SysPostMapper;
 import com.dimple.system.mapper.SysRoleMapper;
 import com.dimple.system.mapper.SysUserMapper;
@@ -27,11 +28,11 @@ import com.dimple.system.service.ISysConfigService;
 import com.dimple.system.service.ISysUserService;
 
 /**
- * @className: SysUserServiceImpl
- * @description: 用户 业务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysUserServiceImpl
+ * @description 用户 业务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -56,7 +57,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private ISysConfigService configService;
 
     /**
-     * 根据条件分页查询用户对象
+     * 根据条件分页查询用户列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -65,6 +66,28 @@ public class SysUserServiceImpl implements ISysUserService {
     @DataScope(tableAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
         return userMapper.selectUserList(user);
+    }
+
+    /**
+     * 根据条件分页查询已分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @DataScope(tableAlias = "u")
+    public List<SysUser> selectAllocatedList(SysUser user) {
+        return userMapper.selectAllocatedList(user);
+    }
+
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @DataScope(tableAlias = "u")
+    public List<SysUser> selectUnallocatedList(SysUser user) {
+        return userMapper.selectUnallocatedList(user);
     }
 
     /**
@@ -150,6 +173,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertUser(SysUser user) {
         // 新增用户信息
         int rows = userMapper.insertUser(user);
@@ -167,6 +191,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int updateUser(SysUser user) {
         Long userId = user.getUserId();
         // 删除用户与角色关联

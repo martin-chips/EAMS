@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.quartz.domain.SysJobLog;
 import com.dimple.quartz.mapper.SysJobLogMapper;
 import com.dimple.quartz.service.ISysJobLogService;
 
 /**
- * @className: SysJobLogServiceImpl
- * @description: 定时任务调度日志信息 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJobLogServiceImpl
+ * @description 定时任务调度日志信息 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysJobLogServiceImpl implements ISysJobLogService {

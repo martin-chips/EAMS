@@ -1,7 +1,16 @@
 package com.dimple.web.controller.monitor;
 
-import java.util.List;
-
+import com.dimple.common.annotation.Log;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.page.TableDataInfo;
+import com.dimple.common.enums.BusinessType;
+import com.dimple.common.enums.OnlineStatus;
+import com.dimple.framework.shiro.session.OnlineSession;
+import com.dimple.framework.shiro.session.OnlineSessionDAO;
+import com.dimple.framework.util.ShiroUtils;
+import com.dimple.system.domain.SysUserOnline;
+import com.dimple.system.service.ISysUserOnlineService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,24 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
-import com.dimple.common.enums.BusinessType;
-import com.dimple.common.enums.OnlineStatus;
-import com.dimple.common.page.TableDataInfo;
-import com.dimple.framework.shiro.session.OnlineSession;
-import com.dimple.framework.shiro.session.OnlineSessionDAO;
-import com.dimple.framework.util.ShiroUtils;
-import com.dimple.system.domain.SysUserOnline;
-import com.dimple.system.service.ISysUserOnlineService;
-import com.dimple.framework.web.base.BaseController;
+
+import java.util.List;
 
 /**
- * @className: SysUserOnlineController
- * @description: 在线用户监控
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysUserOnlineController
+ * @description 在线用户监控
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/monitor/online")
@@ -47,7 +47,7 @@ public class SysUserOnlineController extends BaseController {
     }
 
     @RequiresPermissions("monitor:online:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUserOnline userOnline) {
         startPage();

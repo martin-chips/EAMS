@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
- * @className: EAMSApplication
- * @description: 启动程序
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className EAMSApplication
+ * @description 启动程序
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan("com.dimple.*.mapper")

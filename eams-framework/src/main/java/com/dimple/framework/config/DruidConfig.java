@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 
-import com.dimple.framework.config.properties.DruidProperties;
-import com.dimple.framework.datasource.DynamicDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +12,15 @@ import org.springframework.context.annotation.Primary;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.dimple.common.enums.DataSourceType;
+import com.dimple.framework.config.properties.DruidProperties;
+import com.dimple.framework.datasource.DynamicDataSource;
 
 /**
- * @className: DruidConfig
- * @description: druid 配置多数据源
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DruidConfig
+ * @description druid 配置多数据源
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class DruidConfig {

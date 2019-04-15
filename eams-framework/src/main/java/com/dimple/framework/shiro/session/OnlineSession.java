@@ -4,11 +4,11 @@ import org.apache.shiro.session.mgt.SimpleSession;
 import com.dimple.common.enums.OnlineStatus;
 
 /**
- * @className: OnlineSession
- * @description: 在线用户会话属性
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OnlineSession
+ * @description 在线用户会话属性
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class OnlineSession extends SimpleSession {
     private static final long serialVersionUID = 1L;

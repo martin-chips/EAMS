@@ -1,34 +1,37 @@
 package com.dimple.web.controller.system;
 
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.page.TableDataInfo;
 import com.dimple.common.enums.BusinessType;
-import com.dimple.common.page.TableDataInfo;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.shiro.service.SysPasswordService;
 import com.dimple.framework.util.ShiroUtils;
-import com.dimple.framework.web.base.BaseController;
 import com.dimple.system.domain.SysUser;
 import com.dimple.system.service.ISysPostService;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
- * @className: SysUserController
- * @description: 用户信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysUserController
+ * @description 用户信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/system/user")
@@ -54,7 +57,7 @@ public class SysUserController extends BaseController {
     }
 
     @RequiresPermissions("system:user:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUser user) {
         startPage();
@@ -79,7 +82,7 @@ public class SysUserController extends BaseController {
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
-        String operName = getSysUser().getLoginName();
+        String operName = ShiroUtils.getSysUser().getLoginName();
         String message = userService.importUser(userList, updateSupport, operName);
         return AjaxResult.success(message);
     }
@@ -108,7 +111,6 @@ public class SysUserController extends BaseController {
     @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public AjaxResult addSave(SysUser user) {
         if (StringUtils.isNotNull(user.getUserId()) && SysUser.isAdmin(user.getUserId())) {
@@ -137,7 +139,6 @@ public class SysUserController extends BaseController {
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
-    @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public AjaxResult editSave(SysUser user) {
         if (StringUtils.isNotNull(user.getUserId()) && SysUser.isAdmin(user.getUserId())) {

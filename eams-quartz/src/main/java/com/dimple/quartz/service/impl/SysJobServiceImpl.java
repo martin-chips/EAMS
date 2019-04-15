@@ -1,26 +1,29 @@
 package com.dimple.quartz.service.impl;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-
+import com.dimple.common.constant.ScheduleConstants;
+import com.dimple.common.core.text.Convert;
+import com.dimple.common.exception.job.TaskException;
+import com.dimple.quartz.domain.SysJob;
+import com.dimple.quartz.mapper.SysJobMapper;
+import com.dimple.quartz.service.ISysJobService;
 import com.dimple.quartz.util.CronUtils;
 import com.dimple.quartz.util.ScheduleUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.constant.ScheduleConstants;
-import com.dimple.common.support.Convert;
-import com.dimple.quartz.domain.SysJob;
-import com.dimple.quartz.mapper.SysJobMapper;
-import com.dimple.quartz.service.ISysJobService;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
- * @className: SysJobServiceImpl
- * @description: 定时任务调度信息 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJobServiceImpl
+ * @description 定时任务调度信息 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {
@@ -34,7 +37,7 @@ public class SysJobServiceImpl implements ISysJobService {
      * 项目启动时，初始化定时器
      */
     @PostConstruct
-    public void init() {
+    public void init() throws SchedulerException, TaskException {
         List<SysJob> jobList = jobMapper.selectJobAll();
         for (SysJob job : jobList) {
             CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, job.getJobId());
@@ -75,7 +78,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int pauseJob(SysJob job) {
+    @Transactional
+    public int pauseJob(SysJob job) throws SchedulerException {
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
@@ -90,7 +94,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int resumeJob(SysJob job) {
+    @Transactional
+    public int resumeJob(SysJob job) throws SchedulerException {
         job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
@@ -105,7 +110,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int deleteJob(SysJob job) {
+    @Transactional
+    public int deleteJob(SysJob job) throws SchedulerException {
         int rows = jobMapper.deleteJobById(job.getJobId());
         if (rows > 0) {
             ScheduleUtils.deleteScheduleJob(scheduler, job.getJobId());
@@ -120,7 +126,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @return 结果
      */
     @Override
-    public void deleteJobByIds(String ids) {
+    @Transactional
+    public void deleteJobByIds(String ids) throws SchedulerException {
         Long[] jobIds = Convert.toLongArray(ids);
         for (Long jobId : jobIds) {
             SysJob job = jobMapper.selectJobById(jobId);
@@ -134,7 +141,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int changeStatus(SysJob job) {
+    @Transactional
+    public int changeStatus(SysJob job) throws SchedulerException {
         int rows = 0;
         String status = job.getStatus();
         if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
@@ -151,8 +159,9 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int run(SysJob job) {
-        return ScheduleUtils.run(scheduler, selectJobById(job.getJobId()));
+    @Transactional
+    public void run(SysJob job) throws SchedulerException {
+        ScheduleUtils.run(scheduler, selectJobById(job.getJobId()));
     }
 
     /**
@@ -161,7 +170,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息 调度信息
      */
     @Override
-    public int insertJobCron(SysJob job) {
+    @Transactional
+    public int insertJobCron(SysJob job) throws SchedulerException, TaskException {
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         int rows = jobMapper.insertJob(job);
         if (rows > 0) {
@@ -176,7 +186,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @param job 调度信息
      */
     @Override
-    public int updateJobCron(SysJob job) {
+    @Transactional
+    public int updateJobCron(SysJob job) throws SchedulerException, TaskException {
         int rows = jobMapper.updateJob(job);
         if (rows > 0) {
             ScheduleUtils.updateScheduleJob(scheduler, job);

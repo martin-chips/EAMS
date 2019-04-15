@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.dimple.common.utils.StringUtils;
 
 /**
- * @className: XssFilter
- * @description: 防止XSS攻击的过滤器
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className XssFilter
+ * @description 防止XSS攻击的过滤器
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class XssFilter implements Filter {
     /**

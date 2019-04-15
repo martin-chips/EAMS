@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import com.dimple.system.service.ISysConfigService;
 
 /**
- * @className: ConfigService
- * @description:html调用 thymeleaf 实现参数管理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ConfigService
+ * @description RuoYi首创 html调用 thymeleaf 实现参数管理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service("config")
 public class ConfigService {

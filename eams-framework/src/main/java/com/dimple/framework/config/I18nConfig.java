@@ -11,11 +11,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
- * @className: I18nConfig
- * @description: 资源文件配置加载
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className I18nConfig
+ * @description 资源文件配置加载
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class I18nConfig implements WebMvcConfigurer {

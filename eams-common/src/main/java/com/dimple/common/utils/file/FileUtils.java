@@ -5,13 +5,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @className: FileUtils
- * @description: 文件处理工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className FileUtils
+ * @description 文件处理工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class FileUtils {
     public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
@@ -81,5 +84,33 @@ public class FileUtils {
      */
     public static boolean isValidFilename(String filename) {
         return filename.matches(FILENAME_PATTERN);
+    }
+
+    /**
+     * 下载文件名重新编码
+     *
+     * @param request  请求对象
+     * @param fileName 文件名
+     * @return 编码后的文件名
+     */
+    public static String setFileDownloadHeader(HttpServletRequest request, String fileName)
+            throws UnsupportedEncodingException {
+        final String agent = request.getHeader("USER-AGENT");
+        String filename = fileName;
+        if (agent.contains("MSIE")) {
+            // IE浏览器
+            filename = URLEncoder.encode(filename, "utf-8");
+            filename = filename.replace("+", " ");
+        } else if (agent.contains("Firefox")) {
+            // 火狐浏览器
+            filename = new String(fileName.getBytes(), "ISO8859-1");
+        } else if (agent.contains("Chrome")) {
+            // google浏览器
+            filename = URLEncoder.encode(filename, "utf-8");
+        } else {
+            // 其它浏览器
+            filename = URLEncoder.encode(filename, "utf-8");
+        }
+        return filename;
     }
 }

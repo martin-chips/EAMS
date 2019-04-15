@@ -2,7 +2,6 @@ package com.dimple.framework.aspectj;
 
 import java.lang.reflect.Method;
 
-import com.dimple.framework.datasource.DynamicDataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,14 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import com.dimple.common.annotation.DataSource;
+import com.dimple.common.config.datasource.DynamicDataSourceContextHolder;
 import com.dimple.common.utils.StringUtils;
 
 /**
- * @className: DataSourceAspect
- * @description: 多数据源处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DataSourceAspect
+ * @description 多数据源处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Aspect
 @Order(1)
@@ -42,14 +42,14 @@ public class DataSourceAspect {
         DataSource dataSource = method.getAnnotation(DataSource.class);
 
         if (StringUtils.isNotNull(dataSource)) {
-            DynamicDataSourceContextHolder.setDateSoureType(dataSource.value().name());
+            DynamicDataSourceContextHolder.setDataSourceType(dataSource.value().name());
         }
 
         try {
             return point.proceed();
         } finally {
             // 销毁数据源 在执行方法之后
-            DynamicDataSourceContextHolder.clearDateSoureType();
+            DynamicDataSourceContextHolder.clearDataSourceType();
         }
     }
 }

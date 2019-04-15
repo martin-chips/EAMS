@@ -1,11 +1,11 @@
 package com.dimple.common.constant;
 
 /**
- * @className: Constants
- * @description: 通用常量信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Constants
+ * @description 通用常量信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Constants {
     /**
@@ -41,25 +41,25 @@ public class Constants {
     /**
      * 自动去除表前缀
      */
-    public static String AUTO_REOMVE_PRE = "true";
+    public static final String AUTO_REOMVE_PRE = "true";
 
     /**
      * 当前记录起始索引
      */
-    public static String PAGE_NUM = "pageNum";
+    public static final String PAGE_NUM = "pageNum";
 
     /**
      * 每页显示记录数
      */
-    public static String PAGE_SIZE = "pageSize";
+    public static final String PAGE_SIZE = "pageSize";
 
     /**
      * 排序列
      */
-    public static String ORDER_BY_COLUMN = "orderByColumn";
+    public static final String ORDER_BY_COLUMN = "orderByColumn";
 
     /**
      * 排序的方向 "desc" 或者 "asc".
      */
-    public static String IS_ASC = "isAsc";
+    public static final String IS_ASC = "isAsc";
 }

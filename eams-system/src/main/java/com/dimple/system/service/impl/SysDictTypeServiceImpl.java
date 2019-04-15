@@ -2,23 +2,24 @@ package com.dimple.system.service.impl;
 
 import java.util.List;
 
-import com.dimple.system.domain.SysDictType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.core.text.Convert;
 import com.dimple.common.exception.BusinessException;
-import com.dimple.common.support.Convert;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.system.domain.SysDictType;
 import com.dimple.system.mapper.SysDictDataMapper;
 import com.dimple.system.mapper.SysDictTypeMapper;
 import com.dimple.system.service.ISysDictTypeService;
 
 /**
- * @className: SysDictTypeServiceImpl
- * @description: 字典 业务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDictTypeServiceImpl
+ * @description 字典 业务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysDictTypeServiceImpl implements ISysDictTypeService {
@@ -108,6 +109,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int updateDictType(SysDictType dictType) {
         SysDictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDictId());
         dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());

@@ -16,11 +16,11 @@ import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysUser;
 
 /**
- * @className: LogoutFilter
- * @description: 退出过滤器
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className LogoutFilter
+ * @description 退出过滤器
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
     private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);

@@ -1,11 +1,11 @@
 package com.dimple.common.enums;
 
 /**
- * @className: UserStatus
- * @description: 用户状态
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className UserStatus
+ * @description 用户状态
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public enum UserStatus {
     OK("0", "正常"), DISABLE("1", "停用"), DELETED("2", "删除");

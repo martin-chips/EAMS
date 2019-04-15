@@ -13,11 +13,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @className: SwaggerConfig
- * @description: Swagger2的接口配置
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SwaggerConfig
+ * @description Swagger2的接口配置
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 @EnableSwagger2
@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 // 指定当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.dimple.web.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dimple.web.controller.tool"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
@@ -44,9 +44,9 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
-                .title("高校评优评奖管理系统")
-                .description("基于SpringBoot2最新深度定制，全方位全角度完整的高校评优评奖系统；")
-                .contact(new Contact(Global.getName(), "www.bianxiaofeng.com", "bianxiaofeng@sohu.com"))
+                .title("标题：若依管理系统_接口文档")
+                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
+                .contact(new Contact(Global.getName(), null, null))
                 .version("版本号:" + Global.getVersion())
                 .build();
     }

@@ -3,18 +3,18 @@ package com.dimple.framework.shiro.web.filter.sync;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import com.dimple.framework.shiro.session.OnlineSession;
-import com.dimple.framework.shiro.session.OnlineSessionDAO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.dimple.common.constant.ShiroConstants;
+import com.dimple.framework.shiro.session.OnlineSession;
+import com.dimple.framework.shiro.session.OnlineSessionDAO;
 
 /**
- * @className: SyncOnlineSessionFilter
- * @description: 同步Session数据到Db
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SyncOnlineSessionFilter
+ * @description 同步Session数据到Db
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter {
     @Autowired

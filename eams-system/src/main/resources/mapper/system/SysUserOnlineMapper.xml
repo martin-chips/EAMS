@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.system.mapper.SysUserOnlineMapper">
 
-    <resultMap type="com.dimple.system.domain.SysUserOnline" id="SysUserOnlineResult">
+    <resultMap type="SysUserOnline" id="SysUserOnlineResult">
         <id property="sessionId" column="sessionId"/>
         <result property="loginName" column="login_name"/>
         <result property="deptName" column="dept_name"/>
@@ -19,19 +19,8 @@
     </resultMap>
 
     <sql id="selectOnlineVo">
-        select sessionId,
-               login_name,
-               dept_name,
-               ipaddr,
-               login_location,
-               browser,
-               os,
-               status,
-               status,
-               start_timestamp,
-               last_access_time,
-               expire_time
-        from sys_user_online
+       select sessionId, login_name, dept_name, ipaddr, login_location, browser, os, status, status, start_timestamp, last_access_time, expire_time 
+	   from sys_user_online
     </sql>
 
     <select id="selectOnlineById" parameterType="String" resultMap="SysUserOnlineResult">
@@ -39,21 +28,16 @@
         where sessionid = #{sessionid}
     </select>
 
-    <insert id="saveOnline" parameterType="com.dimple.system.domain.SysUserOnline">
-        replace into sys_user_online(sessionId, login_name, dept_name, ipaddr, login_location, browser, os, status,
-                                     start_timestamp, last_access_time, expire_time)
-        values (#{sessionId}, #{loginName}, #{deptName}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{status},
-                #{startTimestamp}, #{lastAccessTime}, #{expireTime})
-    </insert>
+    <insert id="saveOnline" parameterType="SysUserOnline">
+		replace into sys_user_online(sessionId, login_name, dept_name, ipaddr, login_location, browser, os, status, start_timestamp, last_access_time, expire_time)
+        values (#{sessionId}, #{loginName}, #{deptName}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{status}, #{startTimestamp}, #{lastAccessTime}, #{expireTime})
+	</insert>
 
     <delete id="deleteOnlineById" parameterType="String">
-        delete
-        from sys_user_online
-        where sessionId = #{sessionId}
-    </delete>
+ 		delete from sys_user_online where sessionId = #{sessionId}
+ 	</delete>
 
-    <select id="selectUserOnlineList" parameterType="com.dimple.system.domain.SysUserOnline"
-            resultMap="SysUserOnlineResult">
+    <select id="selectUserOnlineList" parameterType="SysUserOnline" resultMap="SysUserOnlineResult">
         <include refid="selectOnlineVo"/>
         <where>
             <if test="ipaddr != null and ipaddr != ''">

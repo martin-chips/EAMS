@@ -8,11 +8,11 @@ import java.util.Date;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
- * @className: DateUtils
- * @description: 时间工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DateUtils
+ * @description 时间工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static String YYYY = "yyyy";

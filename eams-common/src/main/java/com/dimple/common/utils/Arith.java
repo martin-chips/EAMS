@@ -3,11 +3,11 @@ package com.dimple.common.utils;
 import java.math.BigDecimal;
 
 /**
- * @className: Arith
- * @description: 精确的浮点数运算
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Arith
+ * @description 精确的浮点数运算
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Arith {
 

@@ -1,11 +1,11 @@
 package com.dimple.common.enums;
 
 /**
- * @className: BusinessType
- * @description: 业务操作类型
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className BusinessType
+ * @description 业务操作类型
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public enum BusinessType {
     /**

@@ -11,17 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.dimple.common.base.AjaxResult;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
 import com.dimple.common.utils.ServletUtils;
 import com.dimple.common.utils.StringUtils;
-import com.dimple.framework.web.base.BaseController;
 
 /**
- * @className: SysLoginController
- * @description: 登录验证
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysLoginController
+ * @description 登录验证
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 public class SysLoginController extends BaseController {

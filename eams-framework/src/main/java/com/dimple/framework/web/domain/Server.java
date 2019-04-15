@@ -8,8 +8,8 @@ import java.util.Properties;
 import com.dimple.common.utils.Arith;
 import com.dimple.common.utils.IpUtils;
 import com.dimple.framework.web.domain.server.Cpu;
-import com.dimple.framework.web.domain.server.Mem;
 import com.dimple.framework.web.domain.server.Jvm;
+import com.dimple.framework.web.domain.server.Mem;
 import com.dimple.framework.web.domain.server.Sys;
 import com.dimple.framework.web.domain.server.SysFile;
 import oshi.SystemInfo;
@@ -23,11 +23,11 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
 /**
- * @className: Server
- * @description: 服务器相关信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Server
+ * @description 服务器相关信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Server {
 

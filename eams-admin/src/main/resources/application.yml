@@ -1,12 +1,12 @@
 # 项目相关配置
 dimple:
   # 名称
-  name: 边小丰
+  name: EAMS
   # 版本
   version: 1.0
   # 版权年份
   copyrightYear: 2019
-  # 文件上传路径
+  # 文件路径
   profile: D:/profile/
   # 获取ip地址开关
   addressEnabled: true
@@ -25,13 +25,12 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
- 
+
 # 日志配置
 logging:
   level:
     com.dimple: debug
-    org.springframework: WARN
-    org.spring.springboot.dao: debug
+    org.springframework: warn
 
 # 用户配置
 user:
@@ -54,13 +53,15 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-  profiles: 
+  profiles:
     active: druid
   # 文件上传
   servlet:
-     multipart:
-       max-file-size:  30MB
-       max-request-size:  30MB
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
   # 服务模块
   devtools:
     restart:
@@ -69,19 +70,19 @@ spring:
 
 # MyBatis
 mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.dimple
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath*:mapper/**/*Mapper.xml
-    # 加载全局的配置文件
-    configLocation: classpath:mapper/mybatis-config.xml
+  # 搜索指定包别名
+  typeAliasesPackage: com.dimple
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mapper/mybatis-config.xml
 
 # PageHelper分页插件
-pagehelper: 
+pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
-  params: count=countSql 
+  params: count=countSql
 
 # Shiro
 shiro:
@@ -98,7 +99,7 @@ shiro:
     captchaType: math
   cookie:
     # 设置Cookie的域名 默认空，即当前访问的域名
-    domain: 
+    domain:
     # 设置cookie的有效访问路径
     path: /
     # 设置HttpOnly属性
@@ -114,10 +115,10 @@ shiro:
     validationInterval: 10
 
 # 防止XSS攻击
-xss: 
+xss:
   # 过滤开关
   enabled: true
   # 排除链接（多个用逗号分隔）
   excludes: /system/notice/*
   # 匹配链接
-  urlPatterns: /system/*,/monitor/*
+  urlPatterns: /system/*,/monitor/*,/tool/*

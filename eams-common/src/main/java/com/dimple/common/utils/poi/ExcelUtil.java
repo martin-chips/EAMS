@@ -1,62 +1,37 @@
 package com.dimple.common.utils.poi;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import com.dimple.common.annotation.Excel;
-import com.dimple.common.base.AjaxResult;
+import com.dimple.common.annotation.Excel.Type;
+import com.dimple.common.config.Global;
+import com.dimple.common.core.domain.AjaxResult;
+import com.dimple.common.core.text.Convert;
+import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.DateUtils;
 import com.dimple.common.utils.StringUtils;
-import org.apache.poi.hssf.usermodel.DVConstraint;
-import org.apache.poi.hssf.usermodel.HSSFDataValidation;
+import com.dimple.common.utils.reflect.ReflectUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataValidation;
-import org.apache.poi.ss.usermodel.DataValidationConstraint;
-import org.apache.poi.ss.usermodel.DataValidationHelper;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.dimple.common.config.Global;
-import com.dimple.common.exception.BusinessException;
-import com.dimple.common.reflect.ReflectUtils;
-import com.dimple.common.support.Convert;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
- * @className: ExcelUtil
- * @description: Excel相关处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ExcelUtil
+ * @description Excel相关处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class ExcelUtil<T> {
     private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
@@ -74,7 +49,7 @@ public class ExcelUtil<T> {
     /**
      * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
      */
-    private Excel.Type type;
+    private Type type;
 
     /**
      * 工作薄对象
@@ -105,7 +80,7 @@ public class ExcelUtil<T> {
         this.clazz = clazz;
     }
 
-    public void init(List<T> list, String sheetName, Excel.Type type) {
+    public void init(List<T> list, String sheetName, Type type) {
         if (list == null) {
             list = new ArrayList<T>();
         }
@@ -134,7 +109,7 @@ public class ExcelUtil<T> {
      * @return 转换后集合
      */
     public List<T> importExcel(String sheetName, InputStream is) throws Exception {
-        this.type = Excel.Type.IMPORT;
+        this.type = Type.IMPORT;
         this.wb = WorkbookFactory.create(is);
         List<T> list = new ArrayList<T>();
         Sheet sheet = null;
@@ -162,7 +137,7 @@ public class ExcelUtil<T> {
             for (int col = 0; col < allFields.length; col++) {
                 Field field = allFields[col];
                 Excel attr = field.getAnnotation(Excel.class);
-                if (attr != null && (attr.type() == Excel.Type.ALL || attr.type() == type)) {
+                if (attr != null && (attr.type() == Type.ALL || attr.type() == type)) {
                     // 设置类的私有字段属性可访问.
                     field.setAccessible(true);
                     fieldsMap.put(++serialNum, field);
@@ -231,7 +206,7 @@ public class ExcelUtil<T> {
      * @return 结果
      */
     public AjaxResult exportExcel(List<T> list, String sheetName) {
-        this.init(list, sheetName, Excel.Type.EXPORT);
+        this.init(list, sheetName, Type.EXPORT);
         return exportExcel();
     }
 
@@ -242,7 +217,7 @@ public class ExcelUtil<T> {
      * @return 结果
      */
     public AjaxResult importTemplateExcel(String sheetName) {
-        this.init(null, sheetName, Excel.Type.IMPORT);
+        this.init(null, sheetName, Type.IMPORT);
         return exportExcel();
     }
 
@@ -300,15 +275,15 @@ public class ExcelUtil<T> {
                     // 如果设置了提示信息则鼠标放上去提示.
                     if (StringUtils.isNotEmpty(attr.prompt())) {
                         // 这里默认设了2-101列提示.
-                        setHSSFPrompt(sheet, "", attr.prompt(), 1, 100, i, i);
+                        setXSSFPrompt(sheet, "", attr.prompt(), 1, 100, i, i);
                     }
                     // 如果设置了combo属性则本列只能选择不能输入
                     if (attr.combo().length > 0) {
                         // 这里默认设了2-101列只能选择不能输入.
-                        setHSSFValidation(sheet, attr.combo(), 1, 100, i, i);
+                        setXSSFValidation(sheet, attr.combo(), 1, 100, i, i);
                     }
                 }
-                if (Excel.Type.EXPORT.equals(type)) {
+                if (Type.EXPORT.equals(type)) {
                     fillExcelData(index, row, cell);
                 }
             }
@@ -379,9 +354,9 @@ public class ExcelUtil<T> {
                         Object value = getTargetValue(vo, field, attr);
                         String dateFormat = attr.dateFormat();
                         String readConverterExp = attr.readConverterExp();
-                        if (StringUtils.isNotEmpty(dateFormat)) {
+                        if (StringUtils.isNotEmpty(dateFormat) && StringUtils.isNotNull(value)) {
                             cell.setCellValue(DateUtils.parseDateToStr(dateFormat, (Date) value));
-                        } else if (StringUtils.isNotEmpty(readConverterExp)) {
+                        } else if (StringUtils.isNotEmpty(readConverterExp) && StringUtils.isNotNull(value)) {
                             cell.setCellValue(convertByExp(String.valueOf(value), readConverterExp));
                         } else {
                             cell.setCellType(CellType.STRING);
@@ -390,35 +365,32 @@ public class ExcelUtil<T> {
                         }
                     }
                 } catch (Exception e) {
-                    log.error("导出Excel失败{}", e.getMessage());
+                    log.error("导出Excel失败{}", e);
                 }
             }
         }
     }
 
     /**
-     * 设置单元格上提示
+     * 设置 POI XSSFSheet 单元格提示
      *
-     * @param sheet         要设置的sheet.
-     * @param promptTitle   标题
-     * @param promptContent 内容
+     * @param sheet         表单
+     * @param promptTitle   提示标题
+     * @param promptContent 提示内容
      * @param firstRow      开始行
      * @param endRow        结束行
      * @param firstCol      开始列
      * @param endCol        结束列
-     * @return 设置好的sheet.
      */
-    public static Sheet setHSSFPrompt(Sheet sheet, String promptTitle, String promptContent, int firstRow, int endRow,
-                                      int firstCol, int endCol) {
-        // 构造constraint对象
-        DVConstraint constraint = DVConstraint.createCustomFormulaConstraint("DD1");
-        // 四个参数分别是：起始行、终止行、起始列、终止列
+    public void setXSSFPrompt(Sheet sheet, String promptTitle, String promptContent, int firstRow, int endRow,
+                              int firstCol, int endCol) {
+        DataValidationHelper helper = sheet.getDataValidationHelper();
+        DataValidationConstraint constraint = helper.createCustomConstraint("DD1");
         CellRangeAddressList regions = new CellRangeAddressList(firstRow, endRow, firstCol, endCol);
-        // 数据有效性对象
-        HSSFDataValidation dataValidationView = new HSSFDataValidation(regions, constraint);
-        dataValidationView.createPromptBox(promptTitle, promptContent);
-        sheet.addValidationData(dataValidationView);
-        return sheet;
+        DataValidation dataValidation = helper.createValidation(constraint, regions);
+        dataValidation.createPromptBox(promptTitle, promptContent);
+        dataValidation.setShowPromptBox(true);
+        sheet.addValidationData(dataValidation);
     }
 
     /**
@@ -432,8 +404,7 @@ public class ExcelUtil<T> {
      * @param endCol   结束列
      * @return 设置好的sheet.
      */
-    public static Sheet setHSSFValidation(Sheet sheet, String[] textlist, int firstRow, int endRow, int firstCol,
-                                          int endCol) {
+    public void setXSSFValidation(Sheet sheet, String[] textlist, int firstRow, int endRow, int firstCol, int endCol) {
         DataValidationHelper helper = sheet.getDataValidationHelper();
         // 加载下拉列表内容
         DataValidationConstraint constraint = helper.createExplicitListConstraint(textlist);
@@ -450,7 +421,6 @@ public class ExcelUtil<T> {
         }
 
         sheet.addValidationData(dataValidation);
-        return sheet;
     }
 
     /**
@@ -574,8 +544,9 @@ public class ExcelUtil<T> {
         tempFields.addAll(Arrays.asList(clazz.getDeclaredFields()));
         while (tempClass != null) {
             tempClass = tempClass.getSuperclass();
-            if (tempClass != null)
+            if (tempClass != null) {
                 tempFields.addAll(Arrays.asList(tempClass.getDeclaredFields()));
+            }
         }
         putToFields(tempFields);
     }
@@ -586,7 +557,7 @@ public class ExcelUtil<T> {
     private void putToFields(List<Field> fields) {
         for (Field field : fields) {
             Excel attr = field.getAnnotation(Excel.class);
-            if (attr != null && (attr.type() == Excel.Type.ALL || attr.type() == type)) {
+            if (attr != null && (attr.type() == Type.ALL || attr.type() == type)) {
                 this.fields.add(field);
             }
         }

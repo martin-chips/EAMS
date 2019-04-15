@@ -1,11 +1,11 @@
 package com.dimple.common.exception.job;
 
 /**
- * @className: TaskException
- * @description: 计划策略异常
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className TaskException
+ * @description 计划策略异常
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class TaskException extends Exception {
     private static final long serialVersionUID = 1L;

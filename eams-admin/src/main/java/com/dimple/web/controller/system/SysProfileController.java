@@ -12,24 +12,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.dimple.common.annotation.Log;
-import com.dimple.common.base.AjaxResult;
 import com.dimple.common.config.Global;
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.common.core.domain.AjaxResult;
 import com.dimple.common.enums.BusinessType;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.file.FileUploadUtils;
 import com.dimple.framework.shiro.service.SysPasswordService;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysUser;
-import com.dimple.system.service.ISysDictDataService;
 import com.dimple.system.service.ISysUserService;
-import com.dimple.framework.web.base.BaseController;
 
 /**
- * @className: SysProfileController
- * @description: 个人信息 业务处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysProfileController
+ * @description 个人信息 业务处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/system/user/profile")
@@ -44,16 +43,12 @@ public class SysProfileController extends BaseController {
     @Autowired
     private SysPasswordService passwordService;
 
-    @Autowired
-    private ISysDictDataService dictDataService;
-
     /**
      * 个人信息
      */
     @GetMapping()
     public String profile(ModelMap mmap) {
-        SysUser user = getSysUser();
-        user.setSex(dictDataService.selectDictLabel("sys_user_sex", user.getSex()));
+        SysUser user = ShiroUtils.getSysUser();
         mmap.put("user", user);
         mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
         mmap.put("postGroup", userService.selectUserPostGroup(user.getUserId()));
@@ -63,7 +58,7 @@ public class SysProfileController extends BaseController {
     @GetMapping("/checkPassword")
     @ResponseBody
     public boolean checkPassword(String password) {
-        SysUser user = getSysUser();
+        SysUser user = ShiroUtils.getSysUser();
         if (passwordService.matches(user, password)) {
             return true;
         }
@@ -72,7 +67,7 @@ public class SysProfileController extends BaseController {
 
     @GetMapping("/resetPwd")
     public String resetPwd(ModelMap mmap) {
-        SysUser user = getSysUser();
+        SysUser user = ShiroUtils.getSysUser();
         mmap.put("user", userService.selectUserById(user.getUserId()));
         return prefix + "/resetPwd";
     }
@@ -81,12 +76,12 @@ public class SysProfileController extends BaseController {
     @PostMapping("/resetPwd")
     @ResponseBody
     public AjaxResult resetPwd(String oldPassword, String newPassword) {
-        SysUser user = getSysUser();
+        SysUser user = ShiroUtils.getSysUser();
         if (StringUtils.isNotEmpty(newPassword) && passwordService.matches(user, oldPassword)) {
             user.setSalt(ShiroUtils.randomSalt());
             user.setPassword(passwordService.encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
             if (userService.resetUserPwd(user) > 0) {
-                setSysUser(userService.selectUserById(user.getUserId()));
+                ShiroUtils.setSysUser(userService.selectUserById(user.getUserId()));
                 return success();
             }
             return error();
@@ -100,7 +95,7 @@ public class SysProfileController extends BaseController {
      */
     @GetMapping("/edit")
     public String edit(ModelMap mmap) {
-        SysUser user = getSysUser();
+        SysUser user = ShiroUtils.getSysUser();
         mmap.put("user", userService.selectUserById(user.getUserId()));
         return prefix + "/edit";
     }
@@ -110,7 +105,7 @@ public class SysProfileController extends BaseController {
      */
     @GetMapping("/avatar")
     public String avatar(ModelMap mmap) {
-        SysUser user = getSysUser();
+        SysUser user = ShiroUtils.getSysUser();
         mmap.put("user", userService.selectUserById(user.getUserId()));
         return prefix + "/avatar";
     }
@@ -122,13 +117,13 @@ public class SysProfileController extends BaseController {
     @PostMapping("/update")
     @ResponseBody
     public AjaxResult update(SysUser user) {
-        SysUser currentUser = getSysUser();
+        SysUser currentUser = ShiroUtils.getSysUser();
         currentUser.setUserName(user.getUserName());
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
         if (userService.updateUserInfo(currentUser) > 0) {
-            setSysUser(userService.selectUserById(currentUser.getUserId()));
+            ShiroUtils.setSysUser(userService.selectUserById(currentUser.getUserId()));
             return success();
         }
         return error();
@@ -141,13 +136,13 @@ public class SysProfileController extends BaseController {
     @PostMapping("/updateAvatar")
     @ResponseBody
     public AjaxResult updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
-        SysUser currentUser = getSysUser();
+        SysUser currentUser = ShiroUtils.getSysUser();
         try {
             if (!file.isEmpty()) {
                 String avatar = FileUploadUtils.upload(Global.getAvatarPath(), file);
                 currentUser.setAvatar(avatar);
                 if (userService.updateUserInfo(currentUser) > 0) {
-                    setSysUser(userService.selectUserById(currentUser.getUserId()));
+                    ShiroUtils.setSysUser(userService.selectUserById(currentUser.getUserId()));
                     return success();
                 }
             }

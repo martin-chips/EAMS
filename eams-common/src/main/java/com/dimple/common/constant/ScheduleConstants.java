@@ -1,16 +1,19 @@
 package com.dimple.common.constant;
 
 /**
- * @className: ScheduleConstants
- * @description: 任务调度通用常量
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ScheduleConstants
+ * @description 任务调度通用常量
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ScheduleConstants {
-    public static final String TASK_CLASS_NAME = "__TASK_CLASS_NAME__";
+    public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
-    public static final String TASK_PROPERTIES = "__TASK_PROPERTIES__";
+    /**
+     * 执行目标key
+     */
+    public static final String TASK_PROPERTIES = "TASK_PROPERTIES";
 
     /**
      * 默认

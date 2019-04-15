@@ -1,11 +1,11 @@
 package com.dimple.framework.web.domain.server;
 
 /**
- * @className: SysFile
- * @description: 系统文件相关信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysFile
+ * @description 系统文件相关信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SysFile {
     /**

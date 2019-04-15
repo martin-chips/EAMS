@@ -3,19 +3,19 @@ package com.dimple.common.utils.file;
 import java.io.File;
 import java.io.IOException;
 
-import com.dimple.common.utils.DateUtils;
-import com.dimple.common.utils.Md5Utils;
 import org.springframework.web.multipart.MultipartFile;
 import com.dimple.common.config.Global;
 import com.dimple.common.exception.file.FileNameLengthLimitExceededException;
 import com.dimple.common.exception.file.FileSizeLimitExceededException;
+import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.security.Md5Utils;
 
 /**
- * @className: FileUploadUtils
- * @description: 文件上传工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className FileUploadUtils
+ * @description 文件上传工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class FileUploadUtils {
     /**

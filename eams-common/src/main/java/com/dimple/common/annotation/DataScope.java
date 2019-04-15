@@ -7,11 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @className: DataScope
- * @description: 数据权限过滤注解
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DataScope
+ * @description 数据权限过滤注解
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

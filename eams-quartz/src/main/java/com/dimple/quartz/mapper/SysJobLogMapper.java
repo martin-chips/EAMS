@@ -5,11 +5,11 @@ import com.dimple.quartz.domain.SysJobLog;
 import java.util.List;
 
 /**
- * @className: SysJobLogMapper
- * @description: 调度任务日志信息 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJobLogMapper
+ * @description 调度任务日志信息 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface SysJobLogMapper {
     /**

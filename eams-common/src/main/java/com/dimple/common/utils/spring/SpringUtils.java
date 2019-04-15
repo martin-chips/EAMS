@@ -7,11 +7,11 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @className: SpringUtils
- * @description: spring工具类 方便在非spring管理环境中获取bean
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SpringUtils
+ * @description spring工具类 方便在非spring管理环境中获取bean
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor {

@@ -3,11 +3,11 @@ package com.dimple.quartz.task;
 import org.springframework.stereotype.Component;
 
 /**
- * @className: RyTask
- * @description: 定时任务调度测试
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className RyTask
+ * @description 定时任务调度测试
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component("ryTask")
 public class RyTask {

@@ -1,8 +1,11 @@
 package com.dimple.framework.aspectj;
 
-import java.lang.reflect.Method;
-
+import com.dimple.common.annotation.DataScope;
+import com.dimple.common.core.domain.BaseEntity;
+import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.util.ShiroUtils;
+import com.dimple.system.domain.SysRole;
+import com.dimple.system.domain.SysUser;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,18 +13,15 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import com.dimple.common.annotation.DataScope;
-import com.dimple.common.base.BaseEntity;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.system.domain.SysRole;
-import com.dimple.system.domain.SysUser;
+
+import java.lang.reflect.Method;
 
 /**
- * @className: DataScopeAspect
- * @description: 数据过滤处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DataScopeAspect
+ * @description 数据过滤处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Aspect
 @Component

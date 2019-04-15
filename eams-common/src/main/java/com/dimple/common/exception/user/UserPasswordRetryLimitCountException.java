@@ -1,11 +1,11 @@
 package com.dimple.common.exception.user;
 
 /**
- * @className: UserPasswordRetryLimitCountException
- * @description: 用户错误记数异常类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className UserPasswordRetryLimitCountException
+ * @description 用户错误记数异常类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class UserPasswordRetryLimitCountException extends UserException {
     private static final long serialVersionUID = 1L;

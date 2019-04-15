@@ -2,19 +2,19 @@ package com.dimple.system.service.impl;
 
 import java.util.List;
 
-import com.dimple.system.service.ISysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.system.domain.SysLogininfor;
 import com.dimple.system.mapper.SysLogininforMapper;
+import com.dimple.system.service.ISysLogininforService;
 
 /**
- * @className: SysLogininforServiceImpl
- * @description: 系统访问日志情况信息 服务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysLogininforServiceImpl
+ * @description 系统访问日志情况信息 服务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysLogininforServiceImpl implements ISysLogininforService {

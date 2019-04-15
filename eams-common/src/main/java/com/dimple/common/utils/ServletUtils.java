@@ -8,14 +8,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 
 /**
- * @className: ServletUtils
- * @description: 客户端工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ServletUtils
+ * @description 客户端工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class ServletUtils {
     /**
@@ -96,7 +96,6 @@ public class ServletUtils {
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
-
         String accept = request.getHeader("accept");
         if (accept != null && accept.indexOf("application/json") != -1) {
             return true;
@@ -116,7 +115,6 @@ public class ServletUtils {
         if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")) {
             return true;
         }
-
         return false;
     }
 }

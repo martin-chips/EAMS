@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimple.common.support.Convert;
+import com.dimple.common.core.text.Convert;
 import com.dimple.system.domain.SysNotice;
 import com.dimple.system.mapper.SysNoticeMapper;
 import com.dimple.system.service.ISysNoticeService;
 
 /**
- * @className: SysNoticeServiceImpl
- * @description: 公告 服务层实现
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysNoticeServiceImpl
+ * @description 公告 服务层实现
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {

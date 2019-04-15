@@ -6,16 +6,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.dimple.system.domain.SysRoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.dimple.common.annotation.DataScope;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.core.text.Convert;
 import com.dimple.common.exception.BusinessException;
-import com.dimple.common.support.Convert;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.domain.SysRoleDept;
+import com.dimple.system.domain.SysRoleMenu;
+import com.dimple.system.domain.SysUserRole;
 import com.dimple.system.mapper.SysRoleDeptMapper;
 import com.dimple.system.mapper.SysRoleMapper;
 import com.dimple.system.mapper.SysRoleMenuMapper;
@@ -23,11 +25,11 @@ import com.dimple.system.mapper.SysUserRoleMapper;
 import com.dimple.system.service.ISysRoleService;
 
 /**
- * @className: SysRoleServiceImpl
- * @description: 角色 业务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysRoleServiceImpl
+ * @description 角色 业务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
@@ -151,6 +153,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertRole(SysRole role) {
         // 新增角色信息
         roleMapper.insertRole(role);
@@ -164,6 +167,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int updateRole(SysRole role) {
         // 修改角色信息
         roleMapper.updateRole(role);
@@ -179,7 +183,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public int updateRule(SysRole role) {
+    @Transactional
+    public int authDataScope(SysRole role) {
         // 修改角色信息
         roleMapper.updateRole(role);
         // 删除角色与部门关联
@@ -282,5 +287,47 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int changeStatus(SysRole role) {
         return roleMapper.updateRole(role);
+    }
+
+    /**
+     * 取消授权用户角色
+     *
+     * @param userRole 用户和角色关联信息
+     * @return 结果
+     */
+    @Override
+    public int deleteAuthUser(SysUserRole userRole) {
+        return userRoleMapper.deleteUserRoleInfo(userRole);
+    }
+
+    /**
+     * 批量取消授权用户角色
+     *
+     * @param roleId  角色ID
+     * @param userIds 需要删除的用户数据ID
+     * @return 结果
+     */
+    public int deleteAuthUsers(Long roleId, String userIds) {
+        return userRoleMapper.deleteUserRoleInfos(roleId, Convert.toLongArray(userIds));
+    }
+
+    /**
+     * 批量选择授权用户角色
+     *
+     * @param roleId  角色ID
+     * @param userIds 需要删除的用户数据ID
+     * @return 结果
+     */
+    public int insertAuthUsers(Long roleId, String userIds) {
+        Long[] users = Convert.toLongArray(userIds);
+        // 新增用户与角色管理
+        List<SysUserRole> list = new ArrayList<SysUserRole>();
+        for (Long userId : users) {
+            SysUserRole ur = new SysUserRole();
+            ur.setUserId(userId);
+            ur.setRoleId(roleId);
+            list.add(ur);
+        }
+        return userRoleMapper.batchUserRole(list);
     }
 }

@@ -3,20 +3,20 @@ package com.dimple.quartz.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.dimple.quartz.util.CronUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.dimple.common.annotation.Excel;
-import com.dimple.common.base.BaseEntity;
 import com.dimple.common.constant.ScheduleConstants;
+import com.dimple.common.core.domain.BaseEntity;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.quartz.util.CronUtils;
 
 /**
- * @className: SysJob
- * @description: 定时任务调度表 sys_job
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJob
+ * @description 定时任务调度表 sys_job
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SysJob extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -62,6 +62,12 @@ public class SysJob extends BaseEntity implements Serializable {
      */
     @Excel(name = "计划策略 ")
     private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
+
+    /**
+     * 是否并发执行（0允许 1禁止）
+     */
+    @Excel(name = "并发执行", readConverterExp = "0=允许,1=禁止")
+    private String concurrent;
 
     /**
      * 任务状态（0正常 1暂停）
@@ -132,6 +138,14 @@ public class SysJob extends BaseEntity implements Serializable {
         this.misfirePolicy = misfirePolicy;
     }
 
+    public String getConcurrent() {
+        return concurrent;
+    }
+
+    public void setConcurrent(String concurrent) {
+        this.concurrent = concurrent;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -151,6 +165,7 @@ public class SysJob extends BaseEntity implements Serializable {
                 .append("cronExpression", getCronExpression())
                 .append("nextValidTime", getNextValidTime())
                 .append("misfirePolicy", getMisfirePolicy())
+                .append("concurrent", getConcurrent())
                 .append("status", getStatus())
                 .append("createBy", getCreateBy())
                 .append("createTime", getCreateTime())

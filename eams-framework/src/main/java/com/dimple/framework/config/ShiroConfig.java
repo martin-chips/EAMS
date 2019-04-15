@@ -1,12 +1,7 @@
 package com.dimple.framework.config;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.servlet.Filter;
-
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.shiro.realm.UserRealm;
 import com.dimple.framework.shiro.session.OnlineSessionDAO;
 import com.dimple.framework.shiro.session.OnlineSessionFactory;
@@ -31,15 +26,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.dimple.common.utils.StringUtils;
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+
+import javax.servlet.Filter;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
- * @className: ShiroConfig
- * @description: 权限配置加载
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ShiroConfig
+ * @description 权限配置加载
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Configuration
 public class ShiroConfig {
@@ -90,7 +90,7 @@ public class ShiroConfig {
      */
     @Bean
     public EhCacheManager getEhCacheManager() {
-        net.sf.ehcache.CacheManager cacheManager = net.sf.ehcache.CacheManager.getCacheManager("dimple");
+        net.sf.ehcache.CacheManager cacheManager = net.sf.ehcache.CacheManager.getCacheManager("EAMS");
         EhCacheManager em = new EhCacheManager();
         if (StringUtils.isNull(cacheManager)) {
             em.setCacheManager(new net.sf.ehcache.CacheManager(getCacheManagerConfigFileInputStream()));
@@ -258,7 +258,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/ajax/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/dimple/**", "anon");
+        filterChainDefinitionMap.put("/eams/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session

@@ -1,11 +1,11 @@
 package com.dimple.common.enums;
 
 /**
- * @className: OperatorType
- * @description: 操作人类别
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className OperatorType
+ * @description 操作人类别
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public enum OperatorType {
     /**

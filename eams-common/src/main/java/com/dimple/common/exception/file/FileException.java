@@ -3,11 +3,11 @@ package com.dimple.common.exception.file;
 import com.dimple.common.exception.base.BaseException;
 
 /**
- * @className: FileException
- * @description: 文件信息异常类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className FileException
+ * @description 文件信息异常类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class FileException extends BaseException {
     private static final long serialVersionUID = 1L;

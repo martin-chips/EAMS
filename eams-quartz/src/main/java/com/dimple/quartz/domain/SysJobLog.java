@@ -1,16 +1,18 @@
 package com.dimple.quartz.domain;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.dimple.common.annotation.Excel;
-import com.dimple.common.base.BaseEntity;
+import com.dimple.common.core.domain.BaseEntity;
 
 /**
- * @className: SysJobLog
- * @description: 定时任务调度日志表 sys_job_log
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysJobLog
+ * @description 定时任务调度日志表 sys_job_log
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class SysJobLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -62,6 +64,16 @@ public class SysJobLog extends BaseEntity {
      */
     @Excel(name = "异常信息")
     private String exceptionInfo;
+
+    /**
+     * 开始时间
+     */
+    private Date startTime;
+
+    /**
+     * 结束时间
+     */
+    private Date endTime;
 
     public Long getJobLogId() {
         return jobLogId;
@@ -127,6 +139,22 @@ public class SysJobLog extends BaseEntity {
         this.exceptionInfo = exceptionInfo;
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -138,7 +166,8 @@ public class SysJobLog extends BaseEntity {
                 .append("jobMessage", getJobMessage())
                 .append("status", getStatus())
                 .append("exceptionInfo", getExceptionInfo())
-                .append("createTime", getCreateTime())
+                .append("startTime", getStartTime())
+                .append("endTime", getEndTime())
                 .toString();
     }
 }

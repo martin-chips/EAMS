@@ -2,15 +2,15 @@ package com.dimple.system.mapper;
 
 import java.util.List;
 
-import com.dimple.system.domain.SysDept;
 import org.apache.ibatis.annotations.Param;
+import com.dimple.system.domain.SysDept;
 
 /**
- * @className: SysDeptMapper
- * @description: 部门管理 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDeptMapper
+ * @description 部门管理 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface SysDeptMapper {
     /**

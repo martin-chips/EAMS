@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dimple.system.mapper.SysUserMapper">
 
-    <resultMap type="com.dimple.system.domain.SysUser" id="SysUserResult">
+    <resultMap type="SysUser" id="SysUserResult">
         <id property="userId" column="user_id"/>
         <result property="deptId" column="dept_id"/>
         <result property="loginName" column="login_name"/>
@@ -24,12 +24,11 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
-        <association property="dept" column="dept_id" javaType="com.dimple.system.domain.SysDept"
-                     resultMap="deptResult"/>
+        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
         <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
     </resultMap>
 
-    <resultMap id="deptResult" type="com.dimple.system.domain.SysDept">
+    <resultMap id="deptResult" type="SysDept">
         <id property="deptId" column="dept_id"/>
         <result property="parentId" column="parent_id"/>
         <result property="deptName" column="dept_name"/>
@@ -37,7 +36,7 @@
         <result property="status" column="dept_status"/>
     </resultMap>
 
-    <resultMap id="RoleResult" type="com.dimple.system.domain.SysRole">
+    <resultMap id="RoleResult" type="SysRole">
         <id property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
         <result property="roleKey" column="role_key"/>
@@ -47,40 +46,16 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.user_id,
-               u.dept_id,
-               u.login_name,
-               u.user_name,
-               u.email,
-               u.phonenumber,
-               u.sex,
-               u.avatar,
-               u.password,
-               u.salt,
-               u.status,
-               u.del_flag,
-               u.login_ip,
-               u.login_date,
-               u.create_time,
-               u.remark,
-               d.dept_id,
-               d.parent_id,
-               d.dept_name,
-               d.order_num,
-               d.status as dept_status,
-               r.role_id,
-               r.role_name,
-               r.role_key,
-               r.role_sort,
-               r.data_scope,
-               r.status as role_status
-        from sys_user u
-                 left join sys_dept d on u.dept_id = d.dept_id
-                 left join sys_user_role ur on u.user_id = ur.user_id
-                 left join sys_role r on r.role_id = ur.role_id
+        select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.sex, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
+       		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
+       		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
+		from sys_user u
+			 left join sys_dept d on u.dept_id = d.dept_id
+			 left join sys_user_role ur on u.user_id = ur.user_id
+			 left join sys_role r on r.role_id = ur.role_id
     </sql>
 
-    <select id="selectUserList" parameterType="com.dimple.system.domain.SysUser" resultMap="SysUserResult">
+    <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
         select u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.password, u.sex, u.avatar,
         u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name from
         sys_user u
@@ -109,6 +84,42 @@
         ${params.dataScope}
     </select>
 
+    <select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
+        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where u.del_flag = '0' and r.role_id = #{roleId}
+        <if test="loginName != null and loginName != ''">
+            AND u.login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="phonenumber != null and phonenumber != ''">
+            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
+        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where u.del_flag = '0' and (r.role_id != #{roleId} or r.role_id IS NULL)
+        and u.user_id not in (select u.user_id from sys_user u inner join sys_user_role ur on u.user_id = ur.user_id and
+        ur.role_id = #{roleId})
+        <if test="loginName != null and loginName != ''">
+            AND u.login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="phonenumber != null and phonenumber != ''">
+            AND u.phonenumber like concat('%', #{phonenumber}, '%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
     <select id="selectUserByLoginName" parameterType="String" resultMap="SysUserResult">
         <include refid="selectUserVo"/>
         where u.login_name = #{userName}
@@ -125,22 +136,16 @@
     </select>
 
     <select id="checkLoginNameUnique" parameterType="String" resultType="int">
-        select count(1)
-        from sys_user
-        where login_name = #{loginName}
-    </select>
+		select count(1) from sys_user where login_name=#{loginName}
+	</select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-        select user_id, phonenumber
-        from sys_user
-        where phonenumber = #{phonenumber}
-    </select>
+		select user_id, phonenumber from sys_user where phonenumber=#{phonenumber}
+	</select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-        select user_id, email
-        from sys_user
-        where email = #{email}
-    </select>
+		select user_id, email from sys_user where email=#{email}
+	</select>
 
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectUserVo"/>
@@ -148,10 +153,8 @@
     </select>
 
     <delete id="deleteUserById" parameterType="Long">
-        delete
-        from sys_user
-        where user_id = #{userId}
-    </delete>
+ 		delete from sys_user where user_id = #{userId}
+ 	</delete>
 
     <delete id="deleteUserByIds" parameterType="Long">
         update sys_user set del_flag = '2' where user_id in
@@ -160,7 +163,7 @@
         </foreach>
     </delete>
 
-    <update id="updateUser" parameterType="com.dimple.system.domain.SysUser">
+    <update id="updateUser" parameterType="SysUser">
         update sys_user
         <set>
             <if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
@@ -182,8 +185,7 @@
         where user_id = #{userId}
     </update>
 
-    <insert id="insertUser" parameterType="com.dimple.system.domain.SysUser" useGeneratedKeys="true"
-            keyProperty="userId">
+    <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
         <if test="userId != null and userId != 0">user_id,</if>
         <if test="deptId != null and deptId != 0">dept_id,</if>

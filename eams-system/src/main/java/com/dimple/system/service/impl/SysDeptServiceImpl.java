@@ -1,26 +1,27 @@
 package com.dimple.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.dimple.common.annotation.DataScope;
-import com.dimple.common.base.Ztree;
 import com.dimple.common.constant.UserConstants;
+import com.dimple.common.core.domain.Ztree;
 import com.dimple.common.exception.BusinessException;
 import com.dimple.common.utils.StringUtils;
 import com.dimple.system.domain.SysDept;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.mapper.SysDeptMapper;
 import com.dimple.system.service.ISysDeptService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @className: SysDeptServiceImpl
- * @description: 部门管理 服务实现
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysDeptServiceImpl
+ * @description 部门管理 服务实现
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService {
@@ -170,6 +171,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 结果
      */
     @Override
+    @Transactional
     public int updateDept(SysDept dept) {
         SysDept info = deptMapper.selectDeptById(dept.getParentId());
         if (StringUtils.isNotNull(info)) {
@@ -206,12 +208,12 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public void updateDeptChildren(Long deptId, String ancestors) {
         SysDept dept = new SysDept();
         dept.setParentId(deptId);
-        List<SysDept> children = deptMapper.selectDeptList(dept);
-        for (SysDept child : children) {
-            child.setAncestors(ancestors + "," + dept.getParentId());
+        List<SysDept> childrens = deptMapper.selectDeptList(dept);
+        for (SysDept children : childrens) {
+            children.setAncestors(ancestors + "," + dept.getParentId());
         }
-        if (children.size() > 0) {
-            deptMapper.updateDeptChildren(children);
+        if (childrens.size() > 0) {
+            deptMapper.updateDeptChildren(childrens);
         }
     }
 

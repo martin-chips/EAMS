@@ -8,11 +8,11 @@ import com.dimple.system.domain.SysDictData;
 import com.dimple.system.service.ISysDictDataService;
 
 /**
- * @className: DictService
- * @description: html调用 thymeleaf 实现字典读取
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className DictService
+ * @description RuoYi首创 html调用 thymeleaf 实现字典读取
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service("dict")
 public class DictService {

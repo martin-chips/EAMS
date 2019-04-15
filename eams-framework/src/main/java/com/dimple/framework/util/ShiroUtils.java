@@ -1,6 +1,5 @@
 package com.dimple.framework.util;
 
-import com.dimple.framework.shiro.realm.UserRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.mgt.RealmSecurityManager;
@@ -8,16 +7,18 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+
 import com.dimple.common.utils.StringUtils;
 import com.dimple.common.utils.bean.BeanUtils;
+import com.dimple.framework.shiro.realm.UserRealm;
 import com.dimple.system.domain.SysUser;
 
 /**
- * @className: ShiroUtils
- * @description: shiro 工具类
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ShiroUtils
+ * @description shiro 工具类
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class ShiroUtils {
     public static Subject getSubject() {

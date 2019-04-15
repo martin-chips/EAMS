@@ -4,11 +4,11 @@ import com.dimple.common.utils.MessageUtils;
 import com.dimple.common.utils.StringUtils;
 
 /**
- * @className: BaseException
- * @description: 基础异常
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className BaseException
+ * @description 基础异常
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;

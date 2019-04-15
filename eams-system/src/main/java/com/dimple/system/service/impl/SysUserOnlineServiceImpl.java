@@ -1,22 +1,22 @@
 package com.dimple.system.service.impl;
 
+import com.dimple.common.utils.DateUtils;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.system.domain.SysUserOnline;
+import com.dimple.system.mapper.SysUserOnlineMapper;
+import com.dimple.system.service.ISysUserOnlineService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 
-import com.dimple.system.domain.SysUserOnline;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.dimple.common.utils.DateUtils;
-import com.dimple.common.utils.StringUtils;
-import com.dimple.system.mapper.SysUserOnlineMapper;
-import com.dimple.system.service.ISysUserOnlineService;
-
 /**
- * @className: SysUserOnlineServiceImpl
- * @description: 在线用户 服务层处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysUserOnlineServiceImpl
+ * @description 在线用户 服务层处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService {

@@ -1,15 +1,15 @@
 package com.dimple.system.mapper;
 
-import java.util.List;
-
 import com.dimple.system.domain.SysConfig;
 
+import java.util.List;
+
 /**
- * @className: SysConfigMapper
- * @description: 参数配置 数据层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysConfigMapper
+ * @description 参数配置 数据层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface SysConfigMapper {
     /**

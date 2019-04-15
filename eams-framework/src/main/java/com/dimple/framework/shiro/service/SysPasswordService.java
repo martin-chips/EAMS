@@ -18,11 +18,11 @@ import com.dimple.framework.manager.factory.AsyncFactory;
 import com.dimple.system.domain.SysUser;
 
 /**
- * @className: SysPasswordService
- * @description: 登录密码方法
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysPasswordService
+ * @description 登录密码方法
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public class SysPasswordService {

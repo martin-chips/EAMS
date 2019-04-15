@@ -2,16 +2,16 @@ package com.dimple.system.service;
 
 import java.util.List;
 
-import com.dimple.common.base.Ztree;
+import com.dimple.common.core.domain.Ztree;
 import com.dimple.system.domain.SysDept;
 import com.dimple.system.domain.SysRole;
 
 /**
- * @className: ISysDeptService
- * @description: 部门管理 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ISysDeptService
+ * @description 部门管理 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ISysDeptService {
     /**

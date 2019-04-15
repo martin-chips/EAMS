@@ -6,11 +6,11 @@ import com.dimple.common.utils.Arith;
 import com.dimple.common.utils.DateUtils;
 
 /**
- * @className: Jvm
- * @description: JVM相关信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Jvm
+ * @description JVM相关信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Jvm {
     /**

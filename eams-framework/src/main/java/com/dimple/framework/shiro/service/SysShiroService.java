@@ -2,20 +2,20 @@ package com.dimple.framework.shiro.service;
 
 import java.io.Serializable;
 
-import com.dimple.framework.shiro.session.OnlineSession;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.dimple.common.utils.StringUtils;
+import com.dimple.framework.shiro.session.OnlineSession;
 import com.dimple.system.domain.SysUserOnline;
 import com.dimple.system.service.ISysUserOnlineService;
 
 /**
- * @className: SysShiroService
- * @description: 会话db操作处理
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className SysShiroService
+ * @description 会话db操作处理
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 @Component
 public class SysShiroService {

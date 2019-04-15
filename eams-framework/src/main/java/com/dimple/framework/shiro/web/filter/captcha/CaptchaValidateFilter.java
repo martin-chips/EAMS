@@ -11,11 +11,11 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.util.ShiroUtils;
 
 /**
- * @className: CaptchaValidateFilter
- * @description: 验证码过滤器
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className CaptchaValidateFilter
+ * @description 验证码过滤器
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class CaptchaValidateFilter extends AccessControlFilter {
     /**

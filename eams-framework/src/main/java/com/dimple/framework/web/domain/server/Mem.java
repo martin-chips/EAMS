@@ -3,11 +3,11 @@ package com.dimple.framework.web.domain.server;
 import com.dimple.common.utils.Arith;
 
 /**
- * @className: Mem
- * @description: 內存相关信息
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className Mem
+ * @description 內存相关信息
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public class Mem {
     /**

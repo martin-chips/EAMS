@@ -5,11 +5,11 @@ import java.util.List;
 import com.dimple.system.domain.SysPost;
 
 /**
- * @className: ISysPostService
- * @description: 岗位信息 服务层
- * @auther: Dimple
- * @Date: 2019/3/2
- * @Version: 1.0
+ * @className ISysPostService
+ * @description 岗位信息 服务层
+ * @auther Dimple
+ * @date 2019/3/13
+ * @Version 1.0
  */
 public interface ISysPostService {
     /**
