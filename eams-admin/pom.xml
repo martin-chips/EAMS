@@ -54,6 +54,12 @@
             <artifactId>eams-quartz</artifactId>
         </dependency>
 
+        <!--学生管理-->
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>eams-maintenance</artifactId>
+        </dependency>
+
 
     </dependencies>
 

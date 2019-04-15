@@ -186,6 +186,11 @@
                 <version>${eams.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.dimple</groupId>
+                <artifactId>eams-maintenance</artifactId>
+                <version>${eams.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -195,6 +200,7 @@
         <module>eams-system</module>
         <module>eams-quartz</module>
         <module>eams-common</module>
+        <module>eams-maintenance</module>
     </modules>
     <packaging>pom</packaging>
 
