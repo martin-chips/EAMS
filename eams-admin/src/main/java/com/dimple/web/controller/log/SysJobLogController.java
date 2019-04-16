@@ -42,7 +42,7 @@ public class SysJobLogController extends BaseController {
     }
 
     @RequiresPermissions("log:job:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysJobLog jobLog) {
         startPage();

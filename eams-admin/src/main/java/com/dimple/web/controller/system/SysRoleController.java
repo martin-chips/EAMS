@@ -49,7 +49,7 @@ public class SysRoleController extends BaseController {
     }
 
     @RequiresPermissions("system:role:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysRole role) {
         startPage();

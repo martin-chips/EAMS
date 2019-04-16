@@ -42,7 +42,7 @@ public class SysOperlogController extends BaseController {
     }
 
     @RequiresPermissions("log:operlog:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysOperLog operLog) {
         startPage();

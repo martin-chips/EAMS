@@ -42,7 +42,7 @@ public class SysDictTypeController extends BaseController {
         return prefix + "/type";
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @RequiresPermissions("system:dict:list")
     @ResponseBody
     public TableDataInfo list(SysDictType dictType) {

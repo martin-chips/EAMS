@@ -57,7 +57,7 @@ public class SysUserController extends BaseController {
     }
 
     @RequiresPermissions("system:user:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUser user) {
         startPage();

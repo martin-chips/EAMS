@@ -44,7 +44,7 @@ public class SysJobController extends BaseController {
     }
 
     @RequiresPermissions("monitor:job:list")
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysJob job) {
         startPage();
