@@ -37,6 +37,10 @@ public class UserConstants {
      * 部门正常状态
      */
     public static final String DEPT_NORMAL = "0";
+    /**
+     * 班级正常状态
+     */
+    public static final String PROFESSION_NORMAL = "1";
 
     /**
      * 用户名长度限制

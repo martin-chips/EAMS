@@ -9,7 +9,6 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.maintenance.domain.Profession;
 import com.dimple.maintenance.service.EamsProfessionService;
-import com.dimple.system.domain.SysDept;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,7 @@ public class EamsProfessionController extends BaseController {
     }
 
     @GetMapping("/add/{parentId}")
-    public String add(@PathVariable("parentId") Integer parentId, Model model) {
+    public String add(@PathVariable("parentId") Long parentId, Model model) {
         model.addAttribute("profession", professionService.selectProfessionById(parentId));
         return "maintenance/profession/add";
     }
@@ -65,7 +64,7 @@ public class EamsProfessionController extends BaseController {
     }
 
     @GetMapping("/edit/{profId}")
-    public String edit(@PathVariable Integer profId, Model model) {
+    public String edit(@PathVariable Long profId, Model model) {
         Profession profession = professionService.selectProfessionById(profId);
         if (StringUtils.isNotNull(profession) && 100L == profId) {
             //profession.setParentName("无");
@@ -88,7 +87,7 @@ public class EamsProfessionController extends BaseController {
     @RequiresPermissions("maintenance:profession:remove")
     @GetMapping("/remove/{profId}")
     @ResponseBody
-    public AjaxResult remove(@PathVariable Integer profId) {
+    public AjaxResult remove(@PathVariable Long profId) {
         int professionCount = professionService.selectProfessionCountById(profId);
         if (professionCount > 0) {
             return AjaxResult.warn("存在下级" + professionCount + "个,不允许删除");
@@ -101,7 +100,7 @@ public class EamsProfessionController extends BaseController {
     }
 
     /**
-     * 加载部门列表树
+     * 加载班级列表树
      */
     @GetMapping("/treeData")
     @ResponseBody
@@ -109,4 +108,14 @@ public class EamsProfessionController extends BaseController {
         List<Ztree> ztrees = professionService.selectProfessionTree(new Profession());
         return ztrees;
     }
+
+    /**
+     * 选择部门树
+     */
+    @GetMapping("/selectProfessionTree/{profId}")
+    public String selectDeptTree(@PathVariable Long profId, Model model) {
+        model.addAttribute("profession", professionService.selectProfessionById(profId));
+        return "maintenance/profession/tree";
+    }
+
 }

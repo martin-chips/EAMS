@@ -3,9 +3,12 @@ package com.dimple.quartz.domain;
 import com.dimple.common.annotation.Excel;
 import com.dimple.common.constant.ScheduleConstants;
 import com.dimple.common.core.domain.BaseEntity;
+import com.dimple.common.utils.StringUtils;
+import com.dimple.quartz.util.CronUtils;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @className SysJob
@@ -71,4 +74,16 @@ public class SysJob extends BaseEntity implements Serializable {
      */
     @Excel(name = "任务状态", readConverterExp = "0=正常,1=暂停")
     private String status;
+
+    /**
+     * 获取下一次执行的时间
+     *
+     * @return 下一次执行的时间
+     */
+    public Date getNextValidTime() {
+        if (StringUtils.isNotEmpty(cronExpression)) {
+            return CronUtils.getNextExecution(cronExpression);
+        }
+        return null;
+    }
 }

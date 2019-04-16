@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-sm-12 search-collapse">
             <form id="user-form">
-                <input type="hidden" id="deptId" name="deptId">
+                <input type="hidden" id="profId" name="profId">
                 <input type="hidden" id="parentId" name="parentId">
                 <div class="select-list">
                     <ul>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">
+            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="maintenance:student:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()"
@@ -105,7 +105,7 @@
     var removeFlag = [[${@permission.hasPermi('maintenance:student:remove')}]];
     var resetPwdFlag = [[${@permission.hasPermi('maintenance:student:resetPwd')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "maintenance/user";
+    var prefix = ctx + "maintenance/student";
 
     $(function () {
         var panehHidden = false;
@@ -128,7 +128,7 @@
             importTemplateUrl: prefix + "/importTemplate",
             sortName: "createTime",
             sortOrder: "desc",
-            modalName: "用户",
+            modalName: "学生",
             columns: [{
                 checkbox: true
             },
@@ -183,7 +183,7 @@
     }
 
     function queryDeptTree() {
-        var url = ctx + "system/dept/treeData";
+        var url = ctx + "maintenance/profession/treeData";
         var options = {
             url: url,
             expandLevel: 2,
@@ -192,7 +192,7 @@
         $.tree.init(options);
 
         function zOnClick(event, treeId, treeNode) {
-            $("#deptId").val(treeNode.id);
+            $("#profId").val(treeNode.id);
             $("#parentId").val(treeNode.pId);
             $.table.search();
         }

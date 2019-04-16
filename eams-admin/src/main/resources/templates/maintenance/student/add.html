@@ -2,30 +2,30 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: select2-css"/>
-    <th:block th:include="include :: header('新增用户')"/>
+    <th:block th:include="include :: header('新增学生')"/>
 </head>
 <body>
 <div class="form-content">
-    <form id="form-user-add" class="form-horizontal">
-        <input name="deptId" type="hidden" id="treeId"/>
+    <form id="form-student-add" class="form-horizontal">
+        <input name="profId" type="hidden" id="treeId"/>
         <h4 class="form-header h4">基本信息</h4>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户名称：</label>
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生名称：</label>
                     <div class="col-sm-8">
-                        <input name="userName" autocomplete="off" placeholder="请输入用户名称" class="form-control" type="text"
+                        <input name="stuName" autocomplete="off" placeholder="请输入学生名称" class="form-control" type="text"
                                maxlength="30" required>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>归属部门：</label>
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>归属班级：</label>
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <input name="deptName" onclick="selectDeptTree()" id="treeName" type="text"
-                                   placeholder="请选择归属部门" class="form-control" required>
+                            <input name="profName" onclick="selectProfessionTree()" id="treeName" type="text"
+                                   placeholder="请选择归属班级" class="form-control" required>
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
@@ -35,9 +35,29 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学号：</label>
+                    <div class="col-sm-8">
+                        <input name="stuNum" autocomplete="off" placeholder="请输入学号" class="form-control"
+                               type="text" maxlength="11" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>身份证号码：</label>
+                    <div class="col-sm-8">
+                        <input name="idCard" autocomplete="off" class="form-control" type="text" maxlength="50"
+                               placeholder="请输入身份证号码" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
                     <label class="col-sm-4 control-label"><span style="color: red; ">*</span>手机号码：</label>
                     <div class="col-sm-8">
-                        <input name="phonenumber" autocomplete="off" placeholder="请输入手机号码" class="form-control"
+                        <input name="phoneNum" autocomplete="off" placeholder="请输入手机号码" class="form-control"
                                type="text" maxlength="11" required>
                     </div>
                 </div>
@@ -101,32 +121,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <label class="col-xs-2 control-label">岗位：</label>
-                    <div class="col-xs-4">
-                        <select id="post" class="form-control select2-hidden-accessible" multiple="">
-                            <option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"
-                                    th:disabled="${post.status == '1'}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <label class="col-xs-2 control-label">角色：</label>
-                    <div class="col-xs-10">
-                        <label th:each="role:${roles}" class="check-box">
-                            <input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}"
-                                   th:disabled="${role.status == '1'}">
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
         <h4 class="form-header h4">其他信息</h4>
         <div class="row">
             <div class="col-sm-12">
@@ -152,27 +146,32 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: select2-js"/>
 <script>
-    var prefix = ctx + "system/user";
+    var prefix = ctx + "maintenance/student";
 
     $("#form-user-add").validate({
         onkeyup: false,
         rules: {
+          /*  stuName: {
+                minlength: 2,
+                maxlength: 20,
+            },
+            stuNum: {
+                minlength: 2,
+                maxlength: 20,
+                number: true
+            },
+            idCard: {
+                minlength: 18,
+                maxlength: 18,
+                number: true
+            },
+            phoneNum: {
+                isPhone: 11,
+                number: true
+            },
             loginName: {
                 minlength: 2,
                 maxlength: 20,
-                remote: {
-                    url: prefix + "/checkLoginNameUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        name: function () {
-                            return $.common.trim($("#loginName").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
             },
             password: {
                 minlength: 5,
@@ -180,73 +179,32 @@
             },
             email: {
                 email: true,
-                remote: {
-                    url: prefix + "/checkEmailUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        name: function () {
-                            return $.common.trim($("#email").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
-            },
-            phonenumber: {
-                isPhone: true,
-                remote: {
-                    url: prefix + "/checkPhoneUnique",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        name: function () {
-                            return $.common.trim($("#phonenumber").val());
-                        }
-                    },
-                    dataFilter: function (data, type) {
-                        return $.validate.unique(data);
-                    }
-                }
-            },
+            },*/
         },
-        messages: {
-            "loginName": {
-                remote: "用户已经存在"
-            },
-            "email": {
-                remote: "Email已经存在"
-            },
-            "phonenumber": {
-                remote: "手机号码已经存在"
-            }
-        },
+        messages: {},
         focusCleanup: true
     });
 
     function submitHandler() {
         if ($.validate.form()) {
-            var data = $("#form-user-add").serializeArray();
+            var data = $("#form-student-add").serializeArray();
             var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
-            var roleIds = $.form.selectCheckeds("role");
             var postIds = $.form.selectSelects("post");
             data.push({"name": "status", "value": status});
-            data.push({"name": "roleIds", "value": roleIds});
-            data.push({"name": "postIds", "value": postIds});
+            data.push({"name": "profId", "value": postIds});
             $.operate.saveTab(prefix + "/add", data);
         }
     }
 
-    /*用户管理-新增-选择部门树*/
-    function selectDeptTree() {
+    /*学生管理-新增-选择班级树*/
+    function selectProfessionTree() {
         var treeId = $("#treeId").val();
-        var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
-        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var profId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + profId;
         var options = {
             title: '选择部门',
             width: "380",
-            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            url: ctx + "maintenance/profession/selectProfessionTree/" + profId,
             callBack: doSubmit
         };
         $.modal.openOptions(options);

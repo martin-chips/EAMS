@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.maintenance.mapper.EamsProfessionMapper">
+
+    <resultMap type="com.dimple.maintenance.domain.Profession" id="EamsProfessionMap">
+        <result property="profId" column="prof_id"/>
+        <result property="profName" column="prof_name"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="leader" column="leader"/>
+        <result property="phone" column="phone"/>
+        <result property="status" column="status"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="email" column="email"/>
+        <result property="type" column="type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"
+        />
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectProfessionById" resultMap="EamsProfessionMap">
+        select
+          prof_id, prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by, update_time
+        from eams.eams_profession
+        where prof_id = #{id}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectProfessionList" resultMap="EamsProfessionMap">
+        select
+        prof_id, prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by,
+        update_time
+        from eams.eams_profession
+        <where>
+            <if test="profId != null">
+                and prof_id = #{id}
+            </if>
+            <if test="profName != null and profName != ''">
+                and prof_name = #{profName}
+            </if>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="leader != null and leader != ''">
+                and leader = #{leader}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+    <select id="selectProfessionCountById" resultType="java.lang.Integer">
+        select count(*)from eams_profession where parent_id=#{profId}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertProfession" keyProperty="id" useGeneratedKeys="true">
+        insert into eams.eams_profession(prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by, update_time)
+        values (#{profName}, #{orderNum}, #{leader}, #{phone}, #{status}, #{parentId}, #{email}, #{type}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateProfession">
+        update eams.eams_profession
+        <set>
+            <if test="profName != null and profName != ''">
+                prof_name = #{profName},
+            </if>
+            <if test="orderNum != null">
+                order_num = #{orderNum},
+            </if>
+            <if test="leader != null and leader != ''">
+                leader = #{leader},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateProfessionChildren">
+        update eams_profession set ancestors =
+        <foreach collection="professions" item="item" index="index"
+                 separator=" " open="case dept_id" close="end">
+            when #{item.profId} then #{item.ancestors}
+        </foreach>
+        where dept_id in
+        <foreach collection="professions" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.profId}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteProfessionById">
+        delete from eams.eams_profession where prof_id = #{id}
+    </delete>
+    <delete id="deleteProfessionByIds">
+        delete from eams_profession where prof_id in
+        <foreach collection="array" close=")" open="(" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
