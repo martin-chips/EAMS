@@ -38,25 +38,13 @@
                 and prof_id = #{id}
             </if>
             <if test="profName != null and profName != ''">
-                and prof_name = #{profName}
-            </if>
-            <if test="orderNum != null">
-                and order_num = #{orderNum}
-            </if>
-            <if test="leader != null and leader != ''">
-                and leader = #{leader}
-            </if>
-            <if test="phoneNum != null and phoneNum != ''">
-                and phone_num = #{phoneNum}
+                and prof_name like concat('%',#{profName},"%")
             </if>
             <if test="status != null and status != ''">
                 and status = #{status}
             </if>
             <if test="parentId != null">
                 and parent_id = #{parentId}
-            </if>
-            <if test="type != null and type != ''">
-                and type = #{type}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

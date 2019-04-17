@@ -33,10 +33,13 @@
         from eams_policy
         <where>
             <if test="polName != null and polName != ''">
-                and pol_name = #{polName}
+                and pol_name like concat('%',#{polName},'%')
             </if>
             <if test="parentId != null">
                 and parent_id = #{parentId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

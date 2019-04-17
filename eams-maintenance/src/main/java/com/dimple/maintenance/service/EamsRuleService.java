@@ -61,4 +61,12 @@ public interface EamsRuleService {
      */
     int deleteRuleByIds(String ruleIds);
 
+    /**
+     * 根据Id切换状态
+     *
+     * @param status 需要切换到的状态
+     * @param ruleId id
+     * @return 受影响的行数
+     */
+    int updateRuleStatusById(String status, Long ruleId);
 }

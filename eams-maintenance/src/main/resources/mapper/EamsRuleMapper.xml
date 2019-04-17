@@ -3,66 +3,77 @@
 <mapper namespace="com.dimple.maintenance.mapper.EamsRuleMapper">
 
     <resultMap type="com.dimple.maintenance.domain.Rule" id="EamsRuleMap">
-        <result property="ruleId" column="rule_id" jdbcType="LONG INTEGER"/>
-        <result property="openTime" column="open_time" jdbcType="TIMESTAMP"/>
-        <result property="closeTime" column="close_time" jdbcType="TIMESTAMP"/>
-        <result property="polId" column="pol_id" jdbcType="INTEGER"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="ruleId" column="rule_id"/>
+        <result property="openTime" column="open_time"/>
+        <result property="closeTime" column="close_time"/>
+        <result property="polId" column="pol_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="ruleName" column="rule_name"/>
+        <result property="status" column="status"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectRuleById" resultMap="EamsRuleMap">
         select
-          rule_id, open_time, close_time, pol_id, create_by, create_time, update_by, update_time
-        from eams.eams_rule
+          rule_id, open_time, close_time, pol_id, create_by, create_time, update_by, update_time,rule_name,status,(select pol_name from eams_policy where eams_policy.pol_id =eams_rule.pol_id ) pol_name
+        from eams_rule
         where rule_id = #{ruleId}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectRuleList" resultMap="EamsRuleMap">
         select
-        rule_id, open_time, close_time, pol_id, create_by, create_time, update_by, update_time
-        from eams.eams_rule
+        rule_id, open_time, close_time, pol_id, create_by, create_time,rule_name,status
+        from eams_rule
         <where>
             <if test="ruleId != null">
                 and rule_id = #{ruleId}
             </if>
-            <if test="openTime != null">
-                and open_time = #{openTime}
-            </if>
-            <if test="closeTime != null">
-                and close_time = #{closeTime}
-            </if>
             <if test="polId != null">
                 and pol_id = #{polId}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
+            <if test="ruleName != null and ruleName != ''">
+                and rule_name like concat('%',#{ruleName},'%')
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
+            <if test="status != null and status != ''">
+                and status = #{status}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insertRule" keyProperty="ruleId" useGeneratedKeys="true">
-        insert into eams.eams_rule(open_time, close_time, pol_id, create_by, create_time, update_by, update_time)
-        values (#{openTime}, #{closeTime}, #{polId}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+        insert into eams_rule (
+        <if test="ruleName != null and ruleName != ''">rule_name,</if>
+        <if test="openTime != null ">open_time,</if>
+        <if test="closeTime != null ">close_time,</if>
+        <if test="polId != null and polId != ''">pol_id,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="ruleName != null and ruleName != ''">#{ruleName},</if>
+        <if test="openTime != null ">#{openTime},</if>
+        <if test="closeTime != null ">#{closeTime},</if>
+        <if test="polId != null and polId != ''">#{polId},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->
     <update id="updateRule">
-        update eams.eams_rule
+        update eams_rule
         <set>
             <if test="openTime != null">
                 open_time = #{openTime},
@@ -73,25 +84,27 @@
             <if test="polId != null">
                 pol_id = #{polId},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
+            <if test="ruleName != null">
+                rule_name = #{ruleName},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
+            <if test="status != null">
+                status = #{status},
             </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
+            update_time = sysdate()
         </set>
         where rule_id = #{ruleId}
     </update>
 
+    <update id="updateRuleStatusById">
+        update eams_rule set status=#{status} where rule_id=#{ruleId}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteRuleById">
-        delete from eams.eams_rule where rule_id = #{ruleId}
+        delete from eams_rule where rule_id = #{ruleId}
     </delete>
 
     <delete id="deleteRuleByIds">

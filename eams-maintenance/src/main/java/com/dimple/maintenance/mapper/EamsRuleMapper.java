@@ -1,6 +1,7 @@
 package com.dimple.maintenance.mapper;
 
 import com.dimple.maintenance.domain.Rule;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -61,4 +62,12 @@ public interface EamsRuleMapper {
      */
     int deleteRuleByIds(Long[] ids);
 
+    /**
+     * 根据rule的id切换状态
+     *
+     * @param status 状态
+     * @param ruleId id
+     * @return 受影响的行数
+     */
+    int updateRuleStatusById(@Param("status") String status, @Param("ruleId") Long ruleId);
 }

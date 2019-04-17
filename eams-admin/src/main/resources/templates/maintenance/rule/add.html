@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增规则')"/>
+</head>
+<body>
+<div class="form-content">
+    <form id="form-rule-add" class="form-horizontal">
+        <input id="treeId" name="polId" type="hidden" value="100"/>
+
+        <h4 class="form-header h4">基本信息</h4>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>规则名称：</label>
+                    <div class="col-sm-8">
+                        <input name="ruleName" autocomplete="off" placeholder="请输入规则名称" class="form-control" type="text"
+                               maxlength="30" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户状态：</label>
+                    <div class="col-sm-8">
+                        <div class="onoffswitch">
+                            <input type="checkbox" th:checked="true" class="onoffswitch-checkbox" id="status">
+                            <label class="onoffswitch-label" for="status">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>开闭时间：</label>
+                    <div class="col-sm-8">
+                        <div class="layui-input-inline">
+                            <input type="text" class="form-control" id="rangeTime" name="time" readonly="true" required
+                                   placeholder=" ~ ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label "><span style="color: red; ">*</span>指定策略：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input class="form-control" type="text" onclick="selectDeptTree()" id="treeName" placeholder="请指定需要选择的策略"
+                                   readonly="true">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+        </button>&nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "maintenance/rule";
+
+    $("#form-user-add").validate({
+        onkeyup: false,
+        rules: {
+            ruleName: {
+                minlength: 2,
+                maxlength: 20,
+            },
+        },
+        messages: {},
+        focusCleanup: true
+    });
+
+    /*规则管理-新增-选择策略树*/
+    function selectDeptTree() {
+        var options = {
+            title: '策略选择',
+            width: "380",
+            url: "/maintenance/policy/selectPolicyTree/" + $("#treeId").val(),
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var split = $("input[name='time']").val().split("~");
+            var data = {
+                "status": $("input[id='status']").is(':checked') == true ? 0 : 1,
+                "ruleName": $("input[name='ruleName']").val(),
+                "openTime": $.trim(split[0]),
+                "closeTime": $.trim(split[1]),
+                "polId": $("input[name='polId']").val()
+            };
+            $.operate.saveTab(prefix + "/add", data);
+        }
+    }
+
+    function doSubmit(index, layero) {
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowCustomLevel(tree, 2)) {
+            var body = layer.getChildFrame('body', index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            layer.close(index);
+        }
+    }
+</script>
+
+</body>
+</html>

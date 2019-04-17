@@ -38,26 +38,11 @@
         s.create_time, s.update_by, s.update_time,remark
         from eams.eams_student s left join eams_profession p on s.prof_id = p.prof_id
         <where>
-            <if test="stuId != null">
-                and s.stu_id = #{stuId}
-            </if>
             <if test="stuName != null and stuName != ''">
-                and s.stu_name = #{stuName}
+                and s.stu_name like concat('%',#{stuName},'%')
             </if>
             <if test="stuNum != null and stuNum != ''">
                 and s.stu_num = #{stuNum}
-            </if>
-            <if test="sex != null and sex != ''">
-                and s.sex = #{sex}
-            </if>
-            <if test="email != null and email != ''">
-                and s.email = #{email}
-            </if>
-            <if test="phoneNum != null and phoneNum != ''">
-                and s.phone_num = #{phoneNum}
-            </if>
-            <if test="idCard != null and idCard != ''">
-                and s.id_card = #{idCard}
             </if>
             <if test="status != null and status != ''">
                 and s.status = #{status}
@@ -74,6 +59,7 @@
             </if>
         </where>
     </select>
+
     <select id="checkProfessionExistStudent" resultType="java.lang.Integer">
             select count(*) from eams_student where prof_id=#{profId}
     </select>

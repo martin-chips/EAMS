@@ -1107,6 +1107,17 @@
                     return row[_column];
                 }).join();
             },
+            // 不允许level节点父节点选择
+            notAllowCustomLevel: function (_tree, level) {
+                var nodes = _tree.getSelectedNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                    if (nodes[i].level == level) {
+                        $.modal.msgError("不能选择此节点（" + nodes[i].name + "）");
+                        return false;
+                    }
+                }
+                return true;
+            },
             // 不允许根父节点选择
             notAllowParents: function (_tree) {
                 var nodes = _tree.getSelectedNodes();

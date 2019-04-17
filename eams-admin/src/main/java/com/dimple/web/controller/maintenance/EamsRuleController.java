@@ -10,6 +10,7 @@ import com.dimple.maintenance.domain.Rule;
 import com.dimple.maintenance.service.EamsRuleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * @Date: 2019/4/17
  * @Version: 1.0
  */
-@RestController
+@Controller
 @RequestMapping("/maintenance/rule")
 public class EamsRuleController extends BaseController {
     @Autowired
@@ -37,7 +37,7 @@ public class EamsRuleController extends BaseController {
     @RequiresPermissions("maintenance:rule:view")
     @GetMapping()
     public String student() {
-        return "maintenance/rule/student";
+        return "maintenance/rule/rule";
     }
 
     @RequiresPermissions("maintenance:rule:list")
@@ -97,4 +97,9 @@ public class EamsRuleController extends BaseController {
         return toAjax(ruleService.deleteRuleByIds(ids));
     }
 
+    @PutMapping("/changeStatus")
+    @ResponseBody
+    public AjaxResult status(Rule rule) {
+        return toAjax(ruleService.updateRule(rule));
+    }
 }

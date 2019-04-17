@@ -67,6 +67,17 @@ $(function () {
             });
         });
     }
+    //时间范围选择
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //日期范围
+        laydate.render({
+            elem: '#rangeTime'
+            ,type: 'datetime'
+            , range: "~"
+        });
+    });
+
     // laydate time-input 时间控件绑定
     if ($(".time-input").length > 0) {
         layui.use('laydate', function () {

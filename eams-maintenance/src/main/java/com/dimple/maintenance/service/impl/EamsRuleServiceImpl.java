@@ -54,4 +54,9 @@ public class EamsRuleServiceImpl implements EamsRuleService {
     public int deleteRuleByIds(String ruleIds) {
         return ruleMapper.deleteRuleByIds(Convert.toLongArray(ruleIds));
     }
+
+    @Override
+    public int updateRuleStatusById(String status, Long ruleId) {
+        return ruleMapper.updateRuleStatusById(status,ruleId);
+    }
 }
