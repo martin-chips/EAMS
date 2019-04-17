@@ -7,9 +7,9 @@ import java.util.List;
 
 /**
  * @className EamsProfessionService
- * @description 学院，年级，专业，班级的联动表(Profession)表服务接口
+ * @description 专业Service
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 public interface EamsProfessionService {

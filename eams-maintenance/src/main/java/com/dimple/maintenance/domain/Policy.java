@@ -4,10 +4,11 @@ import com.dimple.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 策略表(Policy)实体类
- *
- * @author makejava
- * @since 2019-04-17 11:35:25
+ * @className Policy
+ * @description 策略表(Policy)实体类
+ * @auther Dimple
+ * @date 2019/4/17
+ * @Version 1.0
  */
 @Data
 public class Policy extends BaseEntity {

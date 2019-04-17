@@ -5,9 +5,9 @@ import lombok.Data;
 
 /**
  * @className Student
- * @description 学生表(Student)实体类
+ * @description 学生表
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 @Data

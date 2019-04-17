@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * @className EamsStudentServiceImpl
- * @description 学生表(Student)表服务实现类
+ * @description EamsStudentServiceImpl
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 @Service

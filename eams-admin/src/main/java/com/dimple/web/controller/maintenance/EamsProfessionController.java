@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-
 /**
- * 学生表(Student)表控制层
- *
- * @author makejava
- * @since 2019-04-15 21:25:51
+ * @className: EamsPolicyController
+ * @description: 学生表(Student)表控制层
+ * @auther: Dimple
+ * @Date: 2019/4/17
+ * @Version: 1.0
  */
 @Controller
 @RequestMapping("/maintenance/profession")

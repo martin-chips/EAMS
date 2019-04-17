@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * @className EamsStudentService
- * @description 学生表(Student)表服务接口
+ * @description 学生表
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 public interface EamsStudentService {

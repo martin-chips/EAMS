@@ -7,9 +7,9 @@ import java.util.List;
 
 /**
  * @className EamsProfessionMapper
- * @description 学院，年级，专业，班级的联动表(Profession)表数据库访问层
+ * @description EamsProfessionMapper
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 public interface EamsProfessionMapper {

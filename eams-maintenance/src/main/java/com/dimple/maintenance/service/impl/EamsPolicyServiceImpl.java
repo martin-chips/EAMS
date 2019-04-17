@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 策略表(Policy)表服务实现类
- *
- * @author makejava
- * @since 2019-04-17 11:35:26
+ * @className EamsPolicyServiceImpl
+ * @description 策略表(Policy)表服务实现类
+ * @auther Dimple
+ * @date 2019/4/17
+ * @Version 1.0
  */
 @Service
 public class EamsPolicyServiceImpl implements EamsPolicyService {

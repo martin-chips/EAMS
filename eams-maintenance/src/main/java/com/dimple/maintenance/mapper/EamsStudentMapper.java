@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  * @className EamsStudentMapper
- * @description 学生表(Student)表数据库访问层
+ * @description EamsStudentMapper
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 public interface EamsStudentMapper {

@@ -6,10 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 策略表(Policy)表数据库访问层
- *
- * @author makejava
- * @since 2019-04-17 11:35:26
+ * @className EamsPolicyMapper
+ * @description 策略表(Policy)表数据库访问层
+ * @auther Dimple
+ * @date 2019/4/17
+ * @Version 1.0
  */
 public interface EamsPolicyMapper {
 

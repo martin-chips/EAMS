@@ -5,9 +5,9 @@ import lombok.Data;
 
 /**
  * @className Profession
- * @description 学院，年级，专业，班级的联动表(Profession)实体类
+ * @description Profession
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 @Data

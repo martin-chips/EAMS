@@ -18,9 +18,9 @@ import java.util.List;
 
 /**
  * @className EamsProfessionServiceImpl
- * @description 学院，年级，专业，班级的联动表(Profession)表服务实现类
+ * @description EamsProfessionServiceImpl
  * @auther Dimple
- * @date 2019/4/15
+ * @date 2019/4/17
  * @Version 1.0
  */
 @Service
