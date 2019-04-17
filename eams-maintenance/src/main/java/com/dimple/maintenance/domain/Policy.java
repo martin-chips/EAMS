@@ -3,8 +3,6 @@ package com.dimple.maintenance.domain;
 import com.dimple.common.core.domain.BaseEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * 策略表(Policy)实体类
  *
@@ -37,7 +35,15 @@ public class Policy extends BaseEntity {
      **/
     private Double score;
     /**
+     * 状态
+     */
+    private String status;
+    /**
      * 备注
      **/
     private String remark;
+    /**
+     * 上级菜单的名称
+     */
+    private String parentName;
 }

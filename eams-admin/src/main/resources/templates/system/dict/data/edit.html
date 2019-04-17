@@ -93,7 +93,7 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	        	$.operate.save(prefix + "/edit", $('#form-dict-edit').serialize());
+	        	$.operate.savePut(prefix + "/edit", $('#form-dict-edit').serialize());
 	        }
 	    }
 	</script>

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增部门')"/>
+    <th:block th:include="include :: header('编辑班级')"/>
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-profession-update">
         <input id="treeId" name="parentId" type="hidden" th:value="${profession.parentId}"/>
-        <input  name="profId" type="hidden" th:value="${profession.profId}"/>
+        <input name="profId" type="hidden" th:value="${profession.profId}"/>
         <div class="form-group">
             <label class="col-sm-3 control-label ">上级：</label>
             <div class="col-sm-8">
                 <div class="input-group">
-                    <input class="form-control" type="text" onclick="selectDeptTree()" id="treeName" readonly="true"
+                    <input class="form-control" type="text" onclick="selectProfessionTree()" id="treeName"
+                           readonly="true"
                            th:value="${profession.parentName}">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 </div>
@@ -90,15 +91,20 @@
         }
     }
 
-    /*部门管理-新增-选择父部门树*/
-    function selectDeptTree() {
-        var options = {
-            title: '部门选择',
-            width: "380",
-            url: prefix + "/selectProfessionTree/" + $("#treeId").val(),
-            callBack: doSubmit
-        };
-        $.modal.openOptions(options);
+    /*班级管理-新增-选择父部门树*/
+    function selectProfessionTree() {
+        var profId = $("#treeId").val();
+        if (profId > 0) {
+            var options = {
+                title: '班级选择',
+                width: "380",
+                url: prefix + "/selectProfessionTree/" + $("#treeId").val(),
+                callBack: doSubmit
+            };
+            $.modal.openOptions(options);
+        } else {
+            $.modal.alertError("父级不能选择");
+        }
     }
 
     function doSubmit(index, layero) {

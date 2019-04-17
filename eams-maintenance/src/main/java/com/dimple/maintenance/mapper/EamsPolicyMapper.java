@@ -1,6 +1,7 @@
 package com.dimple.maintenance.mapper;
 
 import com.dimple.maintenance.domain.Policy;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -59,4 +60,20 @@ public interface EamsPolicyMapper {
      * @return 影响行数
      */
     int deletePolicyByIds(Long[] polIds);
+
+    /**
+     * 获取下级策略的个数
+     *
+     * @param polId id
+     * @return 个数
+     */
+    int selectPolicyCountByParentId(Long polId);
+
+    /**
+     * 更新子节点的访问路径
+     *
+     * @param childrens 子节点的集合
+     * @return 受影响的行数
+     */
+    int updatePolicyChildren(@Param("policies") List<Policy> childrens);
 }

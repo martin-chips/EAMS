@@ -131,7 +131,7 @@
         var menuIds = $.tree.getCheckedNodes();
         $.ajax({
             cache: true,
-            type: "POST",
+            type: "put",
             url: ctx + "system/role/edit",
             data: {
                 "roleId": roleId,

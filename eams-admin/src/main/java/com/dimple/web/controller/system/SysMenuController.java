@@ -1,16 +1,5 @@
 package com.dimple.web.controller.system;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.annotation.Log;
 import com.dimple.common.core.controller.BaseController;
 import com.dimple.common.core.domain.AjaxResult;
@@ -20,6 +9,18 @@ import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysMenu;
 import com.dimple.system.domain.SysRole;
 import com.dimple.system.service.ISysMenuService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @className SysMenuController
@@ -112,7 +113,7 @@ public class SysMenuController extends BaseController {
      */
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:menu:edit")
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(SysMenu menu) {
         menu.setUpdateBy(ShiroUtils.getLoginName());

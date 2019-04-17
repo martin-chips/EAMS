@@ -1,5 +1,6 @@
 package com.dimple.maintenance.service;
 
+import com.dimple.common.core.domain.Ztree;
 import com.dimple.maintenance.domain.Policy;
 
 import java.util.List;
@@ -52,4 +53,19 @@ public interface EamsPolicyService {
      */
     int deletePolicyById(Long polId);
 
+    /**
+     * 获取下级策略的个数
+     *
+     * @param polId 当前策略的id
+     * @return 下级策略的个数
+     */
+    int selectPolicyCountById(Long polId);
+
+    /**
+     * 获取策略树
+     *
+     * @param policy 带有策略条件的策略
+     * @return 策略树
+     */
+    List<Ztree> selectPolicyTree(Policy policy);
 }

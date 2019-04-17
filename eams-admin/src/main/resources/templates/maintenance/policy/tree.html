@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('班级树选择')"/>
+    <th:block th:include="include :: header('部门树选择')"/>
     <th:block th:include="include :: ztree-css"/>
 </head>
 <style>
@@ -15,8 +15,8 @@
     }
 </style>
 <body class="hold-transition box box-main">
-<input id="treeId" name="treeId" type="hidden" th:value="${profession.profId}"/>
-<input id="treeName" name="treeName" type="hidden" th:value="${profession.profName}"/>
+<input id="treeId" name="treeId" type="hidden" th:value="${policy.polId}"/>
+<input id="treeName" name="treeName" type="hidden" th:value="${policy.polName}"/>
 <div class="wrapper">
     <div class="treeShowHideButton" onclick="$.tree.toggleSearch();">
         <label id="btnShow" title="显示搜索" style="display:none;">︾</label>
@@ -36,7 +36,7 @@
 <th:block th:include="include :: ztree-js"/>
 <script th:inline="javascript">
     $(function () {
-        var url = ctx + "maintenance/profession/treeData";
+        var url = ctx + "maintenance/policy/treeData";
         var options = {
             url: url,
             expandLevel: 2,

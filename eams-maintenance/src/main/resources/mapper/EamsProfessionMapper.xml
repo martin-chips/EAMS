@@ -65,6 +65,7 @@
                 AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+        order by order_num
     </select>
     <select id="selectProfessionCountById" resultType="java.lang.Integer">
         select count(*) from eams_profession where parent_id=#{profId}

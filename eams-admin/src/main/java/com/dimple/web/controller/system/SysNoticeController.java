@@ -1,16 +1,5 @@
 package com.dimple.web.controller.system;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.dimple.common.annotation.Log;
 import com.dimple.common.core.controller.BaseController;
 import com.dimple.common.core.domain.AjaxResult;
@@ -19,6 +8,18 @@ import com.dimple.common.enums.BusinessType;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysNotice;
 import com.dimple.system.service.ISysNoticeService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @className SysNoticeController
@@ -87,7 +88,7 @@ public class SysNoticeController extends BaseController {
      */
     @RequiresPermissions("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(SysNotice notice) {
         notice.setUpdateBy(ShiroUtils.getLoginName());

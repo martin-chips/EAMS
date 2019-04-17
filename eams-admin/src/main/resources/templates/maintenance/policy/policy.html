@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('班级列表')"/>
+    <th:block th:include="include :: header('部门列表')"/>
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -11,7 +11,7 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            名称：<input type="text" name="deptName"/>
+                            名称：<input type="text" name="polName"/>
                         </li>
                         <li>
                             状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
@@ -32,10 +32,10 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add(100)" shiro:hasPermission="maintenance:profession:add">
+            <a class="btn btn-success" onclick="$.operate.add(100)" shiro:hasPermission="maintenance:policy:add">
                 <i class="fa fa-plus"></i> 新增
             </a>
-            <a class="btn btn-primary" onclick="$.operate.edit()" shiro:hasPermission="maintenance:profession:edit">
+            <a class="btn btn-primary" onclick="$.operate.edit()" shiro:hasPermission="maintenance:policy:edit">
                 <i class="fa fa-edit"></i> 修改
             </a>
             <a class="btn btn-info" id="expandAllBtn">
@@ -49,31 +49,31 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
-    var addFlag = [[${@permission.hasPermi('maintenance:profession:add')}]];
-    var editFlag = [[${@permission.hasPermi('maintenance:profession:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('maintenance:profession:remove')}]];
+    var addFlag = [[${@permission.hasPermi('maintenance:policy:add')}]];
+    var editFlag = [[${@permission.hasPermi('maintenance:policy:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('maintenance:policy:remove')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "maintenance/profession"
+    var prefix = ctx + "maintenance/policy"
 
     $(function () {
         var options = {
-            code: "profId",
+            code: "polId",
             parentCode: "parentId",
-            uniqueId: "profId",
+            uniqueId: "polId",
             url: prefix + "/list",
             createUrl: prefix + "/add/{id}",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove/{id}",
-            modalName: "班级",
+            modalName: "策略",
             columns: [{
                 field: 'selectItem',
                 radio: true
             },
                 {
-                    field: 'profName',
+                    field: 'polName',
                     title: '名称',
                     align: "left",
-                    width: "20%"
+                    width: "40%"
                 },
                 {
                     field: 'orderNum',
@@ -81,18 +81,8 @@
                     align: "left"
                 },
                 {
-                    field: 'leader',
-                    title: '负责人',
-                    align: "left"
-                },
-                {
-                    field: 'phoneNum',
-                    title: '负责人电话',
-                    align: "left"
-                },
-                {
-                    field: 'email',
-                    title: '负责人邮箱',
+                    field: 'score',
+                    title: '分值',
                     align: "left"
                 },
                 {
@@ -114,9 +104,9 @@
                     formatter: function (value, row, index) {
                         if (row.parentId != 0) {
                             var actions = [];
-                            actions.push('<a class="' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.profId + '\')"><i class="fa fa-edit"></i>编辑</a>');
-                            actions.push('<a class="' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.profId + '\')"><i class="fa fa-trash"></i>删除</a>');
-                            actions.push('<a class="' + addFlag + '" href="#" onclick="$.operate.add(\'' + row.profId + '\')"><i class="fa fa-plus"></i>添加下级班级</a>');
+                            actions.push('<a class="' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.polId + '\')"><i class="fa fa-edit"></i>编辑</a>');
+                            actions.push('<a class="' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.polId + '\')"><i class="fa fa-trash"></i>删除</a>');
+                            actions.push('<a class="' + addFlag + '" href="#" onclick="$.operate.add(\'' + row.polId + '\')"><i class="fa fa-plus"></i>添加下级策略</a>');
                             return $.table.dropdownToggle(actions.join(''));
                         } else {
                             return "";

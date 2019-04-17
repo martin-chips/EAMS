@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -137,7 +138,7 @@ public class SysJobController extends BaseController {
      */
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @RequiresPermissions("monitor:job:edit")
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(SysJob job) throws SchedulerException, TaskException {
         return toAjax(jobService.updateJobCron(job));

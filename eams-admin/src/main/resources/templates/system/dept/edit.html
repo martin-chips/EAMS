@@ -108,7 +108,7 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/edit", $('#form-dept-edit').serialize());
+            $.operate.savePut(prefix + "/edit", $('#form-dept-edit').serialize());
         }
     }
 

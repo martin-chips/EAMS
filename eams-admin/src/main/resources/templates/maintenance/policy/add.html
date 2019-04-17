@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增班级')"/>
+    <th:block th:include="include :: header('新增策略')"/>
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-profession-add">
-        <input id="treeId" name="parentId" type="hidden" th:value="${profession.profId}"/>
+    <form class="form-horizontal m" id="form-policy-add">
+        <input id="treeId" name="parentId" type="hidden" th:value="${policy.polId}"/>
+        <h4 class="form-header h4">基本信息</h4>
         <div class="form-group">
             <label class="col-sm-3 control-label ">上级：</label>
             <div class="col-sm-8">
                 <div class="input-group">
-                    <input class="form-control" type="text" onclick="selectDeptTree()" id="treeName" readonly="true"
-                           th:value="${profession.profName}">
+                    <input class="form-control" type="text" onclick="selectPolicyTree()" id="treeName" readonly="true"
+                           th:value="${policy.polName}">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 </div>
             </div>
@@ -20,35 +21,28 @@
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>名称：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="profName" id="profName" required>
+                <input class="form-control" type="text" name="polName" id="polName" required>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>显示排序：</label>
             <div class="col-sm-8">
                 <input class="form-control" type="text" name="orderNum" required>
+                <span class="help-block m-b-none">
+                    <i class="fa fa-info-circle"></i> 数值越小越靠前</span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">负责人：</label>
+            <label class="col-sm-3 control-label">分数：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="leader">
+                <input class="form-control" type="text" name="score">
+                <span class="help-block m-b-none">
+                    <i class="fa fa-info-circle"></i> 此处填写该项目的分数</span>
             </div>
+
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">联系电话：</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="phoneNum">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">邮箱：</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="email">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">部门状态：</label>
+            <label class="col-sm-3 control-label">策略状态：</label>
             <div class="col-sm-8">
                 <div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
                     <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}"
@@ -57,14 +51,28 @@
                 </div>
             </div>
         </div>
+        <h4 class="form-header h4">其他信息</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">备注：</label>
+                    <div class="col-xs-10">
+                        <textarea name="remark" autocomplete="off" maxlength="500" class="form-control"
+                                  rows="3"></textarea>
+                        <span class="help-block m-b-none">
+                            <i class="fa fa-info-circle"></i> 此处填写详细的规则明细</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
 <th:block th:include="include :: footer"/>
 <script type="text/javascript">
-    var prefix = ctx + "maintenance/profession";
+    var prefix = ctx + "maintenance/policy";
 
-    $("#form-dept-add").validate({
+    $("#form-policy-add").validate({
         onkeyup: false,
         rules: {
             orderNum: {
@@ -83,16 +91,16 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/add", $('#form-profession-add').serialize());
+            $.operate.save(prefix + "/add", $('#form-policy-add').serialize());
         }
     }
 
-    /*班级管理-新增-选择父部门树*/
-    function selectDeptTree() {
+    /*部门管理-新增-选择父部门树*/
+    function selectPolicyTree() {
         var options = {
-            title: '班级选择',
+            title: '策略选择',
             width: "380",
-            url: prefix + "/selectProfessionTree/" + $("#treeId").val(),
+            url: prefix + "/selectPolicyTree/" + $("#treeId").val(),
             callBack: doSubmit
         };
         $.modal.openOptions(options);

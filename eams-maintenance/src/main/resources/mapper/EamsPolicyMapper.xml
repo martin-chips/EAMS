@@ -3,79 +3,83 @@
 <mapper namespace="com.dimple.maintenance.mapper.EamsPolicyMapper">
 
     <resultMap type="com.dimple.maintenance.domain.Policy" id="EamsPolicyMap">
-        <result property="polId" column="pol_id" jdbcType="LONG INTEGER"/>
-        <result property="polName" column="pol_name" jdbcType="VARCHAR"/>
-        <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
-        <result property="parentId" column="parent_id" jdbcType="LONG INTEGER"/>
-        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
-        <result property="score" column="score" jdbcType="NUMERIC"/>
-        <result property="remark" column="remark" jdbcType="VARCHAR"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="polId" column="pol_id"/>
+        <result property="polName" column="pol_name"/>
+        <result property="ancestors" column="ancestors"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="score" column="score"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectPolicyById" resultMap="EamsPolicyMap">
         select
-          pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time, update_by, update_time
-        from eams.eams_policy
-        where pol_id = #{polId}
+          p.pol_id, p.pol_name, p.ancestors, p.parent_id, p.status,p.order_num, p.score, p.remark, p.create_by, p.create_time,(select pol_name from eams_policy where pol_id =p.parent_id ) as parent_name
+        from eams_policy p
+        where p.pol_id = #{polId}
     </select>
 
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectPolicyList" resultMap="EamsPolicyMap">
         select
-        pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time, update_by, update_time
-        from eams.eams_policy
+        pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status
+        from eams_policy
         <where>
-            <if test="polId != null">
-                and pol_id = #{polId}
-            </if>
             <if test="polName != null and polName != ''">
                 and pol_name = #{polName}
-            </if>
-            <if test="ancestors != null and ancestors != ''">
-                and ancestors = #{ancestors}
             </if>
             <if test="parentId != null">
                 and parent_id = #{parentId}
             </if>
-            <if test="orderNum != null">
-                and order_num = #{orderNum}
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="score != null">
-                and score = #{score}
-            </if>
-            <if test="remark != null and remark != ''">
-                and remark = #{remark}
-            </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+        order by order_num
+    </select>
+
+    <select id="selectPolicyCountByParentId" resultType="java.lang.Integer">
+        select count(*) from eams_policy where parent_id=#{polId}
     </select>
 
     <!--新增所有列-->
     <insert id="insertPolicy" keyProperty="polId" useGeneratedKeys="true">
-        insert into eams.eams_policy(pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time, update_by, update_time)
-        values (#{polName}, #{ancestors}, #{parentId}, #{orderNum}, #{score}, #{remark}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+        insert into eams_policy (
+        <if test="polName !=null and polName !=''">pol_name,</if>
+        <if test="ancestors != null and ancestors != ''">ancestors,</if>
+        <if test="parentId != null and parentId != ''">parent_id,</if>
+        <if test="orderNum != null and orderNum != ''">order_num,</if>
+        <if test="score != null and score != ''">score,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time
+        )values(
+        <if test="polName != null and polName != ''">#{polName},</if>
+        <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+        <if test="parentId != null and parentId != ''">#{parentId},</if>
+        <if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+        <if test="score != null and score != ''">#{score},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->
     <update id="updatePolicy">
-        update eams.eams_policy
+        update eams_policy
         <set>
             <if test="polName != null and polName != ''">
                 pol_name = #{polName},
@@ -95,25 +99,30 @@
             <if test="remark != null and remark != ''">
                 remark = #{remark},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
+            update_time = sysdate()
         </set>
         where pol_id = #{polId}
     </update>
 
+    <update id="updatePolicyChildren">
+        update eams_policy set ancestors =
+        <foreach collection="policies" item="item" index="index"
+                 separator=" " open="case pol_id" close="end">
+            when #{item.polId} then #{item.ancestors}
+        </foreach>
+        where pol_id in
+        <foreach collection="policies" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.polId}
+        </foreach>
+    </update>
+
     <!--通过主键删除-->
     <delete id="deletePolicyById">
-        delete from eams.eams_policy where pol_id = #{polId}
+        delete from eams_policy where pol_id = #{polId}
     </delete>
 
     <delete id="deletePolicyByIds">
