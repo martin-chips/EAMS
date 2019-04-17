@@ -195,7 +195,7 @@ public class SysRoleController extends BaseController {
      * 查询已分配用户角色列表
      */
     @RequiresPermissions("system:role:list")
-    @PostMapping("/authUser/allocatedList")
+    @GetMapping("/authUser/allocatedList")
     @ResponseBody
     public TableDataInfo allocatedList(SysUser user) {
         startPage();
@@ -236,7 +236,7 @@ public class SysRoleController extends BaseController {
      * 查询未分配用户角色列表
      */
     @RequiresPermissions("system:role:list")
-    @PostMapping("/authUser/unallocatedList")
+    @GetMapping("/authUser/unallocatedList")
     @ResponseBody
     public TableDataInfo unallocatedList(SysUser user) {
         startPage();
