@@ -7,7 +7,7 @@
         <result property="profName" column="prof_name"/>
         <result property="orderNum" column="order_num"/>
         <result property="leader" column="leader"/>
-        <result property="phone" column="phone"/>
+        <result property="phoneNum" column="phone_num"/>
         <result property="status" column="status"/>
         <result property="parentId" column="parent_id"/>
         <result property="email" column="email"/>
@@ -22,8 +22,8 @@
     <!--查询单个-->
     <select id="selectProfessionById" resultMap="EamsProfessionMap">
         select
-          prof_id, prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by, update_time
-        from eams.eams_profession
+          p.prof_id, p.prof_name, p.order_num, p.leader, p.phone_num, p.status, p.parent_id, p.email, p.type, p.create_by, p.create_time,(select prof_name from eams_profession where prof_id = p.parent_id) parent_name,p.ancestors
+        from eams.eams_profession as p
         where prof_id = #{id}
     </select>
 
@@ -31,9 +31,8 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectProfessionList" resultMap="EamsProfessionMap">
         select
-        prof_id, prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by,
-        update_time
-        from eams.eams_profession
+        prof_id, prof_name, order_num, leader, phone_num, status, parent_id, email, type, create_by, create_time
+        from eams_profession
         <where>
             <if test="profId != null">
                 and prof_id = #{id}
@@ -47,8 +46,8 @@
             <if test="leader != null and leader != ''">
                 and leader = #{leader}
             </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
+            <if test="phoneNum != null and phoneNum != ''">
+                and phone_num = #{phoneNum}
             </if>
             <if test="status != null and status != ''">
                 and status = #{status}
@@ -56,39 +55,53 @@
             <if test="parentId != null">
                 and parent_id = #{parentId}
             </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
-            </if>
             <if test="type != null and type != ''">
                 and type = #{type}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
     </select>
     <select id="selectProfessionCountById" resultType="java.lang.Integer">
-        select count(*)from eams_profession where parent_id=#{profId}
+        select count(*) from eams_profession where parent_id=#{profId}
     </select>
 
     <!--新增所有列-->
     <insert id="insertProfession" keyProperty="id" useGeneratedKeys="true">
-        insert into eams.eams_profession(prof_name, order_num, leader, phone, status, parent_id, email, type, create_by, create_time, update_by, update_time)
-        values (#{profName}, #{orderNum}, #{leader}, #{phone}, #{status}, #{parentId}, #{email}, #{type}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+        insert into eams_profession (
+        <if test="profName !=null and profName !=''">prof_name,</if>
+        <if test="orderNum != null and orderNum != ''">order_num,</if>
+        <if test="leader != null and leader != ''">leader,</if>
+        <if test="phoneNum != null and phoneNum != ''">phone_num,</if>
+        <if test="email != null and email != ''">email,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="parentId != null and parentId != ''">parent_id,</if>
+        <if test="ancestors != null and ancestors != ''">ancestors,</if>
+        <if test="type != null and type != ''">type,</if>
+        create_time
+        )values(
+        <if test="profName != null and profName != ''">#{profName},</if>
+        <if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+        <if test="leader != null and leader != ''">#{leader},</if>
+        <if test="phoneNum != null and phoneNum != ''">#{phoneNum},</if>
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="parentId != null and parentId != ''">#{parentId},</if>
+        <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+        <if test="type != null and type != ''">#{type},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->
     <update id="updateProfession">
-        update eams.eams_profession
+        update eams_profession
         <set>
             <if test="profName != null and profName != ''">
                 prof_name = #{profName},
@@ -99,8 +112,8 @@
             <if test="leader != null and leader != ''">
                 leader = #{leader},
             </if>
-            <if test="phone != null and phone != ''">
-                phone = #{phone},
+            <if test="phoneNum != null and phoneNum != ''">
+                phone_num = #{phoneNum},
             </if>
             <if test="status != null and status != ''">
                 status = #{status},
@@ -114,29 +127,21 @@
             <if test="type != null and type != ''">
                 type = #{type},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
+            update_time = sysdate()
         </set>
-        where id = #{id}
+        where prof_id = #{profId}
     </update>
 
     <update id="updateProfessionChildren">
         update eams_profession set ancestors =
         <foreach collection="professions" item="item" index="index"
-                 separator=" " open="case dept_id" close="end">
+                 separator=" " open="case prof_id" close="end">
             when #{item.profId} then #{item.ancestors}
         </foreach>
-        where dept_id in
+        where prof_id in
         <foreach collection="professions" item="item" index="index"
                  separator="," open="(" close=")">
             #{item.profId}
@@ -147,6 +152,7 @@
     <delete id="deleteProfessionById">
         delete from eams.eams_profession where prof_id = #{id}
     </delete>
+
     <delete id="deleteProfessionByIds">
         delete from eams_profession where prof_id in
         <foreach collection="array" close=")" open="(" separator="," item="id">

@@ -11,6 +11,7 @@ import com.dimple.maintenance.mapper.EamsStudentMapper;
 import com.dimple.maintenance.service.EamsProfessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +55,16 @@ public class EamsProfessionServiceImpl implements EamsProfessionService {
 
 
     @Override
+    @Transactional
     public int updateProfession(Profession profession) {
+        //获取上级的班级的信息
         Profession parentProfession = professionMapper.selectProfessionById(profession.getParentId());
         if (StringUtils.isNotNull(parentProfession)) {
+            //上级班级的路径加上班级班级的id=当前班级的访问路径
             String ancestors = parentProfession.getAncestors() + "," + parentProfession.getProfId();
             profession.setAncestors(ancestors);
             //修改子级的的关系列表
-            updateDeptChildren(profession.getProfId(), ancestors);
+            updateProfessionChildren(profession.getProfId(), ancestors);
         }
         return professionMapper.updateProfession(profession);
     }
@@ -71,9 +75,10 @@ public class EamsProfessionServiceImpl implements EamsProfessionService {
      * @param profId    班级的id
      * @param ancestors 关系列表
      */
-    public void updateDeptChildren(Long profId, String ancestors) {
+    public void updateProfessionChildren(Long profId, String ancestors) {
         Profession profession = new Profession();
         profession.setParentId(profId);
+        //查询出所有的parentId是ProfId的班级
         List<Profession> childrens = professionMapper.selectProfessionList(profession);
         for (Profession children : childrens) {
             children.setAncestors(ancestors + "," + profession.getParentId());

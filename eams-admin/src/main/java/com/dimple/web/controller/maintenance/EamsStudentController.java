@@ -15,12 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-
-import static org.apache.naming.SelectorContext.prefix;
 
 /**
  * 学生表(Student)表控制层
@@ -87,12 +86,12 @@ public class EamsStudentController extends BaseController {
     @GetMapping("/edit/{studentId}")
     public String edit(@PathVariable Integer studentId, Model model) {
         model.addAttribute("student", eamsStudentService.selectStudentById(studentId));
-        return prefix + "/edit";
+        return "maintenance/student/edit";
     }
 
     @RequiresPermissions("maintenance:student:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Student student) {
         return toAjax(eamsStudentService.updateStudent(student));

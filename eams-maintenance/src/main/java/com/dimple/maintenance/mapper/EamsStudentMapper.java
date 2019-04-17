@@ -61,5 +61,11 @@ public interface EamsStudentMapper {
      */
     int deleteStudentByIds(Integer[] ids);
 
+    /**
+     * 获取当前profession下的student的数量
+     *
+     * @param profId 需要检查的profession的id
+     * @return 结果集的行数
+     */
     int checkProfessionExistStudent(Long profId);
 }

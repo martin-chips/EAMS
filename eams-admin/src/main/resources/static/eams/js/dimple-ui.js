@@ -815,6 +815,23 @@
                 };
                 $.ajax(config)
             },
+            // 保存信息 刷新表格 put提交
+            savePut: function (url, data) {
+                var config = {
+                    url: url,
+                    type: "put",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                        $.modal.disable();
+                    },
+                    success: function (result) {
+                        $.operate.successCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
             // 保存信息 弹出提示框
             saveModal: function (url, data) {
                 var config = {
@@ -843,6 +860,22 @@
                 var config = {
                     url: url,
                     type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                    },
+                    success: function (result) {
+                        $.operate.successTabCallback(result);
+                    }
+                };
+                $.ajax(config)
+            },
+            // 保存选项卡信息，put方式
+            saveTabPut: function (url, data) {
+                var config = {
+                    url: url,
+                    type: "put",
                     dataType: "json",
                     data: data,
                     beforeSend: function () {

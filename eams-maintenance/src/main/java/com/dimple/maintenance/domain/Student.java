@@ -54,4 +54,14 @@ public class Student extends BaseEntity {
      * 密码的盐
      **/
     private String salt;
+    /**
+     * 备注
+     */
+    private String remark;
+
+
+    /**
+     * 班级的名称
+     */
+    private String profName;
 }

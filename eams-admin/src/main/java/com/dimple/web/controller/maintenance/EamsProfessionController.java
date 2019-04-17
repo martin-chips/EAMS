@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -67,7 +68,7 @@ public class EamsProfessionController extends BaseController {
     public String edit(@PathVariable Long profId, Model model) {
         Profession profession = professionService.selectProfessionById(profId);
         if (StringUtils.isNotNull(profession) && 100L == profId) {
-            //profession.setParentName("无");
+            profession.setParentName("无");
         }
         model.addAttribute("profession", profession);
         return "maintenance/profession/edit";
@@ -75,7 +76,7 @@ public class EamsProfessionController extends BaseController {
 
     @Log(title = "班级管理", businessType = BusinessType.UPDATE)
     @RequiresPermissions("maintenance:profession:edit")
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Profession profession) {
         profession.setUpdateBy(ShiroUtils.getLoginName());

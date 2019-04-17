@@ -18,13 +18,14 @@
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectStudentById" resultMap="EamsStudentMap">
         select
-          stu_id, stu_name, stu_num, prof_id, sex, email, phone_num, password, id_card, status, salt, create_by, create_time, update_by, update_time
-        from eams.eams_student
+          s.stu_id, s.stu_name, s.stu_num, s.prof_id, s.sex, s.email, s.phone_num, s.id_card, s.status,s.remark,p.prof_name
+        from eams_student s left join eams_profession p on s.prof_id = p.prof_id
         where stu_id = #{stuId}
     </select>
 
@@ -32,42 +33,34 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectStudentList" resultMap="EamsStudentMap">
         select
-        stu_id, stu_name, stu_num, prof_id, sex, email, phone_num, password, id_card, status, salt, create_by,
-        create_time, update_by, update_time
-        from eams.eams_student s
+        s.stu_id, s.stu_name, s.stu_num, s.prof_id, s.sex, s.email, s.phone_num, s.password, s.id_card, s.status,
+        s.salt, s.create_by,
+        s.create_time, s.update_by, s.update_time,remark
+        from eams.eams_student s left join eams_profession p on s.prof_id = p.prof_id
         <where>
             <if test="stuId != null">
-                and stu_id = #{stuId}
+                and s.stu_id = #{stuId}
             </if>
             <if test="stuName != null and stuName != ''">
-                and stu_name = #{stuName}
+                and s.stu_name = #{stuName}
             </if>
             <if test="stuNum != null and stuNum != ''">
-                and stu_num = #{stuNum}
-            </if>
-            <if test="profId != null">
-                and prof_id = #{profId}
+                and s.stu_num = #{stuNum}
             </if>
             <if test="sex != null and sex != ''">
-                and sex = #{sex}
+                and s.sex = #{sex}
             </if>
             <if test="email != null and email != ''">
-                and email = #{email}
+                and s.email = #{email}
             </if>
             <if test="phoneNum != null and phoneNum != ''">
-                and phone_num = #{phoneNum}
-            </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
+                and s.phone_num = #{phoneNum}
             </if>
             <if test="idCard != null and idCard != ''">
-                and id_card = #{idCard}
+                and s.id_card = #{idCard}
             </if>
             <if test="status != null and status != ''">
-                and status = #{status}
-            </if>
-            <if test="salt != null and salt != ''">
-                and salt = #{salt}
+                and s.status = #{status}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
@@ -76,16 +69,46 @@
                 AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
             <if test="profId != null and profId != 0">
-                AND (s.prof_id = #{profId} OR s.prof_id IN ( SELECT p.prof_id FROM eams_profession p WHERE FIND_IN_SET
+                AND (s.prof_id = #{profId} OR s.prof_id IN ( SELECT t.prof_id FROM eams_profession t WHERE FIND_IN_SET
                 (#{profId},ancestors) ))
             </if>
         </where>
     </select>
+    <select id="checkProfessionExistStudent" resultType="java.lang.Integer">
+            select count(*) from eams_student where prof_id=#{profId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insertStudent" keyProperty="stuId" useGeneratedKeys="true">
-        insert into eams.eams_student(stu_name, stu_num, prof_id, sex, email, phone_num, password, id_card, status, salt, create_by, create_time, update_by, update_time)
-        values (#{stuName}, #{stuNum}, #{profId}, #{sex}, #{email}, #{phoneNum}, #{password}, #{idCard}, #{status}, #{salt}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+        insert into eams_student (
+        <if test="stuName != null and stuName != ''">stu_name,</if>
+        <if test="stuNum != null and stuNum != ''">stu_num,</if>
+        <if test="profId != null and profId != ''">prof_id,</if>
+        <if test="sex != null and sex != ''">sex,</if>
+        <if test="email != null and email != ''">email,</if>
+        <if test="password != null and password != ''">password,</if>
+        <if test="salt != null and salt != ''">salt,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="phoneNum != null and phoneNum != ''">phone_num,</if>
+        <if test="idCard != null and idCard != ''">id_card,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time
+        )values(
+        <if test="stuName != null and stuName != ''">#{stuName},</if>
+        <if test="stuNum != null and stuNum != ''">#{stuNum},</if>
+        <if test="profId != null and profId != ''">#{profId},</if>
+        <if test="sex != null and sex != ''">#{sex},</if>
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="password != null and password != ''">#{password},</if>
+        <if test="salt != null and salt != ''">#{salt},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="phoneNum != null and phoneNum != ''">#{phoneNum},</if>
+        <if test="idCard != null and idCard != ''">#{idCard},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate()
+        )
     </insert>
 
     <!--通过主键修改数据-->
@@ -122,18 +145,13 @@
             <if test="salt != null and salt != ''">
                 salt = #{salt},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
             </if>
+            update_time = sysdate()
         </set>
         where stu_id = #{stuId}
     </update>

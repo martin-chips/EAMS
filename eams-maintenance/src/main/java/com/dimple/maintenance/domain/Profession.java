@@ -30,7 +30,7 @@ public class Profession extends BaseEntity {
     /**
      * 当前级的管理员的联系方式
      **/
-    private String phone;
+    private String phoneNum;
     /**
      * 当前级的状态
      **/
@@ -51,5 +51,8 @@ public class Profession extends BaseEntity {
      * 祖级路径
      */
     private String ancestors;
-
+    /**
+     * 上级菜单的名称
+     */
+    private String parentName;
 }
