@@ -60,6 +60,11 @@
             <artifactId>eams-maintenance</artifactId>
         </dependency>
 
+        <!--评优评奖-->
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>eams-evaluation</artifactId>
+        </dependency>
 
     </dependencies>
 

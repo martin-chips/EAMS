@@ -185,10 +185,16 @@
                 <artifactId>eams-common</artifactId>
                 <version>${eams.version}</version>
             </dependency>
-
+            <!-- 数据维护-->
             <dependency>
                 <groupId>com.dimple</groupId>
                 <artifactId>eams-maintenance</artifactId>
+                <version>${eams.version}</version>
+            </dependency>
+            <!--评优评奖-->
+            <dependency>
+                <groupId>com.dimple</groupId>
+                <artifactId>eams-evaluation</artifactId>
                 <version>${eams.version}</version>
             </dependency>
         </dependencies>
