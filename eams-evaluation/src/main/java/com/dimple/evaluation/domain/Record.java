@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Record extends BaseEntity {
+
     private static final long serialVersionUID = -34478752643094884L;
     private Long recId;
     /**
@@ -49,4 +50,6 @@ public class Record extends BaseEntity {
      * 该项目审核者的名称
      **/
     private String reviewerName;
+
+
 }
