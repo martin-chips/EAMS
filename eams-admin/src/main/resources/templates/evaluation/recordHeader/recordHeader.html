@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('评优评奖记录')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="type-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            学生名称：<input type="text" name="dictName"/>
+                        </li>
+                        <li>
+                            学生学号：<input type="text" name="dictType"/>
+                        </li>
+                        <li class="select-time">
+                            <label>创建时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                   name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                   name="params[endTime]"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="evaluation:recordHeader:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="evaluation:recordHeader:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('evaluation:recordHeader:edit')}]];
+    var listFlag = [[${@permission.hasPermi('evaluation:recordHeader:list')}]];
+    var removeFlag = [[${@permission.hasPermi('evaluation:recordHeader:remove')}]];
+    var datas = [[${@dict.getType('sys_normal_disable')}]];
+    var prefix = ctx + "evaluation/recordHeader";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            sortName: "createTime",
+            sortOrder: "desc",
+            modalName: "参评",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'recHeaderId',
+                    title: 'ID'
+                },
+                {
+                    field: 'stuNum',
+                    title: '学生学号',
+                    sortable: true
+                },
+                {
+                    field: 'stuName',
+                    title: '学生姓名',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="detail(\'' + row.dictId + '\')">' + value + '</a>';
+                    }
+                },
+                {
+                    field: 'ruleName',
+                    title: '规则名称'
+                },
+                {
+                    field: 'score',
+                    title: '成绩'
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.dictId + '\')"><i class="fa fa-edit"></i>发送邮件通知</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + listFlag + '" href="#" onclick="detail(\'' + row.dictId + '\')"><i class="fa fa-list-ul"></i>详细</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.dictId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*字典列表-详细*/
+    function detail(dictId) {
+        var url = prefix + '/detail/' + dictId;
+        createMenuItem(url, "字典数据");
+    }
+</script>
+</body>
+</html>

@@ -32,7 +32,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/system/dict")
 public class SysDictTypeController extends BaseController {
-    private String prefix = "system/dict/type";
 
     @Autowired
     private ISysDictTypeService dictTypeService;
@@ -40,7 +39,7 @@ public class SysDictTypeController extends BaseController {
     @RequiresPermissions("system:dict:view")
     @GetMapping()
     public String dictType() {
-        return prefix + "/type";
+        return "system/dict/type/type";
     }
 
     @GetMapping("/list")
@@ -68,7 +67,7 @@ public class SysDictTypeController extends BaseController {
      */
     @GetMapping("/add")
     public String add() {
-        return prefix + "/add";
+        return "system/dict/type/add";
     }
 
     /**
@@ -89,7 +88,7 @@ public class SysDictTypeController extends BaseController {
     @GetMapping("/edit/{dictId}")
     public String edit(@PathVariable("dictId") Long dictId, ModelMap mmap) {
         mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
-        return prefix + "/edit";
+        return"system/dict/type/edit";
     }
 
     /**

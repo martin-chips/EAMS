@@ -28,4 +28,21 @@ public class RecordHeader extends BaseEntity {
      * 是否发送邮件通知
      **/
     private String emailSend;
+    /**
+     * ===========================
+     * 学生姓名
+     */
+    private String stuName;
+    /**
+     * 学生学号
+     */
+    private String stuNum;
+    /**
+     * 规则Id
+     */
+    private Long ruleId;
+    /**
+     * 规则名称
+     */
+    private String ruleName;
 }

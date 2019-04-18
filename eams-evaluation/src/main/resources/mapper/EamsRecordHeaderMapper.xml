@@ -3,74 +3,75 @@
 <mapper namespace="com.dimple.evaluation.mapper.EamsRecordHeaderMapper">
 
     <resultMap type="com.dimple.evaluation.domain.RecordHeader" id="EamsRecordHeaderMap">
-        <result property="recHeaderId" column="rec_header_id" jdbcType="LONG INTEGER"/>
-        <result property="stuId" column="stu_id" jdbcType="LONG INTEGER"/>
-        <result property="score" column="score" jdbcType="TIMESTAMP"/>
-        <result property="emailSend" column="email_send" jdbcType="VARCHAR"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-        <result property="creatTime" column="creat_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="recHeaderId" column="rec_header_id"/>
+        <result property="stuId" column="stu_id"/>
+        <result property="score" column="score"/>
+        <result property="emailSend" column="email_send"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="creat_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="ruleId" column="rule_id"/>
+        <result property="ruleName" column="rule_name"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectRecordHeaderById" resultMap="EamsRecordHeaderMap">
         select
-          rec_header_id, stu_id, score, email_send, create_by, creat_time, update_by, update_time
-        from eams.eams_record_header
+          rec_header_id, stu_id, score, email_send, create_by, create_time, update_by, update_time
+        from eams_record_header
         where rec_header_id = #{recHeaderId}
-    </select>
-
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="EamsRecordHeaderMap">
-        select
-          rec_header_id, stu_id, score, email_send, create_by, creat_time, update_by, update_time
-        from eams.eams_record_header
-        limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectRecordHeaderList" resultMap="EamsRecordHeaderMap">
-        select
-        rec_header_id, stu_id, score, email_send, create_by, creat_time, update_by, update_time
-        from eams.eams_record_header
+        select r.rec_header_id,
+        r.stu_id,
+        r.score,
+        r.email_send,
+        r.create_by,
+        r.create_time,
+        s.stu_name,
+        s.stu_num
+        from eams_record_header r
+        left join eams_student s
+        on r.stu_id = s.stu_id
+        left join eams_rule ru
+        on ru.rule_id = r.rule_id
         <where>
-            <if test="recHeaderId != null">
-                and rec_header_id = #{recHeaderId}
-            </if>
-            <if test="stuId != null">
-                and stu_id = #{stuId}
-            </if>
-            <if test="score != null">
-                and score = #{score}
-            </if>
             <if test="emailSend != null and emailSend != ''">
-                and email_send = #{emailSend}
+                and r.email_send = #{emailSend}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
+            <!--设置规则编号查询-->
+            <if test="ruleId != null and ruleId != ''">
+                and r.rule_id = #{ruleId}
             </if>
-            <if test="creatTime != null">
-                and creat_time = #{creatTime}
+            <!--设置学号查询-->
+            <if test="stuNum != null and stuNum != ''">
+                and s.stu_num = #{stuNum}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <!--设置姓名查询-->
+            <if test="stuName!=null and stuName!=''">
+                and s.stu_name=#{stuName}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(r.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(r.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d');
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insertRecordHeader" keyProperty="recHeaderId" useGeneratedKeys="true">
-        insert into eams.eams_record_header(stu_id, score, email_send, create_by, creat_time, update_by, update_time)
-        values (#{stuId}, #{score}, #{emailSend}, #{createBy}, #{creatTime}, #{updateBy}, #{updateTime})
+        insert into eams_record_header(stu_id, score, email_send, create_by, create_time, update_by, update_time)
+        values (#{stuId}, #{score}, #{emailSend}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="updateRecordHeader">
-        update eams.eams_record_header
+        update eams_record_header
         <set>
             <if test="stuId != null">
                 stu_id = #{stuId},
@@ -84,8 +85,8 @@
             <if test="createBy != null and createBy != ''">
                 create_by = #{createBy},
             </if>
-            <if test="creatTime != null">
-                creat_time = #{creatTime},
+            <if test="createTime != null">
+                create_time = #{createTime},
             </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
@@ -99,7 +100,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteRecordHeaderById">
-        delete from eams.eams_record_header where rec_header_id = #{recHeaderId}
+        delete from eams_record_header where rec_header_id = #{recHeaderId}
     </delete>
     <delete id="deleteRecordHeaderByIds">
         delete from eams_record_header where rec_header_id in
