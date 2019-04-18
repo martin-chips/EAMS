@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 评优评奖填写记录(Record)表控制层
- *
- * @author makejava
- * @since 2019-04-18 11:06:31
+ * @className EamsRecordController
+ * @description 评优评奖填写记录(Record)表控制层
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 @RestController
 @RequestMapping("/evaluation/record")

@@ -6,10 +6,11 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 评优评奖统计总表(RecordHeader)实体类
- *
- * @author makejava
- * @since 2019-04-18 14:16:02
+ * @className RecordHeader
+ * @description 评优评奖统计总表(RecordHeader)实体类
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 @Data
 public class RecordHeader extends BaseEntity {

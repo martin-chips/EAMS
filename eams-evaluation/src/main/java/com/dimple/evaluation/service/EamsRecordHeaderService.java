@@ -5,10 +5,11 @@ import com.dimple.evaluation.domain.RecordHeader;
 import java.util.List;
 
 /**
- * 评优评奖统计总表(RecordHeader)表服务接口
- *
- * @author makejava
- * @since 2019-04-18 14:16:04
+ * @className EamsRecordHeaderService
+ * @description 评优评奖统计总表(RecordHeader)表服务接口
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 public interface EamsRecordHeaderService {
 

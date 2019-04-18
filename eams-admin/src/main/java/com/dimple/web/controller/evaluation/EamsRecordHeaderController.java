@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * 评优评奖统计总表(RecordHeader)表控制层
- *
- * @author makejava
- * @since 2019-04-18 14:16:05
+ * @className EamsRecordHeaderController
+ * @description 评优评奖统计总表(RecordHeader)表控制层
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 @Controller
 @RequestMapping("/evaluation/recordHeader")

@@ -4,10 +4,11 @@ import com.dimple.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 评优评奖填写记录(Record)实体类
- *
- * @author makejava
- * @since 2019-04-18 11:06:28
+ * @className Record
+ * @description 评优评奖填写记录(Record)实体类
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 @Data
 public class Record extends BaseEntity {

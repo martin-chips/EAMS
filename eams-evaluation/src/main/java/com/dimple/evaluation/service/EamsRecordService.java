@@ -5,10 +5,11 @@ import com.dimple.evaluation.domain.Record;
 import java.util.List;
 
 /**
- * 评优评奖填写记录(Record)表服务接口
- *
- * @author makejava
- * @since 2019-04-18 11:06:30
+ * @className EamsRecordService
+ * @description 评优评奖填写记录(Record)表服务接口
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 public interface EamsRecordService {
 

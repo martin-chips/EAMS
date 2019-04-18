@@ -10,10 +10,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 评优评奖填写记录(Record)表服务实现类
- *
- * @author makejava
- * @since 2019-04-18 11:06:31
+ * @className EamsRecordServiceImpl
+ * @description 评优评奖填写记录(Record)表服务实现类
+ * @auther Dimple
+ * @date 2019/4/18
+ * @Version 1.0
  */
 @Service
 public class EamsRecordServiceImpl implements EamsRecordService {
