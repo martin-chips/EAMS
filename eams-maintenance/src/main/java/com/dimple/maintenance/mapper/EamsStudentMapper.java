@@ -1,6 +1,7 @@
 package com.dimple.maintenance.mapper;
 
 import com.dimple.maintenance.domain.Student;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -68,4 +69,13 @@ public interface EamsStudentMapper {
      * @return 结果集的行数
      */
     int checkProfessionExistStudent(Long profId);
+
+    /**
+     * 根据学号和身份证后六位查询学生
+     *
+     * @param stuNum 学号
+     * @param idCard 身份证后六位
+     * @return 学生实体
+     */
+    Student selectStudentByStuNumAndIdCard(@Param("stuNum") String stuNum, @Param("idCard") String idCard);
 }

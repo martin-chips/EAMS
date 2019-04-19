@@ -54,6 +54,19 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">需要输入：</label>
+            <div class="col-sm-8">
+                <div class="radio-box">
+                    <input type="radio" id="yes" name="input" th:field="*{policy.input}" value="0">
+                    <label for="yes">是</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="no" name="input" th:field="*{policy.input}" value="1">
+                    <label for="no">否</label>
+                </div>
+            </div>
+        </div>
         <h4 class="form-header h4">其他信息</h4>
         <div class="row">
             <div class="col-sm-12">

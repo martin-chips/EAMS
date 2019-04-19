@@ -33,8 +33,8 @@ public class EamsRecordController extends BaseController {
 
     @RequiresPermissions("evaluation:record:view")
     @GetMapping()
-    public String dictData() {
-        return "system/dict/data/data";
+    public String record() {
+        return "evaluation/record/record";
     }
 
     @GetMapping("/list")

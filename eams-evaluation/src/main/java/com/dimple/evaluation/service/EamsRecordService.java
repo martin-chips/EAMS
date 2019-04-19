@@ -60,4 +60,6 @@ public interface EamsRecordService {
      * @return 影像行数
      */
     int deleteRecordByIds(String ids);
+    
+    
 }

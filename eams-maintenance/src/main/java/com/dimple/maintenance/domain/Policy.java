@@ -3,6 +3,9 @@ package com.dimple.maintenance.domain;
 import com.dimple.common.core.domain.BaseEntity;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @className Policy
  * @description 策略表(Policy)实体类
@@ -47,4 +50,13 @@ public class Policy extends BaseEntity {
      * 上级菜单的名称
      */
     private String parentName;
+    /**
+     * 是否需要输入
+     */
+    private String input;
+    /**
+     * =============
+     * 子策略
+     */
+    private List<Policy> children = new ArrayList<>();
 }

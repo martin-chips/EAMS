@@ -51,6 +51,10 @@ public class Record extends BaseEntity {
      * 该项目审核者的名称
      **/
     private String reviewerName;
-
+    /**
+     * ================
+     * 策略的名称
+     */
+    private String polName;
 
 }

@@ -63,6 +63,9 @@
     <select id="checkProfessionExistStudent" resultType="java.lang.Integer">
             select count(*) from eams_student where prof_id=#{profId}
     </select>
+    <select id="selectStudentByStuNumAndIdCard" resultType="com.dimple.maintenance.domain.Student">
+        select   s.stu_id, s.stu_name, s.stu_num, s.prof_id, s.sex, s.email, s.phone_num, s.id_card, s.status,s.remark,p.prof_name from eams_student s where stu_num=#{stuNum} and idCard like concat(#{idCard},"%")
+    </select>
 
     <!--新增所有列-->
     <insert id="insertStudent" keyProperty="stuId" useGeneratedKeys="true">

@@ -11,6 +11,7 @@
         <result property="score" column="score"/>
         <result property="remark" column="remark"/>
         <result property="status" column="status"/>
+        <result property="input" column="input"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -20,7 +21,7 @@
     <!--查询单个-->
     <select id="selectPolicyById" resultMap="EamsPolicyMap">
         select
-          p.pol_id, p.pol_name, p.ancestors, p.parent_id, p.status,p.order_num, p.score, p.remark, p.create_by, p.create_time,(select pol_name from eams_policy where pol_id =p.parent_id ) as parent_name
+          p.pol_id, p.pol_name, p.ancestors, p.parent_id,p.input, p.status,p.order_num, p.score, p.remark, p.create_by, p.create_time,(select pol_name from eams_policy where pol_id =p.parent_id ) as parent_name
         from eams_policy p
         where p.pol_id = #{polId}
     </select>
@@ -29,7 +30,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectPolicyList" resultMap="EamsPolicyMap">
         select
-        pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status
+        pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status,input
         from eams_policy
         <where>
             <if test="polName != null and polName != ''">
@@ -64,6 +65,7 @@
         <if test="orderNum != null and orderNum != ''">order_num,</if>
         <if test="score != null and score != ''">score,</if>
         <if test="status != null and status != ''">status,</if>
+        <if test="input != null and input != ''">input,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         <if test="remark != null and remark != ''">remark,</if>
         create_time
@@ -74,6 +76,7 @@
         <if test="orderNum != null and orderNum != ''">#{orderNum},</if>
         <if test="score != null and score != ''">#{score},</if>
         <if test="status != null and status != ''">#{status},</if>
+        <if test="input != null and input != ''">#{input},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         <if test="remark != null and remark != ''">#{remark},</if>
         sysdate()
@@ -86,6 +89,9 @@
         <set>
             <if test="polName != null and polName != ''">
                 pol_name = #{polName},
+            </if>
+            <if test="input != null and input != ''">
+                input = #{input},
             </if>
             <if test="ancestors != null and ancestors != ''">
                 ancestors = #{ancestors},

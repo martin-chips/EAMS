@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('部门列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="policy-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            名称：<input type="text" name="polName"/>
+                        </li>
+                        <li>
+                            状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-info" id="expandAllBtn">
+                <i class="fa fa-exchange"></i> 展开/折叠
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var datas = [[${@dict.getType('sys_normal_disable')}]];
+    var prefix = ctx + "maintenance/policy"
+
+    $(function () {
+        var options = {
+            code: "polId",
+            parentCode: "parentId",
+            uniqueId: "polId",
+            url: prefix + "/list",
+            createUrl: prefix + "/add/{id}",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove/{id}",
+            modalName: "策略",
+            columns: [{
+                field: 'selectItem',
+                radio: true
+            },
+                {
+                    field: 'polName',
+                    title: '名称',
+                    align: "left",
+                    width: "30%",
+                },
+                {
+                    field: 'score',
+                    title: '分值',
+                },
+                {
+                    field: 'remark',
+                    title: '说明',
+                    align: "left",
+                    width: "30%",
+                    formatter: function (value, row, index) {
+                        return $.table.tooltipWrap(value,30);
+                    }
+                },
+                {
+                    field: '',
+                    title: '凭证图像地址',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return "-";
+                        } else {
+                            return "<input class='form-control'   >"
+                        }
+                    }
+                },
+                {
+                    field: '',
+                    title: '凭证说明',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return "-";
+                        } else {
+                            return "<input class='form-control'   >"
+                        }
+                    }
+                },
+                {
+                    field: 'input',
+                    title: '自评得分',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (value == 1) {
+                            return "-";
+                        } else {
+                            return "<input class='form-control'  value='0' style='width: 30%' >"
+                        }
+                    }
+                },]
+        };
+        $.treeTable.init(options);
+    });
+</script>
+</body>
+</html>

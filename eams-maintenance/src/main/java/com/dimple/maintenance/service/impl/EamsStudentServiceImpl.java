@@ -57,4 +57,9 @@ public class EamsStudentServiceImpl implements EamsStudentService {
     public int deleteStudentByIds(String ids) {
         return eamsStudentMapper.deleteStudentByIds(Convert.toIntArray(ids));
     }
+
+    @Override
+    public Student selectStudentByStuNumAndIdCard(String stuNum, String idCard) {
+        return eamsStudentMapper.selectStudentByStuNumAndIdCard(stuNum, idCard);
+    }
 }

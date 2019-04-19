@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>高校评优评奖管理系统</title>
+    <meta name="keywords" content="高校评优评奖管理系统">
+    <meta name="description" content="高校评优评奖管理系统">
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../../static/eams/css/dimple-ui.css" th:href="@{/eams/css/dimple-ui.css}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link rel="shortcut icon" href="../../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error {
+        position: inherit;
+    }</style>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location
+        }
+        ;
+    </script>
+</head>
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-7">
+
+        </div>
+        <div class="col-sm-5">
+            <form id="signupForm">
+                <h4 class="no-margins">登录：</h4>
+                <input type="text" name="username" class="form-control uname" placeholder="学号" value=""/>
+                <input type="password" name="password" class="form-control pword" placeholder="身份证后六位" value=""/>
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
+        </div>
+    </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            &copy; 2019 All Rights Reserved. Dimple <br>
+            <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">蜀ICP备 19004343</a><br>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!-- 全局js -->
+<script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../../static/ajax/libs/validate/jquery.validate.min.js"
+        th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../../static/ajax/libs/validate/messages_zh.min.js"
+        th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../../static/ajax/libs/blockUI/jquery.blockUI.js"
+        th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../../static/eams/js/dimple-ui.js" th:src="@{/eams/js/dimple-ui.js}"></script>
+<script>
+    $(function () {
+        $.validator.setDefaults({
+            submitHandler: function () {
+                login();
+            }
+        });
+
+        function login() {
+            $.modal.loading($("#btnSubmit").data("loading"));
+            var username = $.common.trim($("input[name='username']").val());
+            var password = $.common.trim($("input[name='password']").val());
+            $.ajax({
+                type: "post",
+                url: ctx + "/f/apply/login",
+                data: {
+                    "username": username,
+                    "password": password,
+                },
+                success: function (r) {
+                    if (r.code == 0) {
+                        location.href = ctx + 'index';
+                    } else {
+                        $.modal.closeLoading();
+                        $('.imgcode').click();
+                        $(".code").val("");
+                        $.modal.msg(r.msg);
+                    }
+                }
+            });
+        }
+
+        function validateRule() {
+            var icon = "<i class='fa fa-times-circle'></i> ";
+            $("#signupForm").validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: icon + "请输入您的学号",
+                    },
+                    password: {
+                        required: icon + "请输入您的身份证后六位",
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

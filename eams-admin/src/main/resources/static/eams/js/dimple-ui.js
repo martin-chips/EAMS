@@ -159,6 +159,30 @@
                 }
                 return '<a href="#" class="tooltip-show" data-toggle="tooltip" title="' + _value + '">' + _text + '</a>';
             },
+            //超出指定长度就切换到下一行
+            tooltipWrap: function (value, length) {
+                var _length = $.common.isEmpty(length) ? 20 : length;
+                var _text = "";
+                var _value = $.common.nullToStr(value);
+                var valueLength = _value.length;
+                var i = 0;
+                // if (_value.length > _length) {
+                //     while (i < valueLength) {
+                //         console.log(i + _length)
+                //         _text += _value.substr(i, i + _length);
+                //         _text += "<br/>"
+                //         console.log(_text)
+                //         i = i + _length;
+                //     }
+                //
+                // }
+                _text = _value.replace(/(.{23})/g, '$1<br/>');
+                console.log(_text)
+                // if (_value.length > _length) {
+                //     _text = _value.substr(0, _length) + "<br/>" + _value.substr(_length, _value.length);
+                // }
+                return '<a href="#" class="tooltip-show" data-toggle="tooltip" title="' + _value + '">' + _text + '</a>';
+            },
             // 下拉按钮切换
             dropdownToggle: function (value) {
                 var actions = [];

@@ -68,4 +68,13 @@ public interface EamsStudentService {
      * @return 受影响的行数
      */
     int deleteStudentByIds(String ids);
+
+    /**
+     * 根据学号和身份证后六位查询学生
+     *
+     * @param stuNum 学号
+     * @param idCard 身份证后六位
+     * @return 学生实体
+     */
+    Student selectStudentByStuNumAndIdCard(String stuNum, String idCard);
 }
