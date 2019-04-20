@@ -32,7 +32,7 @@
         select
         pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status,input
         from eams_policy
-        <where>
+       <!-- <where>
             <if test="polName != null and polName != ''">
                 and pol_name like concat('%',#{polName},'%')
             </if>
@@ -42,18 +42,22 @@
             <if test="status != null">
                 and status = #{status}
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            <if test="params.beginTime != null and params.beginTime != ''">&lt;!&ndash; 开始时间检索 &ndash;&gt;
                 AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            <if test="params.endTime != null and params.endTime != ''">&lt;!&ndash; 结束时间检索 &ndash;&gt;
                 AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
-        </where>
+        </where>-->
         order by order_num
     </select>
 
     <select id="selectPolicyCountByParentId" resultType="java.lang.Integer">
         select count(*) from eams_policy where parent_id=#{polId}
+    </select>
+    <select id="selectPolicyListApply" resultType="com.dimple.maintenance.domain.Policy">
+         select pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status,input
+        from eams_policy where ancestors like concat("%",#{polId},"%")  order by order_num
     </select>
 
     <!--新增所有列-->

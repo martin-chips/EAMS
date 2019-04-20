@@ -1,8 +1,16 @@
 package com.dimple.framework.shiro.realm;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.dimple.common.exception.user.CaptchaException;
+import com.dimple.common.exception.user.RoleBlockedException;
+import com.dimple.common.exception.user.UserBlockedException;
+import com.dimple.common.exception.user.UserNotExistsException;
+import com.dimple.common.exception.user.UserPasswordNotMatchException;
+import com.dimple.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.dimple.framework.shiro.service.SysLoginService;
+import com.dimple.framework.util.ShiroUtils;
+import com.dimple.system.domain.SysUser;
+import com.dimple.system.service.ISysMenuService;
+import com.dimple.system.service.ISysRoleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -21,17 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dimple.common.exception.user.CaptchaException;
-import com.dimple.common.exception.user.RoleBlockedException;
-import com.dimple.common.exception.user.UserBlockedException;
-import com.dimple.common.exception.user.UserNotExistsException;
-import com.dimple.common.exception.user.UserPasswordNotMatchException;
-import com.dimple.common.exception.user.UserPasswordRetryLimitExceedException;
-import com.dimple.framework.shiro.service.SysLoginService;
-import com.dimple.framework.util.ShiroUtils;
-import com.dimple.system.domain.SysUser;
-import com.dimple.system.service.ISysMenuService;
-import com.dimple.system.service.ISysRoleService;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @className UserRealm
@@ -90,7 +89,7 @@ public class UserRealm extends AuthorizingRealm {
             password = new String(upToken.getPassword());
         }
 
-        SysUser user = null;
+        SysUser user;
         try {
             user = loginService.login(username, password);
         } catch (CaptchaException e) {

@@ -47,8 +47,8 @@ public class EamsPolicyController extends BaseController {
     @GetMapping("/list")
     @ResponseBody
     public List<Policy> list(Policy policy) {
-        List<Policy> deptList = policyService.selectPolicyList(policy);
-        return deptList;
+        List<Policy> policies = policyService.selectPolicyList(policy);
+        return policies;
     }
 
     /**

@@ -8,7 +8,7 @@
 <div class="form-content">
     <form id="form-student-add" class="form-horizontal">
         <input name="profId" type="hidden" id="treeId" th:value="${student.profId}"/>
-        <input name="stuName" type="hidden" id="stuName"/>
+        <input name="stuId" type="hidden" id="stuId" th:value="${student.stuId}"/>
         <h4 class="form-header h4">基本信息</h4>
         <div class="row">
             <div class="col-sm-6">
@@ -181,7 +181,7 @@
             var postIds = $.form.selectSelects("post");
             data.push({"name": "status", "value": status});
             data.push({"name": "profId", "value": postIds});
-            $.operate.saveTabPut(prefix + "/add", data);
+            $.operate.saveTabPut(prefix + "/edit", data);
         }
     }
 

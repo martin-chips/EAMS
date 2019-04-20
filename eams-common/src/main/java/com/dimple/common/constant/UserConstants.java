@@ -45,6 +45,10 @@ public class UserConstants {
      * 策略正常状态
      */
     public static final String POLICY_NORMAL = "0";
+    /**
+     * 规则正常状态
+     */
+    public static final String RULE_NORMAL = "0";
 
     /**
      * 用户名长度限制

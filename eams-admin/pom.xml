@@ -65,7 +65,11 @@
             <groupId>com.dimple</groupId>
             <artifactId>eams-evaluation</artifactId>
         </dependency>
-
+        <!--学生申请-->
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>eams-apply</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

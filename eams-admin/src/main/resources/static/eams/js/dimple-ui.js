@@ -177,11 +177,10 @@
                 //
                 // }
                 _text = _value.replace(/(.{23})/g, '$1<br/>');
-                console.log(_text)
                 // if (_value.length > _length) {
                 //     _text = _value.substr(0, _length) + "<br/>" + _value.substr(_length, _value.length);
                 // }
-                return '<a href="#" class="tooltip-show" data-toggle="tooltip" title="' + _value + '">' + _text + '</a>';
+                return '<a  class="tooltip-show" data-toggle="tooltip" title="' + _value + '">' + _text + '</a>';
             },
             // 下拉按钮切换
             dropdownToggle: function (value) {
@@ -699,6 +698,10 @@
             // get请求传输
             get: function (url) {
                 $.operate.submit(url, "get", "json", "");
+            },
+            // put请求传输
+            put: function (url,data) {
+                $.operate.submit(url, "put", "json", data);
             },
             // 详细信息
             detail: function (id, width, height) {

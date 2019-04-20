@@ -78,4 +78,13 @@ public interface EamsPolicyMapper {
      */
     int updatePolicyChildren(@Param("policies") List<Policy> childrens);
 
+    /**
+     * 根据父节点的id获取全部的策略
+     *
+     * @param polId 度节点的id
+     * @return 全部策略
+     */
+    List<Policy> selectPolicyListApply(Integer polId);
+
+
 }

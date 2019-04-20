@@ -48,7 +48,6 @@
         </div>
     </div>
 </div>
-<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
 <!-- 全局js -->
 <script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
@@ -62,59 +61,61 @@
         th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 <script src="../../static/eams/js/dimple-ui.js" th:src="@{/eams/js/dimple-ui.js}"></script>
 <script>
+
     $(function () {
-        $.validator.setDefaults({
-            submitHandler: function () {
-                login();
+        validateRule();
+
+    })
+    $.validator.setDefaults({
+        submitHandler: function () {
+            login();
+        }
+    });
+
+    function login() {
+        $.modal.loading($("#btnSubmit").data("loading"));
+        var username = $.common.trim($("input[name='username']").val());
+        var password = $.common.trim($("input[name='password']").val());
+        $.ajax({
+            type: "post",
+            url: "/f/apply/login",
+            data: {
+                "username": username,
+                "password": password,
+            },
+            success: function (r) {
+                if (r.code == 0) {
+                    location.href = '/f/apply/rule/'+username;
+                } else {
+                    $.modal.closeLoading();
+                    $.modal.msg(r.msg);
+                }
             }
         });
+    }
 
-        function login() {
-            $.modal.loading($("#btnSubmit").data("loading"));
-            var username = $.common.trim($("input[name='username']").val());
-            var password = $.common.trim($("input[name='password']").val());
-            $.ajax({
-                type: "post",
-                url: ctx + "/f/apply/login",
-                data: {
-                    "username": username,
-                    "password": password,
+    function validateRule() {
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        $("#signupForm").validate({
+            rules: {
+                username: {
+                    required: true
                 },
-                success: function (r) {
-                    if (r.code == 0) {
-                        location.href = ctx + 'index';
-                    } else {
-                        $.modal.closeLoading();
-                        $('.imgcode').click();
-                        $(".code").val("");
-                        $.modal.msg(r.msg);
-                    }
+                password: {
+                    required: true
                 }
-            });
-        }
+            },
+            messages: {
+                username: {
+                    required: icon + "请输入您的学号",
+                },
+                password: {
+                    required: icon + "请输入您的身份证后六位",
+                }
+            }
+        })
+    }
 
-        function validateRule() {
-            var icon = "<i class='fa fa-times-circle'></i> ";
-            $("#signupForm").validate({
-                rules: {
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    username: {
-                        required: icon + "请输入您的学号",
-                    },
-                    password: {
-                        required: icon + "请输入您的身份证后六位",
-                    }
-                }
-            })
-        }
-    })
 </script>
 </body>
 </html>

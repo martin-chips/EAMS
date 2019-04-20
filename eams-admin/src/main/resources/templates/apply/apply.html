@@ -8,26 +8,7 @@
     <div class="row">
         <div class="col-sm-12 search-collapse">
             <form id="policy-form">
-                <div class="select-list">
-                    <ul>
-                        <li>
-                            名称：<input type="text" name="polName"/>
-                        </li>
-                        <li>
-                            状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                    th:value="${dict.dictValue}"></option>
-                        </select>
-                        </li>
-                        <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i
-                                    class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
-                                    class="fa fa-refresh"></i>&nbsp;重置</a>
-                        </li>
-                    </ul>
-                </div>
+
             </form>
         </div>
 
@@ -35,26 +16,30 @@
             <a class="btn btn-info" id="expandAllBtn">
                 <i class="fa fa-exchange"></i> 展开/折叠
             </a>
+            <a class="btn btn-primary" id="submit">
+                <i class="fa fa-address-book"></i> 提交
+            </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
         </div>
     </div>
 </div>
+<input type="hidden" name="stuId" th:value="${stuId}">
+<input type="hidden" name="ruleId" id="ruleId" th:value="${ruleId}">
+<input type="hidden" id="rootValue" th:value="${rootValue}">
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "maintenance/policy"
-
+    var list = ctx + "f/apply/policy/list/" + $("#ruleId").val();
+    var rootValue = $("#rootValue").val();
     $(function () {
         var options = {
             code: "polId",
             parentCode: "parentId",
             uniqueId: "polId",
-            url: prefix + "/list",
-            createUrl: prefix + "/add/{id}",
-            updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove/{id}",
+            url: list,
+            rootIdValue: rootValue,
             modalName: "策略",
             columns: [{
                 field: 'selectItem',
@@ -65,6 +50,9 @@
                     title: '名称',
                     align: "left",
                     width: "30%",
+                    // formatter: function (value, item, index) {
+                    //     return '<font style="color: red">' + value + '</font>';
+                    // }
                 },
                 {
                     field: 'score',
@@ -76,7 +64,7 @@
                     align: "left",
                     width: "30%",
                     formatter: function (value, row, index) {
-                        return $.table.tooltipWrap(value,30);
+                        return $.table.tooltipWrap(value, 30);
                     }
                 },
                 {
