@@ -62,4 +62,9 @@ public class EamsStudentServiceImpl implements EamsStudentService {
     public Student selectStudentByStuNumAndIdCard(String stuNum, String idCard) {
         return eamsStudentMapper.selectStudentByStuNumAndIdCard(stuNum, idCard);
     }
+
+    @Override
+    public Student selectStudentByStuNum(String stuNum) {
+        return eamsStudentMapper.selectStudentByStuNum(stuNum);
+    }
 }

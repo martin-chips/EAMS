@@ -77,4 +77,12 @@ public interface EamsStudentService {
      * @return 学生实体
      */
     Student selectStudentByStuNumAndIdCard(String stuNum, String idCard);
+
+    /**
+     * 根据学号获取学生
+     *
+     * @param stuNum 学号
+     * @return 学生
+     */
+    Student selectStudentByStuNum(String stuNum);
 }

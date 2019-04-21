@@ -32,14 +32,13 @@ public class ApplyController extends BaseController {
 
     @Autowired
     ApplyService applyService;
+    @Autowired
+    EamsStudentService studentService;
 
     @GetMapping("/login")
     public String login() {
         return "apply/login";
     }
-
-    @Autowired
-    EamsStudentService studentService;
 
     @PostMapping("/login")
     @ResponseBody
@@ -68,9 +67,9 @@ public class ApplyController extends BaseController {
         return getDataTable(list);
     }
 
-    @GetMapping("/rule/{ruleId}/{stuId}")
-    public String apply(@PathVariable Long ruleId, @PathVariable String stuId, Model model) {
-        model.addAttribute("stuId", stuId);
+    @GetMapping("/rule/{ruleId}/{stuNum}")
+    public String apply(@PathVariable Long ruleId, @PathVariable String stuNum, Model model) {
+        model.addAttribute("student", studentService.selectStudentByStuNum(stuNum));
         model.addAttribute("ruleId", ruleId);
         //设置属性表格的Root的id
         model.addAttribute("rootValue", applyService.selectRuleById(ruleId).getPolId());

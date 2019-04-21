@@ -9,6 +9,16 @@
         <div class="col-sm-12 search-collapse">
             <form id="policy-form">
 
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            学号：<span th:text="${student.stuNum}"></span>
+                        </li>
+                        <li>
+                            学生姓名：<span th:text="${student.stuName}"></span>
+                        </li>
+                    </ul>
+                </div>
             </form>
         </div>
 
@@ -25,7 +35,7 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="stuId" th:value="${stuId}">
+<input type="hidden" name="stuNum" th:value="${student.stuNum}">
 <input type="hidden" name="ruleId" id="ruleId" th:value="${ruleId}">
 <input type="hidden" id="rootValue" th:value="${rootValue}">
 <th:block th:include="include :: footer"/>
@@ -50,9 +60,13 @@
                     title: '名称',
                     align: "left",
                     width: "30%",
-                    // formatter: function (value, item, index) {
-                    //     return '<font style="color: red">' + value + '</font>';
-                    // }
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return '<span style="font-weight: bold">' + value + "</span>"
+                        } else {
+                            return value;
+                        }
+                    }
                 },
                 {
                     field: 'score',
@@ -75,7 +89,7 @@
                         if (item.input == 1) {
                             return "-";
                         } else {
-                            return "<input class='form-control'   >"
+                            return "<input class='form-control' name='url' polId=''   >"
                         }
                     }
                 },
@@ -87,7 +101,7 @@
                         if (item.input == 1) {
                             return "-";
                         } else {
-                            return "<input class='form-control'   >"
+                            return "<input class='form-control' name='desc'   >"
                         }
                     }
                 },
@@ -99,13 +113,35 @@
                         if (value == 1) {
                             return "-";
                         } else {
-                            return "<input class='form-control'  value='0' style='width: 30%' >"
+                            return "<input class='form-control'  value='0' name='score' style='width: 100%' >"
                         }
                     }
                 },]
         };
         $.treeTable.init(options);
     });
+
+    $(function () {
+        var rows = $('#bootstrap-tree-table').bootstrapTable('getData');//行的数据
+        $('#bootstrap-tree-tabl tbody').each(function () {
+            console.log($(this))
+        });
+
+    });
+
+    var item = [];
+
+    for (let i = 0; i < 5; i++) {
+        var policyItem = {};
+        policyItem.name = i;
+        policyItem.value = i + "value";
+        policyItem.key = i + "key";
+        item.push(policyItem);
+    }
+
+    console.log(item);
+
+
 </script>
 </body>
 </html>
