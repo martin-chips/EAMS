@@ -10,7 +10,6 @@ import com.dimple.common.utils.poi.ExcelUtil;
 import com.dimple.framework.shiro.service.SysPasswordService;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysUser;
-import com.dimple.system.service.ISysPostService;
 import com.dimple.system.service.ISysRoleService;
 import com.dimple.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -45,8 +44,6 @@ public class SysUserController extends BaseController {
     @Autowired
     private ISysRoleService roleService;
 
-    @Autowired
-    private ISysPostService postService;
 
     @Autowired
     private SysPasswordService passwordService;
@@ -102,7 +99,6 @@ public class SysUserController extends BaseController {
     @GetMapping("/add")
     public String add(ModelMap mmap) {
         mmap.put("roles", roleService.selectRoleAll());
-        mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }
 
@@ -130,7 +126,6 @@ public class SysUserController extends BaseController {
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
         mmap.put("user", userService.selectUserById(userId));
         mmap.put("roles", roleService.selectRolesByUserId(userId));
-        mmap.put("posts", postService.selectPostsByUserId(userId));
         return prefix + "/edit";
     }
 

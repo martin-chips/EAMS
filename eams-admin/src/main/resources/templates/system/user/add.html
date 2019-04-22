@@ -104,19 +104,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">岗位：</label>
-                    <div class="col-xs-4">
-                        <select id="post" class="form-control select2-hidden-accessible" multiple="">
-                            <option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"
-                                    th:disabled="${post.status == '1'}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
                     <label class="col-xs-2 control-label">角色：</label>
                     <div class="col-xs-10">
                         <label th:each="role:${roles}" class="check-box">

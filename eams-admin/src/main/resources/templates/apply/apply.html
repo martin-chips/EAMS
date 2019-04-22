@@ -123,10 +123,15 @@
 
     $(function () {
         var rows = $('#bootstrap-tree-table').bootstrapTable('getData');//行的数据
+        console.log(rows[0]);
         $('#bootstrap-tree-tabl tbody').each(function () {
             console.log($(this))
         });
-
+        $('#bootstrap-tree-tabl tbody tr').each(function (i) {                   // 遍历 tr
+            $(this).children('td').each(function (j) {  // 遍历 tr 的各个 td
+                alert("第" + (i + 1) + "行，第" + (j + 1) + "个td的值：" + $(this).text() + "。");
+            });
+        });
     });
 
     var item = [];

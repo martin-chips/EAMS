@@ -81,17 +81,6 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">岗位：</label>
-                    <div class="col-sm-8">
-                        <select id="post" class="form-control select2-hidden-accessible" multiple="">
-                            <option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"
-                                    th:selected="${post.flag}" th:disabled="${post.status == '1'}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
                     <label class="col-sm-4 control-label">用户性别：</label>
                     <div class="col-sm-8">
                         <div class="input-group" style="width: 100%">
