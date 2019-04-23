@@ -48,11 +48,6 @@
             <artifactId>eams-framework</artifactId>
         </dependency>
 
-        <!-- 定时任务-->
-        <dependency>
-            <groupId>com.dimple</groupId>
-            <artifactId>eams-quartz</artifactId>
-        </dependency>
 
         <!--学生管理-->
         <dependency>

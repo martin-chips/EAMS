@@ -158,12 +158,6 @@
                 <version>${velocity.version}</version>
             </dependency>
 
-            <!-- 定时任务-->
-            <dependency>
-                <groupId>com.dimple</groupId>
-                <artifactId>eams-quartz</artifactId>
-                <version>${eams.version}</version>
-            </dependency>
 
             <!-- 核心模块-->
             <dependency>
@@ -210,7 +204,6 @@
         <module>eams-admin</module>
         <module>eams-framework</module>
         <module>eams-system</module>
-        <module>eams-quartz</module>
         <module>eams-common</module>
         <module>eams-maintenance</module>
         <module>eams-evaluation</module>
