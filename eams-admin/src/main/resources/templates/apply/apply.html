@@ -89,7 +89,7 @@
                         if (item.input == 1) {
                             return "-";
                         } else {
-                            return "<input class='form-control' name='url' polId=''   >"
+                            return "<input class='form-control' name='url'" + "polId='" + item.polId + "' >"
                         }
                     }
                 },
@@ -121,30 +121,24 @@
         $.treeTable.init(options);
     });
 
-    $(function () {
-        var rows = $('#bootstrap-tree-table').bootstrapTable('getData');//行的数据
-        console.log(rows[0]);
-        $('#bootstrap-tree-tabl tbody').each(function () {
-            console.log($(this))
-        });
-        $('#bootstrap-tree-tabl tbody tr').each(function (i) {                   // 遍历 tr
-            $(this).children('td').each(function (j) {  // 遍历 tr 的各个 td
-                alert("第" + (i + 1) + "行，第" + (j + 1) + "个td的值：" + $(this).text() + "。");
-            });
-        });
+    $("#submit").click(function () {
+        var form = document.getElementById("bootstrap-tree-table");
+        var inputs = form.getElementsByClassName("form-control");
+        var datas = new Array();
+        var i = 0;
+        var j = 0;
+        while (i < inputs.length) {
+            var data = new Object();
+            data.polId = inputs[i].getAttribute("polId");
+            i++;
+            data.polStuCredence = inputs[i].value;
+            i++;
+            data.polStuCredenceRemark = inputs[i].value;
+            i++;
+            data.polStuScore = inputs[i].value;
+            datas[j++] = data;
+        }
     });
-
-    var item = [];
-
-    for (let i = 0; i < 5; i++) {
-        var policyItem = {};
-        policyItem.name = i;
-        policyItem.value = i + "value";
-        policyItem.key = i + "key";
-        item.push(policyItem);
-    }
-
-    console.log(item);
 
 
 </script>

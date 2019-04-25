@@ -78,7 +78,8 @@ public class EamsPolicyController extends BaseController {
     @GetMapping("/edit/{polId}")
     public String edit(@PathVariable Long polId, Model model) {
         Policy policy = policyService.selectPolicyById(polId);
-        if (StringUtils.isNotNull(policy) && 100L == polId) {
+        //如果其parent的id是0的话，就将其parent的id设置为无
+        if (StringUtils.isNotNull(policy) && 0L == policy.getParentId()) {
             policy.setParentName("无");
         }
         model.addAttribute("policy", policy);

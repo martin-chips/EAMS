@@ -40,7 +40,7 @@ public class ApplyServiceImpl implements ApplyService {
             return null;
         }
         Integer polId = rule.getPolId();
-        List<Policy> policies = policyMapper.selectPolicyListApply(100);
+        List<Policy> policies = policyMapper.selectPolicyListApply(polId);
         return policies;
     }
 
