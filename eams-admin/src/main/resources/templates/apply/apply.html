@@ -89,7 +89,7 @@
                         if (item.input == 1) {
                             return "-";
                         } else {
-                            return "<input class='form-control' name='url'" + "polId='" + item.polId + "' >"
+                            return "<input type='hidden' class='form-control' value='" + item.polId + "' ><input class='form-control' name='url'>"
                         }
                     }
                 },
@@ -123,19 +123,22 @@
 
     $("#submit").click(function () {
         var form = document.getElementById("bootstrap-tree-table");
-        var inputs = form.getElementsByClassName("form-control");
+        var inputs = $(form.getElementsByClassName("form-control"));
         var datas = new Array();
-        var i = 0;
         var j = 0;
-        while (i < inputs.length) {
+        var i=0
+        while(i<inputs.length){
             var data = new Object();
-            data.polId = inputs[i].getAttribute("polId");
+            data.polId = $(inputs[i]).val()
+            console.log(data.polId)
             i++;
-            data.polStuCredence = inputs[i].value;
+            data.polStuCredence = $(inputs[i]).val()
             i++;
-            data.polStuCredenceRemark = inputs[i].value;
+            data.polStuCredenceRemark = $(inputs[i]).val()
             i++;
-            data.polStuScore = inputs[i].value;
+            data.polStuScore = $(inputs[i]).val()
+            i++;
+            console.log(data)
             datas[j++] = data;
         }
     });
