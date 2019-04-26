@@ -16,12 +16,26 @@
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="deptId" column="dept_id"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="selectPolicyById" resultMap="EamsPolicyMap">
-        select
-          p.pol_id, p.pol_name, p.ancestors, p.parent_id,p.input, p.status,p.order_num, p.score, p.remark, p.create_by, p.create_time,(select pol_name from eams_policy where pol_id =p.parent_id ) as parent_name
+        select p.pol_id,
+               p.pol_name,
+               p.ancestors,
+               p.parent_id,
+               p.input,
+               p.status,
+               p.order_num,
+               p.score,
+               p.remark,
+               p.create_by,
+               p.create_time,
+               p.dept_id,
+               (select pol_name from eams_policy where pol_id = p.parent_id)  as parent_name,
+               (select dept_name from sys_dept d where d.dept_id = p.dept_id) as dept_name
         from eams_policy p
         where p.pol_id = #{polId}
     </select>
@@ -30,34 +44,51 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectPolicyList" resultMap="EamsPolicyMap">
         select
-        pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status,input
-        from eams_policy
+        p.pol_id, p.pol_name, p.ancestors, p.parent_id, p.order_num, p.score, p.remark, p.create_by,
+        p.create_time,p.status,p.input,(select
+        dept_name from sys_dept d where d.dept_id=p.dept_id) as dept_name
+        from eams_policy p
         <where>
             <if test="polName != null and polName != ''">
-                and pol_name like concat('%',#{polName},'%')
+                and p.pol_name like concat('%',#{polName},'%')
             </if>
             <if test="parentId != null">
-                and parent_id = #{parentId}
+                and p.parent_id = #{parentId}
             </if>
             <if test="status != null">
-                and status = #{status}
+                and p.status = #{status}
             </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format(p.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                AND date_format(p.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
         order by order_num
     </select>
 
     <select id="selectPolicyCountByParentId" resultType="java.lang.Integer">
-        select count(*) from eams_policy where parent_id=#{polId}
+        select count(*)
+        from eams_policy
+        where parent_id = #{polId}
     </select>
     <select id="selectPolicyListApply" resultType="com.dimple.maintenance.domain.Policy">
-         select pol_id, pol_name, ancestors, parent_id, order_num, score, remark, create_by, create_time,status,input
-        from eams_policy where ancestors like concat("%",#{polId},"%")  order by order_num
+        select pol_id,
+               pol_name,
+               ancestors,
+               parent_id,
+               order_num,
+               score,
+               remark,
+               create_by,
+               create_time,
+               status,
+               input
+        from eams_policy
+        where ancestors like concat("%", #{polId}, "%")
+          and status = 0
+        order by order_num
     </select>
 
     <!--新增所有列-->
@@ -72,6 +103,7 @@
         <if test="input != null and input != ''">input,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         <if test="remark != null and remark != ''">remark,</if>
+        <if test="deptId != null and deptId != ''">dept_id,</if>
         create_time
         )values(
         <if test="polName != null and polName != ''">#{polName},</if>
@@ -83,6 +115,7 @@
         <if test="input != null and input != ''">#{input},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="deptId != null and deptId != ''">#{deptId},</if>
         sysdate()
         )
     </insert>
@@ -115,6 +148,9 @@
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId},
+            </if>
             update_time = sysdate()
         </set>
         where pol_id = #{polId}
@@ -135,7 +171,9 @@
 
     <!--通过主键删除-->
     <delete id="deletePolicyById">
-        delete from eams_policy where pol_id = #{polId}
+        delete
+        from eams_policy
+        where pol_id = #{polId}
     </delete>
 
     <delete id="deletePolicyByIds">

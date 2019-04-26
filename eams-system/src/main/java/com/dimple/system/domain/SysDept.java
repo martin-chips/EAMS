@@ -68,5 +68,9 @@ public class SysDept extends BaseEntity {
      * 父部门名称
      */
     private String parentName;
+    /**
+     * 选中状态
+     */
+    private String selectFlag;
 
 }

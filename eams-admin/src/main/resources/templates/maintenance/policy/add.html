@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <th:block th:include="include :: select2-css"/>
     <th:block th:include="include :: header('新增策略')"/>
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-policy-add">
         <input id="treeId" name="parentId" type="hidden" th:value="${policy.polId}"/>
-        <input id="deptId" name="deptId" type="hidden"/>
         <h4 class="form-header h4">基本信息</h4>
         <div class="form-group">
             <label class="col-sm-3 control-label ">上级：</label>
@@ -65,9 +65,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">指定检查部门：</label>
+            <label class="col-sm-3 control-label">核定部门：</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" onclick="selectDeptTree()" id="deptName" readonly="true">
+                <select id="depts" class="form-control select2-hidden-accessible" required>
+                    <option value="">请选择该策略核定的部门</option>
+                    <option th:each="dept:${depts}" th:value="${dept.deptId}" th:text="${dept.deptName}"
+                            th:disabled="${dept.status == '1'}"></option>
+                </select>
+                <!--                <input class="form-control" type="text" onclick="selectDeptTree()" id="deptName" readonly="true" placeholder="请指定核定的部门">-->
             </div>
         </div>
         <h4 class="form-header h4">其他信息</h4>
@@ -88,6 +93,7 @@
 </div>
 
 <th:block th:include="include :: footer"/>
+<th:block th:include="include :: select2-js"/>
 <script type="text/javascript">
     var prefix = ctx + "maintenance/policy";
 
@@ -110,7 +116,11 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/add", $('#form-policy-add').serialize());
+            var deptIds = $.form.selectSelects("depts");
+            var data = $("#form-policy-add").serializeArray();
+            data.push({"name": "deptId", "value": deptIds})
+            $.operate.save(prefix + "/add", data);
+            // console.log(data)
         }
     }
 
@@ -123,30 +133,6 @@
             callBack: doSubmit
         };
         $.modal.openOptions(options);
-    }
-
-    /*策略管理-新增-选择部门树*/
-    function selectDeptTree() {
-        var treeId = $("#treeId").val();
-        var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
-        var url = ctx + "system/dept/selectDeptTree/" + 100;
-        var options = {
-            title: '选择部门',
-            width: "380",
-            url: ctx + "system/dept/selectDeptTree/" + deptId,
-            callBack: doSubmitForDept
-        };
-        $.modal.openOptions(options);
-    }
-
-    function doSubmitForDept(index, layero) {
-        var tree = layero.find("iframe")[0].contentWindow.$._tree;
-        if ($.tree.notAllowParents(tree)) {
-            var body = layer.getChildFrame('body', index);
-            $("#deptId").val(body.find('#treeId').val());
-            $("#deptName").val(body.find('#treeName').val());
-            layer.close(index);
-        }
     }
 
     function doSubmit(index, layero) {

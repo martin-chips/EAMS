@@ -9,6 +9,8 @@ import com.dimple.common.utils.StringUtils;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.maintenance.domain.Policy;
 import com.dimple.maintenance.service.EamsPolicyService;
+import com.dimple.system.domain.SysDept;
+import com.dimple.system.service.ISysDeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,8 @@ import java.util.List;
 public class EamsPolicyController extends BaseController {
     @Autowired
     EamsPolicyService policyService;
+    @Autowired
+    ISysDeptService deptService;
 
 
     @RequiresPermissions("maintenance:policy:view")
@@ -57,6 +61,7 @@ public class EamsPolicyController extends BaseController {
     @GetMapping("/add/{parentId}")
     public String add(@PathVariable("parentId") Long parentId, Model model) {
         model.addAttribute("policy", policyService.selectPolicyById(parentId));
+        model.addAttribute("depts", deptService.selectDeptList(new SysDept()));
         return "maintenance/policy/add";
     }
 
@@ -83,6 +88,7 @@ public class EamsPolicyController extends BaseController {
             policy.setParentName("无");
         }
         model.addAttribute("policy", policy);
+        model.addAttribute("depts", deptService.selectDeptList(new SysDept()));
         return "maintenance/policy/edit";
     }
 
@@ -109,9 +115,6 @@ public class EamsPolicyController extends BaseController {
         if (policyService.selectPolicyCountById(polId) > 0) {
             return AjaxResult.warn("存在下级策略,不允许删除");
         }
-        //if (deptService.checkDeptExistUser(deptId)) {
-        //    return AjaxResult.warn("部门存在用户,不允许删除");
-        //}
         return toAjax(policyService.deletePolicyById(polId));
     }
 

@@ -55,8 +55,21 @@ public class Policy extends BaseEntity {
      */
     private String input;
     /**
+     * 指定需要检查该策略的部门id
+     */
+    private Long deptId;
+    /**
      * =============
      * 子策略
      */
     private List<Policy> children = new ArrayList<>();
+    /**
+     * 需要检查该策略的部门的名称
+     */
+    private String deptName;
+    /**
+     * 部门数组
+     */
+    private Long[] deptIds;
+
 }

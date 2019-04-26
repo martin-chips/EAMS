@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增策略')"/>
+    <th:block th:include="include :: select2-css"/>
+    <th:block th:include="include :: header('修改策略')"/>
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-policy-update">
         <input id="treeId" name="parentId" type="hidden" th:value="${policy==null?0:policy.parentId}"/>
         <input name="polId" type="hidden" th:value="${policy==null?0:policy.polId}"/>
+        <input name="deptId" type="hidden" th:value="${policy==null?0:policy.deptId}"/>
         <h4 class="form-header h4">基本信息</h4>
         <div class="form-group">
             <label class="col-sm-3 control-label ">上级：</label>
@@ -67,6 +69,17 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">核定部门：</label>
+            <div class="col-sm-8">
+                <select id="depts" class="form-control select2-hidden-accessible">
+                    <option value="">请选择该策略核定的部门</option>
+                    <option th:each="dept:${depts}" th:value="${dept.deptId}" th:text="${dept.deptName}"
+                            th:selected="${dept.deptId==policy.deptId?true:false}"
+                            th:disabled="${dept.status == '1'}"></option>
+                </select>
+            </div>
+        </div>
         <h4 class="form-header h4">其他信息</h4>
         <div class="row">
             <div class="col-sm-12">
@@ -86,6 +99,8 @@
 </div>
 
 <th:block th:include="include :: footer"/>
+<th:block th:include="include :: select2-js"/>
+
 <script type="text/javascript">
     var prefix = ctx + "maintenance/policy";
 
@@ -127,6 +142,29 @@
             $.modal.alertError("父级不能选择");
         }
 
+    }
+
+    /*策略管理-新增-选择部门树*/
+    function selectDeptTree() {
+        var treeId = $("#treeId").val();
+        var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + 100,
+            callBack: doSubmitForDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitForDept(index, layero) {
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            var body = layer.getChildFrame('body', index);
+            $("#deptId").val(body.find('#treeId').val());
+            $("#deptName").val(body.find('#treeName').val());
+            layer.close(index);
+        }
     }
 
     function doSubmit(index, layero) {
