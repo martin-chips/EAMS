@@ -3,7 +3,6 @@
 <mapper namespace="com.dimple.evaluation.mapper.EamsRecordMapper">
 
     <resultMap type="com.dimple.evaluation.domain.Record" id="EamsRecordMap">
-        <result property="recId" column="rec_id"/>
         <result property="stuId" column="stu_id"/>
         <result property="ruleId" column="rule_id"/>
         <result property="polId" column="pol_id"/>
@@ -74,25 +73,10 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insertRecord" keyProperty="recId" useGeneratedKeys="true">
-        insert into eams.eams_record(stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score, pol_review_remark, reviewer_name, create_by, create_time, update_by, update_time)
-        values (#{stuId}, #{ruleId}, #{polId}, #{polStuScore}, #{polStuCredence}, #{polStudentCredenceRemark}, #{polReviewScore}, #{polReviewRemark}, #{reviewerName}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
-    </insert>
-
-    <!--通过主键修改数据-->
+    <!--修改-->
     <update id="updateRecord">
         update eams.eams_record
         <set>
-            <if test="stuId != null">
-                stu_id = #{stuId},
-            </if>
-            <if test="ruleId != null">
-                rule_id = #{ruleId},
-            </if>
-            <if test="polId != null">
-                pol_id = #{polId},
-            </if>
             <if test="polStuScore != null">
                 pol_stu_score = #{polStuScore},
             </if>
@@ -111,26 +95,54 @@
             <if test="reviewerName != null and reviewerName != ''">
                 reviewer_name = #{reviewerName},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="updateBy != null and updateBy != ''">
                 update_by = #{updateBy},
             </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
+            update_time = sysdate()
         </set>
-        where rec_id = #{recId}
+        where
+        <if test="recId !=null">
+            rec_id = #{recId}
+        </if>
+        <if test="recId==null">
+            stu_id=#{stuId} and pol_id=#{polId} and rule_id=#{ruleId}
+        </if>
     </update>
+
+    <!--通过主键修改数据-->
+    <insert id="insertRecord" keyProperty="recId" useGeneratedKeys="true">
+        insert into eams_record(
+        <if test="stuId != null and stuId != 0">stu_id,</if>
+        <if test="ruleId != null and ruleId != 0">rule_id,</if>
+        <if test="polId != null and polId != ''">pol_id,</if>
+        <if test="polStuScore != null and polStuScore != ''">pol_stu_score,</if>
+        <if test="polStuCredence != null and polStuCredence != ''">pol_stu_credence,</if>
+        <if test="polStudentCredenceRemark != null and polStudentCredenceRemark != ''">pol_student_credence_remark,</if>
+        <if test="polReviewScore != null">pol_review_score,</if>
+        <if test="polReviewRemark !=null and polReviewRemark != ''">pol_review_remark,</if>
+        <if test="reviewerName != null and reviewerName != ''">reviewer_name,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="stuId != null and stuId != 0">#{stuId},</if>
+        <if test="ruleId != null and ruleId != 0">#{ruleId},</if>
+        <if test="polId != null and polId != ''">#{polId},</if>
+        <if test="polStuScore != null and polStuScore != ''">#{polStuScore},</if>
+        <if test="polStuCredence != null and polStuCredence != ''">#{polStuCredence},</if>
+        <if test="polStudentCredenceRemark != null and polStudentCredenceRemark != ''">#{polStudentCredenceRemark},</if>
+        <if test="polReviewScore != null and polReviewScore != ''">#{polReviewScore},</if>
+        <if test="polReviewRemark != null">#{polReviewRemark},</if>
+        <if test="reviewerName !=null and reviewerName != ''">#{reviewerName},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
     <!--通过主键删除-->
     <delete id="deleteRecordById">
         delete from eams.eams_record where rec_id = #{recId}
     </delete>
+
     <delete id="deleteRecordByIds">
         delete from eams_record where rec_id in
         <foreach collection="array" item="id" separator="," open="(" close=")">

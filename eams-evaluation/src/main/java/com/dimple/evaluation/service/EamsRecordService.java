@@ -60,6 +60,13 @@ public interface EamsRecordService {
      * @return 影像行数
      */
     int deleteRecordByIds(String ids);
-    
-    
+
+    /**
+     * 批量插入对象数组
+     *
+     * @param records 对象数组
+     * @return 受影响的行数
+     */
+    int insertRecords(Long ruleId, Long stuId, Record... records);
+
 }

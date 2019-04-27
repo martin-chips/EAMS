@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: header('策略列表')"/>
 </head>
@@ -126,8 +126,8 @@
         var inputs = $(form.getElementsByClassName("form-control"));
         var datas = new Array();
         var j = 0;
-        var i=0
-        while(i<inputs.length){
+        var i = 0
+        while (i < inputs.length) {
             var data = new Object();
             data.polId = $(inputs[i]).val()
             console.log(data.polId)
@@ -138,9 +138,20 @@
             i++;
             data.polStuScore = $(inputs[i]).val()
             i++;
-            console.log(data)
             datas[j++] = data;
         }
+        console.log(datas);
+        $.ajax({
+            url: "/f/apply",
+            dataType: "json",
+            data: JSON.stringify(datas),
+            type: "post",
+            contentType: "application/json",
+            success: function () {
+                console.log(111);
+
+            }
+        });
     });
 
 

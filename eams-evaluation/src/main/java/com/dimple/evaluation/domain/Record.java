@@ -14,7 +14,6 @@ import lombok.Data;
 public class Record extends BaseEntity {
 
     private static final long serialVersionUID = -34478752643094884L;
-    private Long recId;
     /**
      * 学生的id
      **/
@@ -27,6 +26,9 @@ public class Record extends BaseEntity {
      * 策略的id
      **/
     private Long polId;
+
+
+
     /**
      * 该项策略的学生的自主评分
      **/
@@ -56,5 +58,4 @@ public class Record extends BaseEntity {
      * 策略的名称
      */
     private String polName;
-
 }
