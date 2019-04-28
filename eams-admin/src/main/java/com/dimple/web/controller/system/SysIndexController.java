@@ -1,17 +1,20 @@
 package com.dimple.web.controller.system;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import com.dimple.common.config.Global;
 import com.dimple.common.core.controller.BaseController;
 import com.dimple.framework.util.ShiroUtils;
 import com.dimple.system.domain.SysMenu;
+import com.dimple.system.domain.SysNotice;
 import com.dimple.system.domain.SysUser;
 import com.dimple.system.service.ISysMenuService;
+import com.dimple.system.service.ISysNoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 /**
  * @className SysIndexController
@@ -24,6 +27,8 @@ import com.dimple.system.service.ISysMenuService;
 public class SysIndexController extends BaseController {
     @Autowired
     private ISysMenuService menuService;
+    @Autowired
+    ISysNoticeService noticeService;
 
     // 系统首页
     @GetMapping("/index")
@@ -40,8 +45,11 @@ public class SysIndexController extends BaseController {
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap) {
-        mmap.put("version", Global.getVersion());
+    public String main(Model model) {
+        //系统当前版本
+        model.addAttribute("version", Global.getVersion());
+        //获取通知公告
+        model.addAttribute("notices", noticeService.selectNoticeList(new SysNotice()));
         return "main";
     }
 }

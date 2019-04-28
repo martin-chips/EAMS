@@ -508,6 +508,14 @@
             alertWarning: function (content) {
                 $.modal.alert(content, modal_status.WARNING);
             },
+            alertWarningWithTitle: function (title, content) {
+                layer.alert(content, {
+                    icon: $.modal.icon(modal_status.WARNING),
+                    title: title,
+                    btn: ['确定'],
+                    btnclass: ['btn btn-primary'],
+                });
+            },
             // 关闭窗体
             close: function () {
                 var index = parent.layer.getFrameIndex(window.name);
@@ -700,7 +708,7 @@
                 $.operate.submit(url, "get", "json", "");
             },
             // put请求传输
-            put: function (url,data) {
+            put: function (url, data) {
                 $.operate.submit(url, "put", "json", data);
             },
             // 详细信息

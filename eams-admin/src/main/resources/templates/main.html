@@ -1,22 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--360浏览器优先以webkit内核解析-->
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
-    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
-    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <th:block th:include="include :: header('首页')" />
 </head>
 
 <body class="gray-bg">
 <div class="row  border-bottom white-bg dashboard-header">
+    <div class="col-sm-12">
+        <blockquote class="text-muted" style="font-size:14px">
+            <h2 class="text-primary text-center">欢迎登陆高校评优评奖系统 EAMS</h2>
+            <h4 class="text-info" th:text="${'当前系统版本:'+version}"></h4>
+            <br>
+            此系统由【边小丰】制作，如需技术支持，请联系: bianxiaofeng@sohu.com
+            <br>
+            <br>
+            <a target="_blank" href="http://www.bianxiaofeng.com">欢迎登陆个人博客系统: http://www.bianxiaofeng.com</a><br><br>
+            <a target="_blank" href="http://www.bianxiaofeng.com">系统设计文档地址: http://doc-eams.bianxiaofeng.com</a><br>
+        </blockquote>
+
+        <hr>
+    </div>
 
 </div>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>系统公告</h5>
+                </div>
+                <div class="ibox-content no-padding">
+                    <div class="panel-body">
+                        <div class="panel-group" id="version">
+                            <div class="panel panel-default" th:each="notice:${notices}"
+                                 th:if="${notice.noticeType=='2'}">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#version" href="#v33"
+                                           th:href="${'#ID'+notice.noticeId}" th:text="${notice.noticeTitle}">v3.3.0</a><code
+                                            class="pull-right"
+                                            th:text="${#dates.format(notice.createTime,'yyyy-MM-dd')}">2019.04.01</code>
+                                    </h5>
+                                </div>
+                                <div th:id="${'ID'+notice.noticeId}" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div th:utext="${notice.noticeContent}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var notices = [[${notices}]];
+    for (let i = 0; i < notices.length; i++) {
+        var notice = notices[i];
+        if (notice.noticeType == '1') {
+            console.log(notice.noticeTitle)
+            $.modal.alertWarningWithTitle(notice.noticeTitle,notice.noticeContent)
+        }
+    }
+
+</script>
 </body>
 </html>

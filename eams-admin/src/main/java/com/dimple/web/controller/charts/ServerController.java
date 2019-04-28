@@ -1,12 +1,12 @@
-package com.dimple.web.controller.monitor;
+package com.dimple.web.controller.charts;
 
+import com.dimple.common.core.controller.BaseController;
+import com.dimple.framework.web.domain.Server;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.dimple.common.core.controller.BaseController;
-import com.dimple.framework.web.domain.Server;
 
 /**
  * @className ServerController
@@ -16,11 +16,11 @@ import com.dimple.framework.web.domain.Server;
  * @Version 1.0
  */
 @Controller
-@RequestMapping("/monitor/server")
+@RequestMapping("/charts/server")
 public class ServerController extends BaseController {
-    private String prefix = "monitor/server";
+    private String prefix = "charts/server";
 
-    @RequiresPermissions("monitor:server:view")
+    @RequiresPermissions("charts:server:view")
     @GetMapping()
     public String server(ModelMap mmap) throws Exception {
         Server server = new Server();
