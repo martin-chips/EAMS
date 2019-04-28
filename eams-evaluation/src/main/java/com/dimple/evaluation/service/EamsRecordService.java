@@ -1,6 +1,8 @@
 package com.dimple.evaluation.service;
 
 import com.dimple.evaluation.domain.Record;
+import com.dimple.evaluation.domain.RecordHeader;
+import com.dimple.maintenance.domain.Policy;
 
 import java.util.List;
 
@@ -69,4 +71,31 @@ public interface EamsRecordService {
      */
     int insertRecords(Long ruleId, Long stuId, Record... records);
 
+    /**
+     * 获取RecordHeader集合
+     *
+     * @param recordHeader 带有查询条件的RecordHeader
+     * @return RecordHeader集结
+     */
+    List<RecordHeader> selectRecordHeaderList(RecordHeader recordHeader);
+
+    /**
+     * 根据学生的学号和规则的id查询所有策略的信息
+     *
+     * @param stuNum 学生的学号
+     * @param ruleId 规则的id
+     * @return 策略集合
+     */
+    List<Policy> selectRecordByStuNumAndRuleId(String stuNum, Long ruleId);
+
+    /**
+     * 审核评优评奖的信息
+     *
+     * @param records   记录
+     * @param stuNum    学号
+     * @param ruleId    规则id
+     * @param loginName 当前用户
+     * @return
+     */
+    int reviewRecord(Record[] records, String stuNum, Long ruleId, String loginName);
 }

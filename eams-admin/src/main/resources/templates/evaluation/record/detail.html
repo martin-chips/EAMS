@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('策略列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="policy-form">
+
+                <div class="select-list">
+                    <ul>
+
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-info" id="expandAllBtn">
+                <i class="fa fa-exchange"></i> 展开/折叠
+            </a>
+            <a class="btn btn-primary" id="submit">
+                <i class="fa fa-address-book"></i> 提交
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="stuNum" id="stuNum" th:value="${stuNum}">
+<input type="hidden" name="ruleId" id="ruleId" th:value="${ruleId}">
+<input type="hidden" id="rootValue" th:value="${rootValue}">
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var datas = [[${@dict.getType('sys_normal_disable')}]];
+    var list = ctx + "evaluation/record/detailList?ruleId=" + $("#ruleId").val() + "&stuNum=" + $("#stuNum").val();
+    var rootValue = $("#rootValue").val();
+    $(function () {
+        var options = {
+            code: "polId",
+            parentCode: "parentId",
+            uniqueId: "polId",
+            url: list,
+            rootIdValue: rootValue,
+            modalName: "策略",
+            columns: [{
+                field: 'selectItem',
+                radio: true
+            },
+                {
+                    field: 'polName',
+                    title: '名称',
+                    align: "left",
+                    width: "30%",
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return '<span style="font-weight: bold">' + value + "</span>"
+                        } else {
+                            return value;
+                        }
+                    }
+                },
+                {
+                    field: 'score',
+                    title: '分值',
+                },
+                {
+                    field: 'remark',
+                    title: '说明',
+                    align: "left",
+                    width: "30%",
+                    formatter: function (value, row, index) {
+                        return $.table.tooltipWrap(value, 30);
+                    }
+                },
+                {
+                    field: '',
+                    title: '凭证图像地址',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return "-";
+                        } else {
+                            return $.table.tooltip(item.record.polStuCredence, 30);
+                        }
+                    }
+                },
+                {
+                    field: '',
+                    title: '凭证说明',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (item.input == 1) {
+                            return "-";
+                        } else {
+                            return $.table.tooltip(item.record.polStudentCredenceRemark, 30);
+                        }
+                    }
+                },
+                {
+                    field: 'input',
+                    title: '自评得分',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (value == 1) {
+                            return "-";
+                        } else {
+                            return $.table.tooltip(item.record.polStuScore, 30);
+                        }
+                    }
+                }, {
+                    field: 'input',
+                    title: '评审得分',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (value == 1) {
+                            return "-";
+                        } else {
+                            var value = item.record.polReviewScore == null ? '' : item.record.polReviewScore
+                            return "<input type='hidden' class='form-control' value='" + item.polId + "' ><input class='form-control' value='" + value + "' >"
+                        }
+                    }
+                },
+                {
+                    field: 'input',
+                    title: '评审备注',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        if (value == 1) {
+                            return "-";
+                        } else {
+                            var value = item.record.polReviewRemark == null ? '' : item.record.polReviewRemark
+                            return "<input class='form-control' value='" + value + "'>"
+                        }
+                    }
+                },]
+        };
+        $.treeTable.init(options);
+    });
+
+    $("#submit").click(function () {
+        var form = document.getElementById("bootstrap-tree-table");
+        var inputs = $(form.getElementsByClassName("form-control"));
+        var datas = new Array();
+        var j = 0;
+        var i = 0
+        while (i < inputs.length) {
+            var data = new Object();
+            data.polId = $(inputs[i]).val()
+            i++;
+            data.polReviewScore = $(inputs[i]).val()
+            i++;
+            data.polReviewRemark = $(inputs[i]).val()
+            i++;
+            datas[j++] = data;
+        }
+        console.log(datas);
+        $.ajax({
+            url: ctx + "evaluation/record/review?ruleId=" + $("#ruleId").val() + "&stuNum=" + $("#stuNum").val(),
+            dataType: "json",
+            data: JSON.stringify(datas),
+            type: "post",
+            contentType: "application/json",
+            success: function () {
+                console.log(111);
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

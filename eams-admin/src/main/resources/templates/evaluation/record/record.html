@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('字典数据列表')"/>
+    <th:block th:include="include :: header('评优评奖记录')"/>
 </head>
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
         <div class="col-sm-12 search-collapse">
-            <form id="data-form">
+            <form id="type-form">
                 <div class="select-list">
                     <ul>
                         <li>
-                            字典名称：<select id="dictType" name="dictType">
-                            <option th:each="dict : ${dictList}" th:text="${dict['dictName']}"
-                                    th:value="${dict['dictType']}" th:field="*{dict.dictType}"></option>
-                        </select>
+                            学生名称：<input type="text" name="dictName"/>
                         </li>
                         <li>
-                            字典标签：<input type="text" name="dictLabel"/>
+                            学生学号：<input type="text" name="dictType"/>
                         </li>
-                        <li>
-                            数据状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                    th:value="${dict.dictValue}"></option>
-                        </select>
+                        <li class="select-time">
+                            <label>创建时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                   name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                   name="params[endTime]"/>
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
@@ -38,13 +36,13 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
-               shiro:hasPermission="evaluation:record:edit">
-                <i class="fa fa-edit"></i> 修改
-            </a>
             <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="evaluation:record:remove">
+               shiro:hasPermission="evaluation:recordHeader:remove">
                 <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="evaluation:recordHeader:export">
+                <i class="fa fa-download"></i> 导出
             </a>
         </div>
 
@@ -55,65 +53,57 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:dict:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:dict:remove')}]];
+    var editFlag = [[${@permission.hasPermi('evaluation:recordHeader:edit')}]];
+    var listFlag = [[${@permission.hasPermi('evaluation:recordHeader:list')}]];
+    var removeFlag = [[${@permission.hasPermi('evaluation:recordHeader:remove')}]];
     var datas = [[${@dict.getType('sys_normal_disable')}]];
-    var prefix = ctx + "evaluation/dict/data";
+    var prefix = ctx + "evaluation/record";
 
     $(function () {
         var options = {
             url: prefix + "/list",
-            createUrl: prefix + "/add/{id}",
+            createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            queryParams: queryParams,
             sortName: "createTime",
             sortOrder: "desc",
-            modalName: "数据",
+            modalName: "参评",
             columns: [{
                 checkbox: true
             },
                 {
-                    field: 'recId',
-                    title: '记录ID'
-                },
-                {
-                    field: 'polName',
-                    title: '策略名称'
-                },
-                {
-                    field: 'polStuScore',
-                    title: '自主评分'
-                },
-                {
-                    field: 'polStuCredence',
-                    title: '凭证'
-                },
-                {
-                    field: 'polStudentCredenceRemark',
-                    title: '凭证说明'
-                },
-                {
-                    field: 'polReviewScore',
-                    title: '审核得分'
-                },
-                {
-                    field: 'polReviewRemark',
-                    title: '审核备注'
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间',
+                    field: 'stuNum',
+                    title: '学生学号',
                     sortable: true
+                },
+                {
+                    field: 'stuName',
+                    title: '学生姓名',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="detail(\'' + row.dictId + '\')">' + value + '</a>';
+                    }
+                },
+                {
+                    field: 'ruleName',
+                    title: '规则名称'
+                },
+                {
+                    field: 'stuTotalScore',
+                    title: '自评成绩得分'
+                },
+                {
+                    field: 'reviewTotalScore',
+                    title: '正式得分'
                 },
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.dictCode + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.dictCode + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.dictId + '\')"><i class="fa fa-edit"></i>发送邮件通知</a> ');
+                        actions.push("<a class='btn btn-info btn-xs '" + listFlag + " href='#' onclick='detail(" + row.stuNum + "," + row.ruleId + ",\"" + row.stuName + "\")'><i class=\"fa fa-list-ul\"></i>详细</a>");
                         return actions.join('');
                     }
                 }]
@@ -121,16 +111,8 @@
         $.table.init(options);
     });
 
-    function queryParams(params) {
-        var search = $.table.queryParams(params);
-        search.dictType = $("#dictType").val();
-        return search;
-    }
-
-    /*字典数据-新增字典*/
-    function add() {
-        var dictType = $("#dictType option:selected").val();
-        $.operate.add(dictType);
+    function detail(stuNum, ruleId, stuName) {
+        createMenuItem(prefix + "/detail?stuNum=" + stuNum + "&ruleId=" + ruleId, stuName + "评优评奖详情");
     }
 </script>
 </body>

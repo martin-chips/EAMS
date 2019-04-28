@@ -72,4 +72,5 @@ public class Policy extends BaseEntity {
      */
     private Long[] deptIds;
 
+    private Object record;
 }

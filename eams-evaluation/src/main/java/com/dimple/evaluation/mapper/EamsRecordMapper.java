@@ -1,6 +1,8 @@
 package com.dimple.evaluation.mapper;
 
 import com.dimple.evaluation.domain.Record;
+import com.dimple.evaluation.domain.RecordHeader;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -61,5 +63,22 @@ public interface EamsRecordMapper {
      * @return 影响行数
      */
     int deleteRecordByIds(Long[] recIds);
+
+    /**
+     * 获取RecordHeader集合
+     *
+     * @param recordHeader 带有查询条件的RecordHeader
+     * @return recordHeader集合
+     */
+    List<RecordHeader> selectRecordHeaderList(RecordHeader recordHeader);
+
+    /**
+     * 根据学生的id和规则的id查询出已经填写的记录
+     *
+     * @param stuId  学生的id
+     * @param ruleId 规则的id
+     * @return 策略填写记录
+     */
+    List<Record> selectRecordByStuIdAndRuleId(@Param("stuId") Long stuId, @Param("ruleId") Long ruleId);
 
 }

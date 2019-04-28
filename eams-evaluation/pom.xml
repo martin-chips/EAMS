@@ -16,6 +16,10 @@
             <groupId>com.dimple</groupId>
             <artifactId>eams-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dimple</groupId>
+            <artifactId>eams-maintenance</artifactId>
+        </dependency>
         <!-- SpringBoot 测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

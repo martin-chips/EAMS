@@ -21,7 +21,7 @@
     <!--查询单个-->
     <select id="selectRecordById" resultMap="EamsRecordMap">
         select
-          rec_id, stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score, pol_review_remark, reviewer_name, create_by, create_time, update_by, update_time
+          stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score, pol_review_remark, reviewer_name, create_by, create_time, update_by, update_time
         from eams.eams_record
         where rec_id = #{recId}
     </select>
@@ -30,13 +30,10 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectRecordList" resultMap="EamsRecordMap">
         select
-        rec_id, stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score,
+        stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score,
         pol_review_remark, reviewer_name, create_by, create_time, update_by, update_time
-        from eams.eams_record
+        from eams_record
         <where>
-            <if test="recId != null">
-                and rec_id = #{recId}
-            </if>
             <if test="stuId != null">
                 and stu_id = #{stuId}
             </if>
@@ -73,9 +70,26 @@
         </where>
     </select>
 
+    <select id="selectRecordHeaderList" resultType="com.dimple.evaluation.domain.RecordHeader">
+        select sum(pol_stu_score)                                                                 as stu_total_score,
+        sum(pol_review_score)                                                              as review_total_score,
+        (select stu_num from eams_student where eams_student.stu_id = eams_record.stu_id)  as stu_num,
+        (select stu_name from eams_student where eams_student.stu_id = eams_record.stu_id) as stu_name,
+        (select rule_name from eams_rule where eams_rule.rule_id = eams_record.rule_id)    as rule_name,
+        rule_id
+        from eams_record
+        group by stu_id, rule_id
+    </select>
+
+    <select id="selectRecordByStuIdAndRuleId" resultType="com.dimple.evaluation.domain.Record">
+        select stu_id, rule_id, pol_id, pol_stu_score, pol_stu_credence, pol_student_credence_remark, pol_review_score, pol_review_remark, reviewer_name, create_by, create_time, update_by, update_time
+        from eams_record where stu_id=#{stuId} and rule_id=#{ruleId}
+    </select>
+
+
     <!--修改-->
     <update id="updateRecord">
-        update eams.eams_record
+        update eams_record
         <set>
             <if test="polStuScore != null">
                 pol_stu_score = #{polStuScore},
@@ -101,12 +115,7 @@
             update_time = sysdate()
         </set>
         where
-        <if test="recId !=null">
-            rec_id = #{recId}
-        </if>
-        <if test="recId==null">
-            stu_id=#{stuId} and pol_id=#{polId} and rule_id=#{ruleId}
-        </if>
+        stu_id=#{stuId} and pol_id=#{polId} and rule_id=#{ruleId}
     </update>
 
     <!--通过主键修改数据-->

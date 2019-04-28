@@ -86,5 +86,4 @@ public interface EamsPolicyMapper {
      */
     List<Policy> selectPolicyListApply(Integer polId);
 
-
 }
