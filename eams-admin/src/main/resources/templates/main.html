@@ -58,13 +58,16 @@
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
     var notices = [[${notices}]];
-    for (let i = 0; i < notices.length; i++) {
-        var notice = notices[i];
-        if (notice.noticeType == '1') {
-            console.log(notice.noticeTitle)
-            $.modal.alertWarningWithTitle(notice.noticeTitle,notice.noticeContent)
+    $(function () {
+        for (let i = 0; i < notices.length; i++) {
+            var notice = notices[i];
+            if (notice.noticeType == '1') {
+                console.log(notice.noticeTitle)
+                $.modal.alertWarningWithTitle(notice.noticeTitle,notice.noticeContent)
+            }
         }
-    }
+
+    });
 
 </script>
 </body>
