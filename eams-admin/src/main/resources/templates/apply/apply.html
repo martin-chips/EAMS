@@ -6,22 +6,6 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <div class="col-sm-12 search-collapse">
-            <form id="policy-form">
-
-                <div class="select-list">
-                    <ul>
-                        <li>
-                            学号：<span th:text="${student.stuNum}"></span>
-                        </li>
-                        <li>
-                            学生姓名：<span th:text="${student.stuName}"></span>
-                        </li>
-                    </ul>
-                </div>
-            </form>
-        </div>
-
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-info" id="expandAllBtn">
                 <i class="fa fa-exchange"></i> 展开/折叠
@@ -31,6 +15,13 @@
             </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
+            <h1 class="text-center text-info">评优评奖管理系统-在线申报</h1>
+            <div class="row">
+                <div class="col-sm-4 text-danger" th:text="${'学生姓名：'+session.student.stuName}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生学号：'+session.student.stuNum}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生专业班级：'+session.student.profName}"></div>
+            </div>
+            <hr>
             <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
         </div>
     </div>
@@ -50,6 +41,8 @@
             uniqueId: "polId",
             url: list,
             rootIdValue: rootValue,
+            showRefresh: false,
+            showColumns: false,
             modalName: "策略",
             columns: [{
                 field: 'selectItem',

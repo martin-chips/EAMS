@@ -115,6 +115,27 @@ public class EamsProfessionServiceImpl implements EamsProfessionService {
         return ztrees;
     }
 
+    @Override
+    public String selectProfessionFullNameByProfId(Long profId) {
+        if (profId == null) {
+            throw new BusinessException("数据异常");
+        }
+        Profession profession = professionMapper.selectProfessionById(profId);
+        if (profession == null) {
+            return "";
+        }
+        String ancestors = profession.getAncestors();
+        String[] split = ancestors.split(",");
+        String className = "";
+        for (String s : split) {
+            Profession temp = professionMapper.selectProfessionById(Long.valueOf(s));
+            if (temp != null) {
+                className += temp.getProfName() + " ";
+            }
+        }
+        return className+profession.getProfName();
+    }
+
     /**
      * 对象转树
      *

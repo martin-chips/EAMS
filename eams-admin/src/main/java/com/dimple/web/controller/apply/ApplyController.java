@@ -10,6 +10,8 @@ import com.dimple.maintenance.domain.Policy;
 import com.dimple.maintenance.domain.Rule;
 import com.dimple.maintenance.domain.Student;
 import com.dimple.maintenance.service.EamsStudentService;
+import com.dimple.system.domain.SysNotice;
+import com.dimple.system.service.ISysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +42,8 @@ public class ApplyController extends BaseController {
     EamsStudentService studentService;
     @Autowired
     EamsRecordService recordService;
+    @Autowired
+    ISysNoticeService noticeService;
 
     @PostMapping
     public String apply(@RequestBody Record[] records, HttpSession session) {
@@ -56,7 +60,7 @@ public class ApplyController extends BaseController {
     @StudentAuth
     public String selectRule(HttpSession session, Model model) {
         Student student = (Student) session.getAttribute("student");
-        model.addAttribute("stuId", student.getStuId());
+        model.addAttribute("notices", noticeService.selectNoticeList(new SysNotice()));
         return "apply/rule";
     }
 
@@ -75,6 +79,7 @@ public class ApplyController extends BaseController {
         Student student = (Student) session.getAttribute("student");
         session.setAttribute("ruleId", ruleId);
         model.addAttribute("student", studentService.selectStudentByStuNum(student.getStuNum()));
+        //设置
         model.addAttribute("ruleId", ruleId);
         //设置属性表格的Root的id
         model.addAttribute("rootValue", applyService.selectRuleById(ruleId).getPolId());

@@ -6,38 +6,45 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <div class="col-sm-12 search-collapse">
-            <form id="config-form">
-                <div class="select-list">
-                    <ul>
-                        <li>
-                            规则名称：<input type="text" name="ruleName"/>
-                        </li>
-                        <li>
-                            规则状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                    th:value="${dict.dictValue}"></option>
-                        </select>
-                        <li class="select-time">
-                            <label>创建时间： </label>
-                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
-                                   name="params[beginTime]"/>
-                            <span>-</span>
-                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
-                                   name="params[endTime]"/>
-                        </li>
-                        <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
-                                    class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
-                                    class="fa fa-refresh"></i>&nbsp;重置</a>
-                        </li>
-                    </ul>
+        <div class="col-sm-12 select-table ">
+            <h1 class="text-center text-info">评优评奖管理系统-在线申报</h1>
+            <div class="row">
+                <div class="col-sm-4 text-danger" th:text="${'学生姓名：'+session.student.stuName}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生学号：'+session.student.stuNum}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生专业班级：'+session.student.profName}"></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4 class="text-danger">系统公告</h4>
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content no-padding">
+                            <div class="panel-body">
+                                <div class="panel-group" id="version">
+                                    <div class="panel panel-default" th:each="notice:${notices}"
+                                         th:if="${notice.noticeType=='2'}">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#version" href="#v33"
+                                                   th:href="${'#ID'+notice.noticeId}" th:text="${notice.noticeTitle}">v3.3.0</a><code
+                                                    class="pull-right"
+                                                    th:text="${#dates.format(notice.createTime,'yyyy-MM-dd')}">2019.04.01</code>
+                                            </h5>
+                                        </div>
+                                        <div th:id="${'ID'+notice.noticeId}" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div th:utext="${notice.noticeContent}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
-        </div>
-        <div class="col-sm-12 select-table table-striped">
+            </div>
+            <hr>
+            <h4 class="text-danger">规则列表</h4>
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
     </div>
@@ -57,6 +64,12 @@
             sortName: "createTime",
             sortOrder: "desc",
             modalName: "规则",
+            search: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            showSearch: false,
+            height: "300",
             columns: [{
                 checkbox: true
             },
@@ -78,7 +91,7 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + '" href="/f/apply/rule/' + row.ruleId  + '" ><i class="fa fa-edit"></i>详细</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="/f/apply/rule/' + row.ruleId + '" ><i class="fa fa-edit"></i>进入填报</a> ');
                         return actions.join('');
                     }
                 }]

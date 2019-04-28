@@ -85,4 +85,12 @@ public interface EamsProfessionService {
      * @return 班级树
      */
     List<Ztree> selectProfessionTree(Profession profession);
+
+    /**
+     * 获取班级的完整名称
+     *
+     * @param profId 班级的id
+     * @return 班级的完整名称
+     */
+    String selectProfessionFullNameByProfId(Long profId);
 }
