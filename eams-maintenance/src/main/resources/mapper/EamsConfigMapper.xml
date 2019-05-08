@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.maintenance.mapper.EamsConfigMapper">
+
+    <resultMap type="com.dimple.maintenance.domain.EamsConfig" id="EamsConfigMap">
+        <result property="configId" column="config_id" jdbcType="LONG INTEGER"/>
+        <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
+        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="selectEamsConfigByKey" resultType="com.dimple.maintenance.domain.EamsConfig">
+        select  from eams_config where config_key=#{key}
+    </select>
+
+
+</mapper>

@@ -75,6 +75,7 @@
         sum(pol_review_score)                                                              as review_total_score,
         (select stu_num from eams_student where eams_student.stu_id = eams_record.stu_id)  as stu_num,
         (select stu_name from eams_student where eams_student.stu_id = eams_record.stu_id) as stu_name,
+        (select prof_id from eams_student where eams_student.stu_id = eams_record.stu_id) as prof_id,
         (select rule_name from eams_rule where eams_rule.rule_id = eams_record.rule_id)    as rule_name,
         rule_id
         from eams_record

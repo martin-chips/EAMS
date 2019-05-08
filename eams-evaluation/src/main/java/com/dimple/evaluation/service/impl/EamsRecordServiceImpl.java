@@ -12,6 +12,7 @@ import com.dimple.maintenance.domain.Student;
 import com.dimple.maintenance.mapper.EamsPolicyMapper;
 import com.dimple.maintenance.mapper.EamsRuleMapper;
 import com.dimple.maintenance.mapper.EamsStudentMapper;
+import com.dimple.maintenance.service.EamsProfessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,8 @@ public class EamsRecordServiceImpl implements EamsRecordService {
     EamsPolicyMapper policyMapper;
     @Autowired
     EamsRuleMapper ruleMapper;
+    @Autowired
+    EamsProfessionService professionService;
 
     @Override
     public Record selectRecordById(Long recId) {
@@ -86,8 +89,13 @@ public class EamsRecordServiceImpl implements EamsRecordService {
 
     @Override
     public List<RecordHeader> selectRecordHeaderList(RecordHeader recordHeader) {
-        List<RecordHeader> list = recordMapper.selectRecordHeaderList(recordHeader);
-        return list;
+        //获取RecordHeader
+        List<RecordHeader> recordHeaders = recordMapper.selectRecordHeaderList(recordHeader);
+        //设置班级信息
+        for (RecordHeader header : recordHeaders) {
+            header.setProfName(professionService.selectProfessionFullNameByProfId(header.getProfId()));
+        }
+        return recordHeaders;
     }
 
     @Override

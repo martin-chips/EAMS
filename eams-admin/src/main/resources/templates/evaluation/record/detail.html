@@ -2,21 +2,16 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: header('策略列表')"/>
+    <style>
+        .blow-up {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <div class="col-sm-12 search-collapse">
-            <form id="policy-form">
-
-                <div class="select-list">
-                    <ul>
-
-                    </ul>
-                </div>
-            </form>
-        </div>
-
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-info" id="expandAllBtn">
                 <i class="fa fa-exchange"></i> 展开/折叠
@@ -26,6 +21,15 @@
             </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
+            <h1 class="text-center text-info">评优评奖管理系统-在线审核</h1>
+            <div class="row">
+                <h4 class="form-header h4">学生信息</h4>
+                <div class="col-sm-4 text-danger" th:text="${'学生姓名：'+student.stuName}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生学号：'+student.stuNum}"></div>
+                <div class="col-sm-4 text-danger" th:text="${'学生专业班级：'+professionName}"></div>
+                <br>
+                <h4 class="form-header h4">填报信息</h4>
+            </div>
             <table id="bootstrap-tree-table" data-mobile-responsive="true"></table>
         </div>
     </div>
@@ -77,14 +81,15 @@
                     }
                 },
                 {
-                    field: '',
+                    field: 'polStuCredence',
                     title: '凭证图像地址',
                     align: "left",
                     formatter: function (value, item, index) {
                         if (item.input == 1) {
                             return "-";
                         } else {
-                            return $.table.tooltip(item.record.polStuCredence, 30);
+                            return "<img class='blow-up'onclick='tt(this)'   src='" + item.record.polStuCredence + "'>";
+
                         }
                     }
                 },
@@ -157,20 +162,32 @@
             i++;
             datas[j++] = data;
         }
-        console.log(datas);
         $.ajax({
             url: ctx + "evaluation/record/review?ruleId=" + $("#ruleId").val() + "&stuNum=" + $("#stuNum").val(),
             dataType: "json",
             data: JSON.stringify(datas),
             type: "post",
             contentType: "application/json",
-            success: function () {
-                console.log(111);
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.operate.successTabCallback(result);
             }
         });
     });
 
-
+    function tt($this) {
+        var conntent = "<img src='" + $($this).attr("src") + "'>"
+        layer.open({
+            title: false,
+            type: 1,
+            closeBtn: false,
+            shadeClose: true,
+            area: ['auto', 'auto'],
+            content: conntent
+        });
+    }
 </script>
 </body>
 </html>

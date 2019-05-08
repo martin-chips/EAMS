@@ -68,7 +68,7 @@
             exportUrl: prefix + "/export",
             sortName: "createTime",
             sortOrder: "desc",
-            modalName: "参评",
+            modalName: "学生参评",
             columns: [{
                 checkbox: true
             },
@@ -81,9 +81,11 @@
                     field: 'stuName',
                     title: '学生姓名',
                     sortable: true,
-                    formatter: function (value, row, index) {
-                        return '<a href="#" onclick="detail(\'' + row.dictId + '\')">' + value + '</a>';
-                    }
+                },
+                {
+                    field: 'profName',
+                    title: '班级',
+                    sortable: true
                 },
                 {
                     field: 'ruleName',
@@ -102,14 +104,19 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.dictId + '\')"><i class="fa fa-edit"></i>发送邮件通知</a> ');
-                        actions.push("<a class='btn btn-info btn-xs '" + listFlag + " href='#' onclick='detail(" + row.stuNum + "," + row.ruleId + ",\"" + row.stuName + "\")'><i class=\"fa fa-list-ul\"></i>详细</a>");
+                        actions.push("<a class='btn btn-success btn-xs '" + " href='#' onclick='sendEmail(" + row.stuNum + "," + row.ruleId + ")'><i class=\"fa fa-list-ul\"></i>发送邮件通知</a>");
+
+                        actions.push("<a class='btn btn-info btn-xs '" + " href='#' onclick='detail(" + row.stuNum + "," + row.ruleId + ",\"" + row.stuName + "\")'><i class=\"fa fa-list-ul\"></i>详细</a>");
                         return actions.join('');
                     }
                 }]
         };
         $.table.init(options);
     });
+
+    function sendEmail(ruleId, stuNum) {
+        $.modal.msgSuccess("系统发送邮件成功！");
+    }
 
     function detail(stuNum, ruleId, stuName) {
         createMenuItem(prefix + "/detail?stuNum=" + stuNum + "&ruleId=" + ruleId, stuName + "评优评奖详情");
