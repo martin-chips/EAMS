@@ -54,6 +54,9 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="log:logininfor:export">
                 <i class="fa fa-download"></i> 导出
             </a>
+            <a class="btn btn-warning" onclick="select()" shiro:hasPermission="log:logininfor:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
         </div>
 
         <div class="col-sm-12 select-table table-striped">
@@ -66,6 +69,11 @@
 <script th:inline="javascript">
     var datas = [[${@dict.getType('sys_common_status')}]];
     var prefix = ctx + "log/logininfor";
+
+    function select() {
+        var jQuery = $("#bootstrap-table").bootstrapTable('getSelections');
+        console.log(jQuery.length)
+    }
 
     $(function () {
         var options = {
