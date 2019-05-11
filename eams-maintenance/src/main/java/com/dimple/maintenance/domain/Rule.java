@@ -45,4 +45,5 @@ public class Rule extends BaseEntity {
      * 策略的名称
      */
     private String polName;
+
 }

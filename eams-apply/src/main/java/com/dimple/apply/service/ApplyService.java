@@ -30,9 +30,10 @@ public interface ApplyService {
      * 获取前台展示的Rule的List集合
      *
      * @param rule 带有查询条件的rule
+     * @param stuId
      * @return rule集合
      */
-    List<Rule> selectRuleList(Rule rule);
+    List<Rule> selectRuleList(Rule rule, Long stuId);
 
     /**
      * 根据rule的id获取rule实体

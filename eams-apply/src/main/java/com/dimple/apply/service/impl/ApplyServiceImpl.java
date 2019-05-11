@@ -45,7 +45,7 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public List<Rule> selectRuleList(Rule rule) {
+    public List<Rule> selectRuleList(Rule rule, Long stuId) {
         //设置只能是显示的才能被前台看到
         rule.setStatus(UserConstants.RULE_NORMAL);
         return ruleMapper.selectRuleList(rule);

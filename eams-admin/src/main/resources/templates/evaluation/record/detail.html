@@ -88,8 +88,10 @@
                         if (item.input == 1) {
                             return "-";
                         } else {
+                            if (item.record.polStuCredence == null) {
+                                return "无"
+                            }
                             return "<img class='blow-up'onclick='tt(this)'   src='" + item.record.polStuCredence + "'>";
-
                         }
                     }
                 },

@@ -223,7 +223,8 @@
     /* 用户管理-重置密码 */
     function resetPwd(userId) {
         var url = prefix + '/resetPwd/' + userId;
-        $.modal.open("重置密码", url, '800', '300');
+        $.modal.msgSuccess("重置密码成功");
+        // $.modal.open("重置密码", url, '800', '300');
     }
 
     /* 用户状态显示 */

@@ -45,12 +45,12 @@ public class ApplyController extends BaseController {
     @Autowired
     ISysNoticeService noticeService;
 
-    @PostMapping
+    @PostMapping()
     public String apply(@RequestBody Record[] records, HttpSession session) {
         Long ruleId = (Long) session.getAttribute("ruleId");
         Student student = (Student) session.getAttribute("student");
         int i = recordService.insertRecords(ruleId, student.getStuId(), records);
-        return "";
+        return "apply/rule";
     }
 
     /**
@@ -67,9 +67,10 @@ public class ApplyController extends BaseController {
     @GetMapping("/rule/list")
     @ResponseBody
     @StudentAuth
-    public TableDataInfo list(Rule rule) {
+    public TableDataInfo list(Rule rule,HttpSession session) {
         startPage();
-        List<Rule> list = applyService.selectRuleList(rule);
+        Student student = (Student) session.getAttribute("student");
+        List<Rule> list = applyService.selectRuleList(rule, student.getStuId());
         return getDataTable(list);
     }
 

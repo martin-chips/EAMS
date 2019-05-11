@@ -94,7 +94,7 @@ public class ExcelUtil<T> {
     /**
      * 对excel表单默认第一个索引名转换成list
      *
-     * @param input 输入流
+     * @param is 输入流
      * @return 转换后集合
      */
     public List<T> importExcel(InputStream is) throws Exception {
@@ -105,7 +105,7 @@ public class ExcelUtil<T> {
      * 对excel表单指定表格索引名转换成list
      *
      * @param sheetName 表格索引名
-     * @param input     输入流
+     * @param is     输入流
      * @return 转换后集合
      */
     public List<T> importExcel(String sheetName, InputStream is) throws Exception {

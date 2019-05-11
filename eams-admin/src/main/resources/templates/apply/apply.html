@@ -140,9 +140,8 @@
             data: JSON.stringify(datas),
             type: "post",
             contentType: "application/json",
-            success: function () {
-                console.log(111);
-
+            success: function (result) {
+                window.location="/f/apply/rule"
             }
         });
     });
